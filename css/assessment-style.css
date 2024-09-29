@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f7;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 1000px;
+    margin: 40px auto;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #ffffff;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.sidebar .subject img {
+    width: 100%;
+    height: auto;
+}
+
+.subject {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 15px;
+    background-color: #ffffff;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.subject:hover {
+    background-color: #cbd9e6;
+}
+
+.subject h3 { 
+    color: #1c274a;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    border-left: 2px solid #adadad; /* The line that separates the sidebar from the content */
+}
+
+h1 {
+    font-size: 36px;
+    color: #113366;
+}
+
+.assessment {
+    background-color: #cbd9e6;
+    border-radius: 10px;
+    margin: 20px 0;
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #adadad;
+}
+
+.title-status {
+    display: flex;
+    flex-direction: column; /* Stack title and status vertically */
+}
+
+.title, .status {
+    font-size: 18px;
+}
+
+/* .status {
+    font-size: 18px;
+    font-weight: bold;
+    /* margin-top: 5px;
+} */
+
+.last-used {
+    background-color: #2f4070;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    display: inline-block;
+    position: absolute;
+    top: -10px; /* Adjust this value to place it slightly above the assessment box */
+    right: 15px; /*Align to the right of the container */
+}
+
+.edit {
+    text-decoration: none;
+    color: #113366;
+    font-size: 16px;
+}
+
+.details {
+    margin: 10px 0;
+    color: #666;
+}
+
+.share {
+    display: flex;
+    align-items: center;
+}
+
+.share label {
+    font-size: small;
+    margin-right: 5px;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #32659a;
+    padding: 2px 5px;
+    border-radius: 10px;
+}
