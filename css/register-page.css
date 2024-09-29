@@ -1,0 +1,130 @@
+body {
+    font-family: 'Gothic', sans-serif;
+    margin: 0;
+    background-color: #CBD5E0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    width: 100%;
+    background-color: #CBD5E0;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.logo img {
+    width: 140px;
+    height: 50px;
+}
+
+.content {
+    padding: 20px;
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px);
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px;
+}
+
+.left-section {
+    flex: 1;
+}
+
+.left-section h1 {
+    font-size: 5rem;
+    color: #1A202C;
+    margin: 0;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.left-section button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #FFFFFF;
+    background-color: #1A202C;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.left-section button::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: -5px;
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    z-index: -1;
+}
+
+.right-section {
+    background-color: #ffffff;
+    padding: 100px; 
+    border-radius: 10px;
+    position: relative;
+}
+.right-section::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    width: 100%;
+    height: 100%;
+    background-color: #1A202C;
+    border-radius: 10px;
+    z-index: -1;
+}
+.right-section h1 {
+    font-family: 'Gothic', sans-serif; 
+    margin-top: 0;
+    font-size: 3em; 
+    font-weight: bold;
+    text-align: center;
+    color: #0d1b2a;
+    margin-bottom: 20px;
+}
+.right-section label {
+    display: block;
+    margin: 10px 0 3px;
+    color: #0d1b2a;
+    font-weight: bold;
+}
+.right-section input {
+    width: 100%;
+    padding: 12px;
+    border-style: none;
+    background-color: #f5e0c3;
+    margin-bottom: 10px;
+}
+.right-section button {
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px; 
+    background-color: #ffffff;
+    color: #0d1b2a;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+}
