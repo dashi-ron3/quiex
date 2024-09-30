@@ -29,7 +29,7 @@
 
             <div class="right-section">
                 <h1>REGISTER</h1>
-                <form action="functions/register.php" method="POST">
+                <form action="register.php" method="POST">
                     <label for="username">USERNAME</label>
                     <input type="text" id="username" name="username" required>
                     <label for="email">EMAIL</label>
