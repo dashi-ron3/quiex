@@ -42,19 +42,25 @@
             </div>
 
             <div class="assessment">
+                <div class="last-used">LAST USED ON: 2024/10/08</div>
                 <div class="header">
-                    <div class="title">Assessment Title: Lorem Ipsum</div>
-                    <div class="status">Status: Unfinished</div>
-                    <div class="last-used">LAST USED ON: 2024/10/02</div>
+                    <div class="title-status">
+                        <div class="title"><strong>Assessment Title:</strong> Lorem Ipsum</div>
+                        <div class="status"><strong>Status:</strong> Done</div>
+                    </div>
+
                 </div>
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
             </div>
 
             <div class="assessment">
+                <div class="last-used">LAST USED ON: 2024/10/08</div>
                 <div class="header">
-                    <div class="title">Assessment Title: Lorem Ipsum</div>
-                    <div class="status">Status: Done</div>
-                    <div class="last-used">LAST USED ON: 2024/09/28</div>
+                    <div class="title-status">
+                        <div class="title"><strong>Assessment Title:</strong> Lorem Ipsum</div>
+                        <div class="status"><strong>Status:</strong> Done</div>
+                    </div>
+
                 </div>
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
             </div>
