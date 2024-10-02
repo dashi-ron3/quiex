@@ -22,8 +22,14 @@
                 <img src="assets/folder.png" alt="biology folder">
                 <h3>BIOLOGY</h3>
             </div>
-            <div class="subject">CHEMISTRY</div>
-            <div class="subject">CALCULUS</div>
+            <div class="subject">
+                <img src="assets/folder.png" alt="biology folder">
+                <h3>CHEMISTRY</h3>
+            </div>
+            <div class="subject">
+                <img src="assets/folder.png" alt="biology folder">
+                <h3>CALCULUS</h3>
+            </div>
         </div>
 
         <div class="content">
@@ -59,7 +65,7 @@
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
                 <div class="share">
                     <label for="share2">SHARE TO PUBLIC: </label>
-                    <input type="checkbox" id="share2" checked>
+                    <input type="checkbox" id="share2">
                 </div>
             </div>
 
@@ -76,7 +82,7 @@
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
                 <div class="share">
                     <label for="share3">SHARE TO PUBLIC: </label>
-                    <input type="checkbox" id="share3" checked>
+                    <input type="checkbox" id="share3">
                 </div>
             </div>
         </div>
