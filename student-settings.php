@@ -1,3 +1,9 @@
+<?php
+session_start();
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
+$profile_pic = isset($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'assets/user-icon.svg';
+?>
+
 <html lang="en">
 
 <head>
@@ -41,11 +47,6 @@
 
         <div class="content">
             <h2>User Profile</h2>
-            <?php
-            session_start();
-            $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
-            $profile_pic = isset($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'user-icon.svg';
-            ?>
             <div class="profile-header">
                 <div class="profile-pic">
                     <img src="<?php echo htmlspecialchars($profile_pic); ?>" alt="Profile Picture" width="80" height="80">
@@ -54,13 +55,14 @@
                     <h3><?php echo htmlspecialchars($username); ?></h3>
                     <p>n/a</p>
                 </div>
+            </div>
 
-                <form action="pfp-upload.php" method="post" enctype="multipart/form-data">
-                    <label for="fileToUpload">Choose a profile picture:</label><br>
-                    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*"><br><br>
-                    <input type="submit" value="Upload Picture" name="submit">
+            <div class="profile-upload">
+                <form action="profile-upload.php" method="post" enctype="multipart/form-data">
+                    <label for="fileToUpload">Upload Profile Picture:</label>
+                    <input type="file" name="fileToUpload" id="fileToUpload" required>
+                    <button type="submit" name="submit">Upload</button>
                 </form>
-
             </div>
 
             <div class="basic-info">

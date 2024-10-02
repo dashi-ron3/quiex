@@ -1,7 +1,7 @@
 <?php
-session_start(); 
+session_start();
 
-$target_dir = "uploads/"; 
+$target_dir = "uploads/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -36,13 +36,11 @@ if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". htmlspecialchars(basename($_FILES["fileToUpload"]["name"])). " has been uploaded.";
         $_SESSION['profile_pic'] = $target_file;
-
         header('Location: student-settings.php');
         exit;
     } else {
         echo "Sorry, there was an error uploading your file.";
-    }
+    } 
 }
 ?>
