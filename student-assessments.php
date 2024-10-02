@@ -37,13 +37,8 @@
                         <div class="status"><strong>Status:</strong> Done</div>
                     </div>
 
-                    <a href="#" class="edit"><strong>Edit</strong></a>
                 </div>
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
-                <div class="share">
-                    <label for="share1">SHARE TO PUBLIC: </label>
-                    <input type="checkbox" id="share1" checked>
-                </div>
             </div>
 
             <div class="assessment">
@@ -53,10 +48,6 @@
                     <div class="last-used">LAST USED ON: 2024/10/02</div>
                 </div>
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
-                <div class="share">
-                    <label for="share2">SHARE TO PUBLIC: </label>
-                    <input type="checkbox" id="share2">
-                </div>
             </div>
 
             <div class="assessment">
@@ -64,7 +55,6 @@
                     <div class="title">Assessment Title: Lorem Ipsum</div>
                     <div class="status">Status: Done</div>
                     <div class="last-used">LAST USED ON: 2024/09/28</div>
-                    <a href="#" class="edit">Edit</a>
                 </div>
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
             </div>
