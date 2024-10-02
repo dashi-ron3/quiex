@@ -1,0 +1,156 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d5e2ef;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    width: 100%;
+    background-color: #d0e1f9;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 150px;
+    height: auto;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container h1 {
+    font-size: 2.5rem;
+    color: #022343;
+}
+
+.assessment-section {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-panel, .right-panel {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 48%;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.btn-icon {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-icon:hover {
+    background: #555;
+}
+
+.panel-body h2, h3 {
+    margin-bottom: 10px;
+}
+
+.choices, .contact-info, .text-media {
+    margin-bottom: 20px;
+}
+
+.choices ul, .contact-info ul, .text-media ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.choices ul li, .contact-info ul li, .text-media ul li {
+    margin-bottom: 5px;
+}
+
+.right-panel h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.question-input {
+    margin-bottom: 20px;
+}
+
+.question-input input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    background-color: #022343;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #034582;
+}
+
+.points-section {
+    margin-top: 20px;
+}
+
+.points-section input {
+    width: 100px;
+    padding: 10px;
+}
+
+.file-upload {
+    margin-bottom: 20px;
+}
+
+.file-upload button {
+    background-color: #ccc;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-submit {
+    display: block;
+    margin: 20px auto;
+    background-color: #022343;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background-color: #034582;
+}
