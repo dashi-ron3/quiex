@@ -47,25 +47,31 @@
             </div>
 
             <div class="assessment">
+                <div class="last-used">LAST USED ON: 2024/10/08</div>
                 <div class="header">
-                    <div class="title">Assessment Title: Lorem Ipsum</div>
-                    <div class="status">Status: Unfinished</div>
-                    <div class="last-used">LAST USED ON: 2024/10/02</div>
-                    <a href="#" class="edit">Edit</a>
+                    <div class="title-status">
+                        <div class="title"><strong>Assessment Title:</strong> Lorem Ipsum</div>
+                        <div class="status"><strong>Status:</strong> Done</div>
+                    </div>
+
+                    <a href="#" class="edit"><strong>Edit</strong></a>
                 </div>
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
                 <div class="share">
                     <label for="share2">SHARE TO PUBLIC: </label>
-                    <input type="checkbox" id="share2">
+                    <input type="checkbox" id="share2" checked>
                 </div>
             </div>
 
             <div class="assessment">
+                <div class="last-used">LAST USED ON: 2024/10/08</div>
                 <div class="header">
-                    <div class="title">Assessment Title: Lorem Ipsum</div>
-                    <div class="status">Status: Done</div>
-                    <div class="last-used">LAST USED ON: 2024/09/28</div>
-                    <a href="#" class="edit">Edit</a>
+                    <div class="title-status">
+                        <div class="title"><strong>Assessment Title:</strong> Lorem Ipsum</div>
+                        <div class="status"><strong>Status:</strong> Done</div>
+                    </div>
+
+                    <a href="#" class="edit"><strong>Edit</strong></a>
                 </div>
                 <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
                 <div class="share">
