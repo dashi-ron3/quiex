@@ -9,6 +9,13 @@
 </head>
 
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+            </div>
+        </nav>
+    </header>
     <div class="container">
         <div class="sidebar">
             <div class="subject">
