@@ -23,7 +23,7 @@ $profile_pic = isset($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'ass
     </header>
 
     <div class="container">
-        <div class="sidebar">
+        <div class="sidebar"></div>
             <h1>
                 <svg
                     xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16" onclick="goBack()">
@@ -35,7 +35,7 @@ $profile_pic = isset($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'ass
 
             <ul>
                 <li><a href="#">PROFILE</a></li>
-                <li><a href="#">APPEARANCE</a></li>
+                <li><a href="appearance.php">APPEARANCE</a></li>
                 <li><a href="#">HELP</a></li>
             </ul>
 
