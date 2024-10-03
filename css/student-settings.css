@@ -170,3 +170,20 @@ header {
 .illustration img {
     width: 100px;
 }
+
+input[type="file"]::-webkit-file-upload-button, #saveButton {
+    margin-top:  20px;
+    padding: 10px 20px;
+    background-color: #d0e1f9; 
+    color: #1A202C; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover, #saveButton:hover {
+    background-color: #1A202C; 
+    color: #ffffff;
+}
+

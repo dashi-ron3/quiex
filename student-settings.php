@@ -46,7 +46,7 @@ $profile_pic = isset($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'ass
         </div>
 
         <div class="content">
-            <h2>User Profile</h2>
+            <h2>USER PROFILE</h2>
             <div class="profile-header">
                 <div class="profile-pic">
                     <img src="<?php echo htmlspecialchars($profile_pic); ?>" alt="Profile Picture" width="80" height="80">
@@ -58,10 +58,9 @@ $profile_pic = isset($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'ass
             </div>
 
             <div class="profile-upload">
-                <form action="profile-upload.php" method="post" enctype="multipart/form-data">
-                    <label for="fileToUpload">Upload Profile Picture:</label>
-                    <input type="file" name="fileToUpload" id="fileToUpload" required>
-                    <button type="submit" name="submit">Upload</button>
+                <form action="pfp-upload.php" method="post" enctype="multipart/form-data">
+                    <input type="file" name="fileToUpload" id="fileToUpload">
+                    <button type="submit" id="saveButton" name="submit" style="display:none" ;>Save</button>
                 </form>
             </div>
 
@@ -89,6 +88,21 @@ $profile_pic = isset($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'ass
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('fileToUpload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('saveButton').style.display = 'inline-block';
+            }
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function() {
+            // You can hide the save button after "saving"
+            document.getElementById('saveButton').style.display = 'none';
+        });
+    </script>
 </body>
 
 </html>
