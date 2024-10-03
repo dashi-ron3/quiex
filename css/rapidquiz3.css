@@ -1,0 +1,95 @@
+body {
+    font-family: 'Gothic', sans-serif;
+    margin: 0;
+    background-color: #CBD5E0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; 
+}
+
+h1 {
+    margin-top: 80px;
+    font-size: 5rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 2rem;
+}
+
+p {
+    margin: 15px;
+    font-size: 20px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.container {
+    background-color: #fffdfd;
+    width: 500px;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    box-shadow: -10px 10px 0 rgba(0, 0, 0, 1);
+    margin-top: 0;
+}
+.timer {
+    font-size: 5rem;
+    font-family: 'Gothic', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(to right, #DFE9E9, #9FCDD8);
+    padding: 20px;
+    border-radius: 20px;
+    color: #fffdfd;
+    box-sizing: border-box;
+    margin: 15px;
+}
+.answer-box {
+    margin: auto;
+    width: 500px; 
+    padding: 20px; 
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content: center; 
+}
+
+.answer1, .answer2, .answer3, .answer4 {
+    background-color: #567cbd;
+    border-radius: 50px;
+    color: #fffdfd;
+    font-weight: bold;
+    padding: 15px; 
+    flex: 1 1 calc(45% - 20px); 
+    text-align: center; 
+    min-width: 200px;
+}
+
+.think-img {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: 20px;
+}
+
+.bolt-img {
+    position: absolute;
+    right: 0;
+    margin-right: 50px;
+}
+
+.brain-img {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right: 20px;
+}
