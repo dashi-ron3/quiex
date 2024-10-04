@@ -26,6 +26,10 @@
                     <button class="btn-icon">Settings</button>
                     <button class="btn-icon">Help</button>
                     <button class="btn-icon">Volume</button>
+                    <button id="randomizeButton" class="btn-volume" onclick="randomizeQuestions()">
+                        <img src="assets/randomizer.png" alt="Randomize Items">
+                    </button>
+
                 </div>
                 
                 <div class="panel-body">
@@ -59,6 +63,7 @@
                             <li>Video</li>
                         </ul>
                     </div>
+
                 </div>
             </div>
 
@@ -68,7 +73,6 @@
                         <option>Multiple Choice</option>
                         <option>True or False</option>
                     </select>
-                    
                     </h2>
 
                     <h4>Read Question:
