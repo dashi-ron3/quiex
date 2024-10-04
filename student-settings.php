@@ -102,6 +102,8 @@
             document.getElementById('saveButton').style.display = 'none';
         });
     </script>
+
+    <script src="javascript/appearance.js" defer></script>
 </body>
 
 </html>
