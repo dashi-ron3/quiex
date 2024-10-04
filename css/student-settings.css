@@ -1,12 +1,47 @@
+:root,
+:root.light {
+    --bg-color: #d0e1f9;
+    --header-bg-color: #d0e1f9;
+    --sidebar-bg-color: #6b83a3;
+    --sidebar-text-color: #1A202C;
+    --content-bg-color: white;
+    --text-color: #1A202C;
+    --hover-bg-color: #d0e1f9;
+    --input-bg-color: #d0e1f9;
+}
+
+:root.dark {
+    --bg-color: #1A202C;
+    --header-bg-color: #1A202C;
+    --sidebar-bg-color: #2D3748;
+    --sidebar-text-color: #F7FAFC;
+    --content-bg-color: #2C5282;
+    --text-color: #F7FAFC;
+    --hover-bg-color: #4A5568;
+    --input-bg-color: #4A5568;
+}
+
+:root.purple {
+    --bg-color: #e3d3f5;
+    --header-bg-color: #e3d3f5;
+    --sidebar-bg-color: #a16bbf;
+    --sidebar-text-color: #1A202C;
+    --content-bg-color: #b68cdb;
+    --text-color: #1A202C;
+    --hover-bg-color: #d0b2e0;
+    --input-bg-color: #e3d3f5;
+}
+
 body {
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: #d0e1f9;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 header {
     width: 100%;
-    background-color: #d0e1f9;
+    background-color: var(--header-bg-color);
     padding: 10px 20px;
     position: fixed;
     top: 0;
@@ -44,15 +79,14 @@ header {
     left: -10px;
     width: 100%;
     height: 100%;
-    background-color: #1A202C;
+    background-color: var(--text-color);
     z-index: -1;
 }
 
-
 .sidebar {
     width: 30%;
-    background-color: #6b83a3;
-    color: #1A202C;
+    background-color: var(--sidebar-bg-color);
+    color: var(--sidebar-text-color);
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
@@ -83,20 +117,20 @@ header {
 }
 
 .sidebar ul li a {
-    color: #1A202C;
+    color: var(--sidebar-text-color);
     text-decoration: none;
     transition: background-color 0.5s;
 }
 
 .sidebar ul li a:hover {
-    background-color: #d0e1f9;
+    background-color: var(--hover-bg-color);
     border-radius: 8px;
     padding: 5px 30px;
 }
 
 .content {
     width: 70%;
-    background-color: white;
+    background-color: var(--content-bg-color);
     padding: 40px;
     overflow-y: auto;
 }
@@ -125,13 +159,13 @@ header {
     margin: 0;
     font-size: 20px;
     padding: 5px 20px;
-    background-color: #d0e1f9;
+    background-color: var(--hover-bg-color);
     border-radius: 10px;
 }
 
 .username p {
     margin: 0;
-    color: #1A202C;
+    color: var(--text-color);
 }
 
 .basic-info {
@@ -145,20 +179,24 @@ header {
 
 .info-item {
     margin-bottom: 20px;
+    color: var(--text-color);
+    
 }
 
 .info-item label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    color: var(--text-color);
 }
 
 .info-item input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #d0e1f9;
+    border: 1px solid var(--hover-bg-color);
     border-radius: 10px;
-    background-color: #d0e1f9;
+    background-color: var(--input-bg-color);
+    color: var(--text-color);
 }
 
 .illustration {
@@ -171,19 +209,21 @@ header {
     width: 100px;
 }
 
-input[type="file"]::-webkit-file-upload-button, #saveButton {
-    margin-top:  20px;
+/* New styles from the second CSS */
+input[type="file"]::-webkit-file-upload-button,
+#saveButton {
+    margin-top: 20px;
     padding: 10px 20px;
-    background-color: #d0e1f9; 
-    color: #1A202C; 
-    border: none; 
-    border-radius: 5px; 
-    cursor: pointer; 
+    background-color: var(--hover-bg-color); /* Changed to use variable */
+    color: var(--text-color); /* Changed to use variable */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-input[type="file"]::-webkit-file-upload-button:hover, #saveButton:hover {
+input[type="file"]::-webkit-file-upload-button:hover,
+#saveButton:hover {
     background-color: #1A202C; 
     color: #ffffff;
 }
-
