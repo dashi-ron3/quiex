@@ -154,3 +154,38 @@ header {
 .btn-submit:hover {
     background-color: #034582;
 }
+
+/**/
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-row h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.header-row h4 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.btn-volume {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10;
+}
+
+.btn-volume img {
+    width: 30px;
+    height: 30px;
+}
+
+.btn-volume:hover img {
+    opacity: 0.7;
+}
