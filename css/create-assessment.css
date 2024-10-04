@@ -189,3 +189,19 @@ header {
 .btn-volume:hover img {
     opacity: 0.7;
 }
+
+.randomizer {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.randomizer img {
+    width: 30px;
+    height: 30px;
+}
+
+.randomizer:hover img {
+    opacity: 0.7;
+}
