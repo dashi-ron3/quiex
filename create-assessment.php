@@ -19,17 +19,14 @@
         <h1>New Assessment</h1>
         <div class="assessment-section">
             <div class="left-panel">
-                <div class="panel-header">
-                    <button class="btn-icon">+</button>
-                    <button class="btn-icon">Play</button>
-                    <button class="btn-icon">Stop</button>
-                    <button class="btn-icon">Settings</button>
-                    <button class="btn-icon">Help</button>
-                    <button class="btn-icon">Volume</button>
-                    <button id="randomizeButton" class="btn-volume" onclick="randomizeQuestions()">
-                        <img src="assets/randomizer.png" alt="Randomize Items">
-                    </button>
-
+                <button id="randomizeButton" class="btn-volume" onclick="randomizeQuestions()">
+                    <img src="assets/randomizer.png" alt="Randomize Items">
+                </button>
+                <div class="timer-section">
+                    <h2>Time Remaining: <span id="timer-display">00:00</span></h2>
+                    <label for="timer">Set Timer:</label>
+                    <input type="number" id="timer-input" placeholder="Enter minutes">
+                    <button id="start-timer">Start Timer</button>
                 </div>
                 
                 <div class="panel-body">
@@ -39,11 +36,11 @@
                     <div class="choices">
                         <h3>Choice</h3>
                         <ul>
-                            <li><input type="radio" name="question_type"> Multiple Choice</li>
-                            <li><input type="radio" name="question_type"> True or False</li>
-                            <li><input type="radio" name="question_type"> Checkbox</li>
-                            <li><input type="radio" name="question_type"> Identification</li>
-                            <li><input type="radio" name="question_type"> Essay</li>
+                            <li>Multiple Choice</li>
+                            <li>True or False</li>
+                            <li>Checkbox</li>
+                            <li>Identification</li>
+                            <li>Essay</li>
                         </ul>
                     </div>
 
@@ -55,52 +52,57 @@
                             <li>Address</li>
                         </ul>
                     </div>
-
-                    <div class="text-media">
-                        <h3>Text & Media</h3>
-                        <ul>
-                            <li>Long Text</li>
-                            <li>Video</li>
-                        </ul>
-                    </div>
-
                 </div>
             </div>
 
             <div class="right-panel">
-                <div class="header-row">
-                    <h2>Question 1: <select>
-                        <option>Multiple Choice</option>
-                        <option>True or False</option>
-                    </select>
-                    </h2>
+                <div class="questions-wrapper" id="questions-container">
+                    <div class="question-block">
+                        <h2>Question 1:</h2>
+                        
+                        <div class="question-type">
+                            <label for="question-type1">Select Question Type:</label>
+                            <select id="question-type1">
+                                <option value="multiple-choice">Multiple Choice</option>
+                                <option value="true-false">True or False</option>
+                                <option value="long-answer">Long Answer (Essay)</option>
+                                <option value="short-answer">Short Answer (Identification)</option>
+                                <option value="checkboxes">Checkboxes (Multiple Answers)</option>
+                            </select>
+                        </div>
 
-                    <h4>Read Question:
-                        <button class="btn-volume" onclick="readQuestion()">
-                        <img src="assets/volume-icon.png" alt="Read Question">
-                    </h4>
+                        <div class="question-input">
+                            <label for="question">Question:</label>
+                            <textarea id="question" rows="3" required></textarea>
+                        </div>
+
+                        <div id="add-choice-section" class="hidden">
+                            <button class="btn" id="add-choice-btn" onclick="addChoice()">Add Choice</button>
+                        </div>
+
+                        <div id="choices-container" class="hidden">
+                            <ul id="choices-list"></ul>
+                        </div>
+
+                        <div class="file-upload">
+                            <button class="btn">Choose file</button>
+                        </div>
+
+                        <div class="points-section">
+                            <label for="points1">Points:</label>
+                            <input type="number" id="points1" required>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="question-input">
-                    <label for="question">Question:</label>
-                    <input type="text" id="question">
-
-                    <button class="btn">Add Choice</button>
-                    <button class="btn">Add Choice</button>
+                <div class="navigation-arrows">
+                    <button class="arrow" id="prev-question" class="hidden">← Previous</button>
+                    <button class="arrow" id="next-question">Next →</button>
                 </div>
 
-                <div class="file-upload">
-                    <button class="btn">Choose file</button>
-                </div>
-
-                <div class="points-section">
-                    <label for="points">Points:</label>
-                    <input type="number" id="points">
-                </div>
+                <button class="btn-submit" id="add-question">Add Question</button>
             </div>
         </div>
-
-        <button class="btn-submit">Add Questions</button>
     </div>
 </body>
 </html>
