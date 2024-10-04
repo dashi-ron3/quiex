@@ -63,10 +63,19 @@
             </div>
 
             <div class="right-panel">
-                <h2>Question 1: <select>
-                    <option>Multiple Choice</option>
-                    <option>True or False</option>
-                </select></h2>
+                <div class="header-row">
+                    <h2>Question 1: <select>
+                        <option>Multiple Choice</option>
+                        <option>True or False</option>
+                    </select>
+                    
+                    </h2>
+
+                    <h4>Read Question:
+                        <button class="btn-volume" onclick="readQuestion()">
+                        <img src="assets/volume-icon.png" alt="Read Question">
+                    </h4>
+                </div>
 
                 <div class="question-input">
                     <label for="question">Question:</label>
