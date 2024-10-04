@@ -2,12 +2,10 @@
 session_start();
 
 if (!isset($_SESSION['quiz_student2'])) {
-    // Redirect to randomizer if questions are not set
     header("Location: randomizer.php");
     exit();
 }
 
-// Retrieve randomized questions and options for student 2
 $randomizedQuiz = $_SESSION['quiz_student2'];
 
 ?>
