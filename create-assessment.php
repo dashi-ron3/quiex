@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QuiEx Create Assessment Feature">
-    <title>New Assessment</title>
+        <title>QuiEx</title>
     <link rel="stylesheet" href="css/create-assessment.css">
     <script src="javascript/create-assessment.js" defer></script>
 </head>
