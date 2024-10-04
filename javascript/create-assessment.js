@@ -7,3 +7,14 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+function readQuestion() {
+    const questionText = document.getElementById('question').value;
+    if (questionText.trim() === "") {
+        alert("Please enter a question first");
+        return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(questionText);
+    speechSynthesis.speak(utterance);
+}
