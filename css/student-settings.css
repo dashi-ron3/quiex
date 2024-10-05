@@ -65,7 +65,7 @@ header {
 .container {
     display: flex;
     height: 80vh;
-    width: 80vw;
+    width: 60vw;
     margin: auto;
     margin-top: 13vh;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -209,13 +209,12 @@ header {
     width: 100px;
 }
 
-/* New styles from the second CSS */
 input[type="file"]::-webkit-file-upload-button,
 #saveButton {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: var(--hover-bg-color); /* Changed to use variable */
-    color: var(--text-color); /* Changed to use variable */
+    background-color: var(--hover-bg-color); 
+    color: var(--text-color); 
     border: none;
     border-radius: 5px;
     cursor: pointer;
