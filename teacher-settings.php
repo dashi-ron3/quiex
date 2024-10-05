@@ -29,7 +29,7 @@
 
             <ul>
                 <li><a href="#">PROFILE</a></li>
-                <li><a href="#">APPEARANCE</a></li>
+                <li><a href="appearance.php">APPEARANCE</a></li>
                 <li><a href="#">HELP</a></li>
             </ul>
 
