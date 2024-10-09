@@ -23,35 +23,16 @@
                     <img src="assets/randomizer.png" alt="Randomize Items">
                 </button>
                 <div class="timer-section">
-                    <h2>Time Remaining: <span id="timer-display">00:00</span></h2>
-                    <label for="timer">Set Timer:</label>
-                    <input type="number" id="timer-input" placeholder="Enter minutes">
+                    <h2>Time Remaining: <span id="timer-display">00:00:00</span></h2>
+                    <label for="total-time-input">Set Timer:</label>
+                    <input type="number" id="total-time-input" placeholder="Enter time in minutes..." min="0">
+                    <br>
                     <button id="start-timer">Start Timer</button>
                 </div>
                 
                 <div class="panel-body">
                     <h2>Assessment Title</h2>
                     <input type="text" placeholder="Enter title">
-
-                    <div class="choices">
-                        <h3>Choice</h3>
-                        <ul>
-                            <li>Multiple Choice</li>
-                            <li>True or False</li>
-                            <li>Checkbox</li>
-                            <li>Identification</li>
-                            <li>Essay</li>
-                        </ul>
-                    </div>
-
-                    <div class="contact-info">
-                        <h3>Contact Info</h3>
-                        <ul>
-                            <li>Email</li>
-                            <li>Phone Number</li>
-                            <li>Address</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
 
