@@ -1,3 +1,4 @@
+let currentQuestionIndex = 0;
 let timerInterval;
 
 document.getElementById('start-timer').addEventListener('click', function() {
@@ -31,12 +32,11 @@ function startTimer(duration) {
     }, 1000);
 }
 
-let currentQuestionIndex = 0;
-
 function handleQuestionTypeChange(selectElement) {
     const selectedType = selectElement.value;
-    const addChoiceSection = selectElement.closest('.question-block').querySelector("#add-choice-section");
-    const choicesContainer = selectElement.closest('.question-block').querySelector("#choices-container");
+    const questionBlock = selectElement.closest('.question-block');
+    const addChoiceSection = questionBlock.querySelector(".add-choice-section");
+    const choicesContainer = questionBlock.querySelector(".choices-container");
 
     addChoiceSection.classList.add("hidden");
     choicesContainer.classList.add("hidden");
@@ -47,39 +47,7 @@ function handleQuestionTypeChange(selectElement) {
     }
 }
 
-function addChoice(questionIndex) {
-    const choicesList = document.getElementById(`choices-list${questionIndex}`);
-    const newChoice = document.createElement("li");
-    const choiceInput = document.createElement("input");
-    choiceInput.type = "text";
-    choiceInput.placeholder = "Enter choice";
-    newChoice.appendChild(choiceInput);
-    choicesList.appendChild(newChoice);
-}
-
-function showQuestion(index) {
-    const questions = document.querySelectorAll('.question-block');
-    questions.forEach((question, idx) => {
-        question.style.transform = `translateX(${(idx - index) * 100}%)`;
-    });
-
-    const prevBtn = document.getElementById('prev-question');
-    const nextBtn = document.getElementById('next-question');
-
-    if (index === 0) {
-        prevBtn.classList.add('hidden');
-    } else {
-        prevBtn.classList.remove('hidden');
-    }
-
-    if (index === questions.length - 1) {
-        nextBtn.classList.add('hidden');
-    } else {
-        nextBtn.classList.remove('hidden');
-    }
-}
-
-document.getElementById('add-question').addEventListener('click', function () {
+document.getElementById('add_question').addEventListener('click', function() {
     const questionsContainer = document.getElementById('questions-container');
     const questionCount = questionsContainer.children.length + 1;
 
@@ -89,8 +57,8 @@ document.getElementById('add-question').addEventListener('click', function () {
     newQuestionBlock.innerHTML = `
         <h2>Question ${questionCount}:</h2>
         <div class="question-type">
-            <label for="question-type${questionCount}">Select Question Type:</label>
-            <select id="question-type${questionCount}" onchange="handleQuestionTypeChange(this)">
+            <label for="question-type-${questionCount}">Select Question Type:</label>
+            <select id="question-type-${questionCount}" onchange="handleQuestionTypeChange(this)">
                 <option value="multiple-choice">Multiple Choice</option>
                 <option value="true-false">True or False</option>
                 <option value="long-answer">Long Answer (Essay)</option>
@@ -100,16 +68,16 @@ document.getElementById('add-question').addEventListener('click', function () {
         </div>
 
         <div class="question-input">
-            <label for="question${questionCount}">Question:</label>
-            <textarea id="question${questionCount}" rows="3" required></textarea>
+            <label for="question-${questionCount}">Question:</label>
+            <textarea id="question-${questionCount}" rows="3" required></textarea>
         </div>
 
-        <div id="add-choice-section" class="hidden">
+        <div class="add-choice-section hidden">
             <button class="btn" onclick="addChoice(${questionCount})">Add Choice</button>
         </div>
 
-        <div id="choices-container" class="hidden">
-            <ul id="choices-list${questionCount}"></ul>
+        <div class="choices-container hidden">
+            <ul id="choices-list-${questionCount}"></ul>
         </div>
 
         <div class="file-upload">
@@ -117,34 +85,65 @@ document.getElementById('add-question').addEventListener('click', function () {
         </div>
 
         <div class="points-section">
-            <label for="points${questionCount}">Points:</label>
-            <input type="number" id="points${questionCount}" required>
+            <label for="points-${questionCount}">Points:</label>
+            <input type="number" id="points-${questionCount}" required>
         </div>
     `;
 
     questionsContainer.appendChild(newQuestionBlock);
-
     showQuestion(questionCount - 1);
     currentQuestionIndex = questionCount - 1;
 });
 
-document.getElementById('next-question').addEventListener('click', function () {
+function addChoice(questionIndex) {
+    const choicesList = document.getElementById(`choices-list-${questionIndex}`);
+    const newChoice = document.createElement("li");
+
+    const choiceInput = document.createElement("input");
+    choiceInput.type = "text";
+    choiceInput.placeholder = "Enter choice";
+
+    newChoice.appendChild(choiceInput);
+    choicesList.appendChild(newChoice);
+}
+
+function showQuestion(index) {
+    const questions = document.querySelectorAll('.question-block');
+    
+    if (index < 0 || index >= questions.length) {
+        return;
+    }
+
+    questions.forEach((question) => {
+        question.style.display = 'none';
+    });
+
+    questions[index].style.display = 'block';
+    currentQuestionIndex = index;
+
+    updateNavigationButtons();
+}
+
+function updateNavigationButtons() {
+    const questions = document.querySelectorAll('.question-block');
+    const prevBtn = document.getElementById('prev-question');
+    const nextBtn = document.getElementById('next-question');
+
+    prevBtn.style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
+    nextBtn.style.display = currentQuestionIndex === questions.length - 1 ? 'none' : 'inline-block'; 
+}
+
+document.getElementById('prev-question').addEventListener('click', function() {
+    if (currentQuestionIndex > 0) {
+        showQuestion(currentQuestionIndex - 1);
+    }
+});
+
+document.getElementById('next-question').addEventListener('click', function() {
     const questions = document.querySelectorAll('.question-block');
     if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        showQuestion(currentQuestionIndex);
+        showQuestion(currentQuestionIndex + 1);
     }
-});
-
-document.getElementById('prev-question').addEventListener('click', function () {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        showQuestion(currentQuestionIndex);
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-    showQuestion(0);
 });
 
 function readQuestion() {
