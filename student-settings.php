@@ -85,6 +85,8 @@
                     <input id="age" type="text" value="LOREM IPSUM" readonly />
                 </div>
             </div>
+            
+            <button onclick="window.location.href='user-access-control.php'">Log out</button>
         </div>
     </div>
 
@@ -98,7 +100,6 @@
         });
 
         document.getElementById('saveButton').addEventListener('click', function() {
-            // You can hide the save button after "saving"
             document.getElementById('saveButton').style.display = 'none';
         });
     </script>
