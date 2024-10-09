@@ -25,12 +25,12 @@
                     LEARN.<br>
                     HAVE FUN.
                 </h1>
-                <button>ENTER AS GUEST</button>
+                <button onclick="window.location.href='guest-mode.html'">ENTER AS GUEST</button>
             </div>
 
             <div class="right-section">
                 <img src="assets/first-illustration.png" alt="Illustration of a person sitting cross-legged with a laptop and papers" width="400" height="600">
-                <br><button>LOGIN</button>
+                <br><button onclick="window.location.href='login-page.php'">LOGIN</button>
                 <p>Don't have an account? <a href="register-page.php">Sign Up!</a></p>
                 <p class="terms">By proceeding, you agree to our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>, and acknowledge that your data will be stored.</p>
             </div>
