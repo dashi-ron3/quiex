@@ -6,7 +6,7 @@
     <meta name="description" content="QuiEx Student Settings">
     <title>QuiEx</title>
     <link rel="stylesheet" href="css/student-settings.css">
-    <script src="javascript/teacher-settings.js"></script>
+    <script src="javascript/student-settings.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
 
 <body>
@@ -28,8 +28,8 @@
             </h1>
 
             <ul>
-                <li><a href="#">PROFILE</a></li>
-                <li><a href="appearance.php">APPEARANCE</a></li>
+                <li><a href="student-settings.php">PROFILE</a></li>
+                <li><a href="student-appearance.php">APPEARANCE</a></li>
                 <li><a href="#">HELP</a></li>
             </ul>
 
@@ -104,7 +104,7 @@
         });
     </script>
 
-    <script src="javascript/appearance.js" defer></script>
+    <script src="javascript/student-appearance.js" defer></script>
 </body>
 
 </html>

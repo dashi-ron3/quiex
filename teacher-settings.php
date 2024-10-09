@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="QuiEx Student Settings">
+    <meta name="description" content="QuiEx Teacher Settings">
     <title>QuiEx</title>
     <link rel="stylesheet" href="css/teacher-settings.css">
     <script src="javascript/teacher-settings.js"></script>
@@ -28,8 +28,8 @@
             </h1>
 
             <ul>
-                <li><a href="#">PROFILE</a></li>
-                <li><a href="appearance.php">APPEARANCE</a></li>
+                <li><a href="teacher-settings.php">PROFILE</a></li>
+                <li><a href="teacher-appearance.php">APPEARANCE</a></li>
                 <li><a href="#">HELP</a></li>
             </ul>
 
@@ -103,5 +103,7 @@
             document.getElementById('saveButton').style.display = 'none';
         });
     </script>
+
+<script src="javascript/teacher-appearance.js" defer></script>
 </body>
 </html>
