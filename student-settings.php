@@ -12,7 +12,7 @@
 <body>
     <header>
         <div class="logo">
-            <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+            <img id="logo" src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
         </div>
     </header>
 
