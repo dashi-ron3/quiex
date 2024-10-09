@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="navigation-arrows">
-                    <button class="arrow" id="prev-question" class="hidden">← Previous</button>
+                    <button class="arrow" id="prev-question">← Previous</button>
                     <button class="arrow" id="next-question">Next →</button>
                 </div>
 
