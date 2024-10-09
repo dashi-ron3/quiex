@@ -1,12 +1,14 @@
 let timerInterval;
 
 document.getElementById('start-timer').addEventListener('click', function() {
-    const timerInput = document.getElementById('timer-input').value;
-    
-    if (timerInput && timerInput > 0) {
-        startTimer(timerInput * 60); 
+    const totalMinutesInput = parseInt(document.getElementById('total-time-input').value) || 0;
+
+    const totalSeconds = totalMinutesInput * 60;
+
+    if (totalSeconds > 0) {
+        startTimer(totalSeconds); 
     } else {
-        alert("Please enter a valid time in minutes.");
+        alert("Please enter a valid time.");
     }
 });
 
@@ -15,11 +17,12 @@ function startTimer(duration) {
     clearInterval(timerInterval);
 
     timerInterval = setInterval(function() {
-        const minutes = Math.floor(timeRemaining / 60);
+        const hours = Math.floor(timeRemaining / 3600);
+        const minutes = Math.floor((timeRemaining % 3600) / 60);
         const seconds = timeRemaining % 60;
 
         document.getElementById('timer-display').textContent = 
-            `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+            `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
 
         if (--timeRemaining < 0) {
             clearInterval(timerInterval);
