@@ -16,6 +16,11 @@
             </div>
         </nav>
     </header>
+
+     <div class="page-name">
+        <h1>ASSESSMENTS</h1>
+    </div>
+    
     <div class="container">
         <div class="sidebar">
             <div class="subject">
