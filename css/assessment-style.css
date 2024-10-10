@@ -78,6 +78,8 @@ body {
 h1 {
     font-size: 36px;
     color: #113366;
+    text-align: center;
+    font-size: 70px;
 }
 
 .assessment {
