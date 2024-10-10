@@ -9,6 +9,19 @@ body {
     background-color: #f0f4f7;
 }
 
+.navbar {
+    width: 100%;
+    background-color: #CBD5E0;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
 .container {
     position: relative;
     display: flex;
