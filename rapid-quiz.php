@@ -65,9 +65,7 @@
             <h1>Rapid Quiz</h1> <img src="assets/timer.png" alt="Timer" width="100" height="80">
         </div>
         <div class="question-number" id="questionNumber">
-            1 <br>
-            ー<br>
-            10
+            1/10
         </div>
         <div class="container">
             <div class="timer">
