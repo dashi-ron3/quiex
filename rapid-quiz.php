@@ -90,6 +90,6 @@
         </div>
     </div>
 
-    <script src="javascript/rapidquiz.js"></script>
+    <script src="javascript/rapid-quiz.js"></script>
 </body>
 </html>
