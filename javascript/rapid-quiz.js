@@ -80,26 +80,32 @@ function nextQuestion() {
 function handleAnswerClick() {
     const questionData = questions[currentQuestion];
     const selectedAnswer = this.innerText;
-    if (selectedAnswer === questionData.correct) {
-        alert('Correct!');
-    } else {
-        alert(`Incorrect! The correct answer was ${questionData.correct}.`);
-    }
-    currentQuestion++;
-    nextQuestion();
+    const isCorrect = selectedAnswer === questionData.correct;
+
+    this.style.backgroundColor = isCorrect ? 'green' : 'red';
+    this.style.color = 'white';
+
+    setTimeout(() => {
+        alert(isCorrect ? 'Correct!' : `Incorrect! The correct answer was ${questionData.correct}.`);
+        currentQuestion++;
+        nextQuestion();
+    }, 1000);
 }
 
 function handleIdentificationSubmit() {
     const input = document.getElementById('identificationAnswer');
     const answer = input.value.trim().toUpperCase();
     const correctAnswer = questions[currentQuestion].answer;
-    if (answer === correctAnswer) {
-        alert('Correct!');
-    } else {
-        alert(`Incorrect! The correct answer was ${correctAnswer}.`);
-    }
-    currentQuestion++;
-    nextQuestion();
+    const isCorrect = answer === correctAnswer;
+
+    input.style.backgroundColor = isCorrect ? 'green' : 'red';
+    input.style.color = 'white';
+
+    setTimeout(() => {
+        alert(isCorrect ? 'Correct!' : `Incorrect! The correct answer was ${correctAnswer}.`);
+        currentQuestion++;
+        nextQuestion();
+    }, 1000);
 }
 
 function startQuiz() {
