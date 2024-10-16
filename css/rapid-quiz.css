@@ -4,7 +4,7 @@ body {
     background-color: #cbd9e6;
     height: 100vh;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 h1 {
@@ -87,8 +87,15 @@ p {
     background-color: #203f69;
 }
 
+.clock-img {
+    margin-top: 60px;
+}
+
 .think-img {
-    position: relative;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-top: 50px;
     margin-right: auto;
 }
 
@@ -103,4 +110,37 @@ p {
     right: 0;
     bottom: 0;
     margin-right: 20px;
+}
+
+.identification-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.5rem;
+    border: 2px solid #567cbd;
+    border-radius: 50px;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.identification-submit {
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    background-color: #567cbd;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.identification-submit:hover {
+    background-color: #203f69;
+}
+
+.score {
+    background-color: #fffdfd;
+    border: 2px solid #567cbd;
+    width: 100px;
+    height: 30px;
+    margin-left: 1200px;
 }
