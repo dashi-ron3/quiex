@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuiEx</title>
-    <link rel="stylesheet" href="css/rapidquiz6.css">
+    <link rel="stylesheet" href="css/rapid-quiz.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <style>
         .start-screen {
@@ -62,7 +62,7 @@
             <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
         </div>
         <div class="title">
-            <h1>Rapid Quiz</h1> <img src="assets/timer.png" alt="Timer" width="100" height="80">
+            <h1>Rapid Quiz</h1> <img src="assets/timer.png" alt="Timer" class="clock-img" width="100" height="80">
         </div>
         <div class="question-number" id="questionNumber">
             1/10
@@ -71,25 +71,25 @@
             <div class="timer">
                 00:10
             </div>
-        <p>What is the capital of South Korea?</p>
+            <p>What is the capital of South Korea?</p>
         </div>
         <div class="answer-box">
             <button class="choice answer1">BUSAN</button>
             <button class="choice answer2">JEJU</button>
-            <button class="choice answer3">SEOUL</button>
+            <button class="choice answer3" id="seoul">SEOUL</button>
             <button class="choice answer4">DAEGU</button>
         </div>
-        <img src="assets/think.png" alt="Man Thinking" class="think-img" width="300" height="400">
-        <img src="assets/lightning.png" alt="Lightning" class="bolt-img" width="350" height="350">
+
+        <img src="assets/think.png" alt="Man Thinking" class="think-img" width="250" height="400">
+        <img src="assets/lightning.png" alt="Lightning" class="bolt-img" width="300" height="300">
         <img src="assets/brain.png" alt="Brain" class="brain-img" width="120" height="100">
+        <div class="score">
+            <div class="score-box">
+                <h2>Score: <span id="score">0</span></h2>
+            </div>
+        </div>
     </div>
 
-    <script>
-        function startQuiz() {
-            document.querySelector('.start-screen').style.display = 'none';
-            document.querySelector('.quiz-screen').style.display = 'flex';
-        }
-    </script>
-    <script src="javascript/rapid-quiz.js"></script>
+    <script src="javascript/rapidquiz.js"></script>
 </body>
 </html>
