@@ -1,9 +1,8 @@
-let currentQuestion = 0; // Start at 0 to reference the first question correctly
+let currentQuestion = 0;
 const totalQuestions = 10;
 let timer;
 let timeLeft = 10;
 
-// Store questions for multiple choice and identification
 const questions = [
     { type: 'multiple-choice', question: 'What is the capital of South Korea?', answers: ['BUSAN', 'JEJU', 'SEOUL', 'DAEGU'], correct: 'SEOUL' },
     { type: 'identification', question: 'What is the largest planet in our solar system?', answer: 'JUPITER' },
@@ -17,11 +16,10 @@ const questions = [
     { type: 'identification', question: 'Who painted the Mona Lisa?', answer: 'LEONARDO DA VINCI' },
 ];
 
-// Shuffle questions array for randomness
 questions.sort(() => Math.random() - 0.5);
 
 function updateQuestionNumber() {
-    document.getElementById('questionNumber').innerText = `${currentQuestion + 1}/${totalQuestions}`; // Adjust to show current question correctly
+    document.getElementById('questionNumber').innerText = `${currentQuestion + 1}/${totalQuestions}`;
 }
 
 function startTimer() {
@@ -41,15 +39,13 @@ function startTimer() {
 }
 
 function nextQuestion() {
-    if (currentQuestion < totalQuestions) { // Change <= to < to avoid out of bounds
+    if (currentQuestion < totalQuestions) {
         const questionData = questions[currentQuestion];
         document.querySelector('.container p').innerText = questionData.question;
 
-        // Clear previous answer options
         document.querySelector('.answer-box').innerHTML = '';
 
         if (questionData.type === 'multiple-choice') {
-            // Display multiple-choice answers
             questionData.answers.forEach(answer => {
                 const button = document.createElement('button');
                 button.classList.add('choice');
@@ -58,24 +54,23 @@ function nextQuestion() {
                 document.querySelector('.answer-box').appendChild(button);
             });
         } else if (questionData.type === 'identification') {
-            // Display input box for identification question
             const input = document.createElement('input');
             input.type = 'text';
             input.placeholder = 'Your answer...';
             input.id = 'identificationAnswer';
-            input.classList.add('identification-input'); // Add class for styling
+            input.classList.add('identification-input');
 
             const submitButton = document.createElement('button');
             submitButton.innerText = 'Submit';
-            submitButton.classList.add('identification-submit'); // Add class for styling
+            submitButton.classList.add('identification-submit');
             submitButton.onclick = handleIdentificationSubmit;
 
             document.querySelector('.answer-box').appendChild(input);
             document.querySelector('.answer-box').appendChild(submitButton);
         }
 
-        updateQuestionNumber(); // Update question number after setting question
-        startTimer(); // Start timer before moving to the next question
+        updateQuestionNumber();
+        startTimer();
     } else {
         clearInterval(timer);
         alert('Quiz Complete!');
@@ -83,27 +78,27 @@ function nextQuestion() {
 }
 
 function handleAnswerClick() {
-    const questionData = questions[currentQuestion]; // Get current question data
-    const selectedAnswer = this.innerText; // Get clicked answer text
+    const questionData = questions[currentQuestion];
+    const selectedAnswer = this.innerText;
     if (selectedAnswer === questionData.correct) {
         alert('Correct!');
     } else {
         alert(`Incorrect! The correct answer was ${questionData.correct}.`);
     }
-    currentQuestion++; // Move to next question after answer
+    currentQuestion++;
     nextQuestion();
 }
 
 function handleIdentificationSubmit() {
     const input = document.getElementById('identificationAnswer');
     const answer = input.value.trim().toUpperCase();
-    const correctAnswer = questions[currentQuestion].answer; // Get the correct answer based on the current question index
+    const correctAnswer = questions[currentQuestion].answer;
     if (answer === correctAnswer) {
         alert('Correct!');
     } else {
         alert(`Incorrect! The correct answer was ${correctAnswer}.`);
     }
-    currentQuestion++; // Move to next question after submission
+    currentQuestion++;
     nextQuestion();
 }
 
