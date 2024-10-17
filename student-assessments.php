@@ -17,14 +17,14 @@
         </nav>
     </header>
 
-     <div class="page-name">
+    <div class="page-name">
         <h1>ASSESSMENTS</h1>
     </div>
-    
+
     <div class="container">
         <div class="sidebar">
             <div class="subject">
-                <img src="assets/folder.png" alt="biology folder">
+                <img src="assets/bio-folder.png" alt="biology folder">
                 <h3>BIOLOGY</h3>
             </div>
             <div class="subject">CHEMISTRY</div>
