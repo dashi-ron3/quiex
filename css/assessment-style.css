@@ -22,14 +22,16 @@ body {
     z-index: 100;
 }
 
-/* .page-name {
+.page-name {
     position: relative;
-} */
+    height: 150px;
+    margin: 0px;
+}
 
 .page-name img{ 
     margin: 20px;
     padding: 0;
-    width: 30%;
+    max-width: 30%;
     height: auto;
 }
 
