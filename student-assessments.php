@@ -18,7 +18,7 @@
     </header>
 
     <div class="page-name">
-        <img src="assets/assessment.png" alt="assessment-title">
+        <img src="assets/assessment.png" alt="page title">
     </div>
 
     <div class="container">
