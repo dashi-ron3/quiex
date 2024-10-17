@@ -14,12 +14,23 @@ body {
     background-color: #CBD5E0;
     padding: 10px 20px;
     display: flex;
-    justify-content: flex-start; 
+    justify-content: space-between; /* Space out elements */
     align-items: center;
     position: relative;
     top: 0;
     left: 0;
     z-index: 100;
+}
+
+/* .page-name {
+    position: relative;
+} */
+
+.page-name img{ 
+    margin: 20px;
+    padding: 0;
+    width: 30%;
+    height: auto;
 }
 
 .container {

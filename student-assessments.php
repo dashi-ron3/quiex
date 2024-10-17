@@ -17,18 +17,24 @@
         </nav>
     </header>
 
-     <div class="page-name">
-        <h1>ASSESSMENTS</h1>
+    <div class="page-name">
+        <img src="assets/assessment.png" alt="assessment-title">
     </div>
-    
+
     <div class="container">
         <div class="sidebar">
             <div class="subject">
-                <img src="assets/folder.png" alt="biology folder">
+                <img src="assets/bio-folder.png" alt="biology folder">
                 <h3>BIOLOGY</h3>
             </div>
-            <div class="subject">CHEMISTRY</div>
-            <div class="subject">CALCULUS</div>
+            <div class="subject">
+                <img src="assets/sub-folder.png" alt="biology folder">
+                <h3>CHEMISTRY</h3>
+            </div>
+            <div class="subject">
+                <img src="assets/sub-folder.png" alt="biology folder">
+                <h3>CALCULUS</h3>
+            </div>
         </div>
 
         <div class="content">
