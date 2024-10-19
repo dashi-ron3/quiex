@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,9 @@
     <title>QuiEx</title>
     <link rel="stylesheet" href="css/teacher-page.css">
     <script src="javascript/teacher-page.js" defer></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
 </head>
+
 <body>
     <header>
         <nav class="navbar">
@@ -22,7 +24,7 @@
                     <div class="dropdown-content">
                         <a href="#">Create Assessment</a>
                         <a href="#">Questions Archive</a>
-                        <a href="#">Assessments</a>
+                        <a href="teacher-assessments.php">Assessments</a>
                     </div>
                 </div>
                 <a href="teacher-settings.php">SETTINGS</a>
@@ -49,13 +51,13 @@
             <div class="slide">
                 <div class="container">
                     <div class="left-section">
-                    <div class="text-content">
+                        <div class="text-content">
                             <h1>QuiEx Features</h1>
                             <p>Our platform offers a wide range of features to enhance your learning experience...</p>
                         </div>
                     </div>
                     <div class="right-section">
-                        <img src="assets/teacher-homepage.png" alt="Illustration of a teacher teaching" class="illustration" width="600" height="500">     
+                        <img src="assets/teacher-homepage.png" alt="Illustration of a teacher teaching" class="illustration" width="600" height="500">
                     </div>
                 </div>
             </div>
@@ -68,38 +70,39 @@
     </section>
 
     <section id="create">
-    <div class="create">
-        <h1>CREATE</h1>
-        <div class="create-container">
-            <div class="create-options">
-                <a href="#">Create Assessment</a>
-                <div class="hover-content">
-                    <p>Create an assessment for your students!</p>
-                    <button>Enter ></button>
+        <div class="create">
+            <h1>CREATE</h1>
+            <div class="create-container">
+                <div class="create-options">
+                    <a href="#">Create Assessment</a>
+                    <div class="hover-content">
+                        <p>Create an assessment for your students!</p>
+                        <button>Enter ></button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="create-options">
-                <a href="#">Questions Archive</a>
-                <div class="hover-content">
-                    <p>Have access on your previous test questions for possible usage on future tests.</p>
-                    <button>Enter ></button>
+                <div class="create-options">
+                    <a href="#">Questions Archive</a>
+                    <div class="hover-content">
+                        <p>Have access on your previous test questions for possible usage on future tests.</p>
+                        <button>Enter ></button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="create-options">
-                <a href="#">Assessments</a>
-                <div class="hover-content">
-                    <p>A test storage.</p>
-                    <button>Enter ></button>
+                <div class="create-options">
+                    <a href="#">Assessments</a>
+                    <div class="hover-content">
+                        <p>A test storage.</p>
+                        <button onclick="location.href='teacher-assessments.php'">Enter ></button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <footer>
         &copy; Copyright 2024 QuiEx
     </footer>
 </body>
+
 </html>
