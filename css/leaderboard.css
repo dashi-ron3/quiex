@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #CBD5E0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;  
+    height: 100vh;
+}
+
+
+.leaderboard-container {
+    width: 100%;
+    max-width: 700px;
+    background-color: #2b2b47;
+    border-radius: 20px;
+    margin: 0 auto;
+    padding: 50px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.top-three {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    gap: 20px;
+}
+
+.player-card {
+    position: relative;
+    flex: 1;
+    background-color: #2b2b47;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+/* Position for the top three */
+.player-1 {
+    order: 2;
+    transform: translateY(-30px); /* Slightly raised for 1st place */
+}
+.player-2 {
+    order: 1;
+}
+.player-3 {
+    order: 3;
+}
+
+.player-card img {
+    width: 120px;
+    height: 120px;
+    border: solid #ddd 7px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.player-card .points {
+    font-weight: bold;
+    color: gold;
+}
+
+/* Star styling */
+.star {
+    position: absolute;
+    top: 93px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 130px;
+    height: 130px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.gold-star {
+    background-image: url('gold.png');
+}
+
+.silver-star {
+    background-image: url('silver.png');
+}
+
+.bronze-star {
+    background-image: url('bronze.png');
+}
+
+h3 {
+    color: white;
+}
+
+.table-container {
+    width: 100%;
+    max-width: 650px;
+    padding: 15px;
+    background-color: #011e31;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    background-color: #32659a;
+    border-collapse: collapse;
+    border-radius: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    border: 1px solid #011e31;
+    color: white;
+    border-radius: 20px;
+}
+
+table th {
+    background-color: #32659a;
+}
+
+table td {
+    text-align: center;
+}
+
