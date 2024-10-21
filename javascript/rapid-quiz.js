@@ -2,6 +2,7 @@ let currentQuestion = 0;
 const totalQuestions = 10;
 let timer;
 let timeLeft = 10;
+let score = 0;
 
 const questions = [
     { type: 'multiple-choice', question: 'What is the capital of South Korea?', answers: ['BUSAN', 'JEJU', 'SEOUL', 'DAEGU'], correct: 'SEOUL' },
@@ -32,7 +33,7 @@ function startTimer() {
         document.querySelector('.timer').innerText = `00:${timeLeft < 10 ? '0' : ''}${timeLeft}`;
 
         if (timeLeft <= 0) {
-            clearInterval(timer);
+            clearInterval(timer); 
             currentQuestion++;
             nextQuestion();
         }
@@ -40,7 +41,7 @@ function startTimer() {
 }
 
 function nextQuestion() {
-    if (currentQuestion < totalQuestions) {
+    if (currentQuestion < totalQuestions) { 
         const questionData = questions[currentQuestion];
         document.querySelector('.container p').innerText = questionData.question;
 
@@ -63,15 +64,15 @@ function nextQuestion() {
 
             const submitButton = document.createElement('button');
             submitButton.innerText = 'Submit';
-            submitButton.classList.add('identification-submit');
+            submitButton.classList.add('identification-submit'); 
             submitButton.onclick = handleIdentificationSubmit;
 
             document.querySelector('.answer-box').appendChild(input);
             document.querySelector('.answer-box').appendChild(submitButton);
         }
 
-        updateQuestionNumber();
-        startTimer();
+        updateQuestionNumber(); 
+        startTimer(); 
     } else {
         clearInterval(timer);
         alert('Quiz Complete!');
@@ -80,34 +81,46 @@ function nextQuestion() {
 
 function handleAnswerClick() {
     const questionData = questions[currentQuestion];
-    const selectedAnswer = this.innerText;
+    const selectedAnswer = this.innerText; 
     const isCorrect = selectedAnswer === questionData.correct;
 
     this.style.backgroundColor = isCorrect ? 'green' : 'red';
-    this.style.color = 'white';
+    this.style.color = 'white'; 
+
+    if (isCorrect) {
+        score += 10; 
+        document.getElementById('score').innerText = score; 
+    }
 
     setTimeout(() => {
         alert(isCorrect ? 'Correct!' : `Incorrect! The correct answer was ${questionData.correct}.`);
-        currentQuestion++;
+        currentQuestion++; 
         nextQuestion();
     }, 1000); 
 }
 
+
 function handleIdentificationSubmit() {
     const input = document.getElementById('identificationAnswer');
     const answer = input.value.trim().toUpperCase();
-    const correctAnswer = questions[currentQuestion].answer;
+    const correctAnswer = questions[currentQuestion].answer; 
     const isCorrect = answer === correctAnswer; 
 
     input.style.backgroundColor = isCorrect ? 'green' : 'red';
     input.style.color = 'white'; 
 
+    if (isCorrect) {
+        score += 10; 
+        document.getElementById('score').innerText = score;
+    }
+
     setTimeout(() => {
         alert(isCorrect ? 'Correct!' : `Incorrect! The correct answer was ${correctAnswer}.`);
         currentQuestion++; 
         nextQuestion();
-    }, 1000);
+    }, 1000); 
 }
+
 
 function startQuiz() {
     document.querySelector('.start-screen').style.display = 'none';
