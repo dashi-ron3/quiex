@@ -150,20 +150,6 @@ header("Pragma: no-cache");
             </section>
         </div>
     </div>
-    <script>
-        document.getElementById('fileToUpload').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById('saveButton').style.display = 'inline-block';
-            }
-            reader.readAsDataURL(file);
-        });
-
-        document.getElementById('saveButton').addEventListener('click', function() {
-            document.getElementById('saveButton').style.display = 'none';
-        });
-    </script>
-
     <script src="javascript/teacher-appearance.js" defer></script>
 </body>
 </html>
