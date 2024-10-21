@@ -9,4 +9,12 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE assessments (
+-- subject VARCHAR(255)
+    title text,
+    status VARCHAR(255),
+    lastUsed DATE,
+    descrip text
+);
+
 SELECT * from users;
