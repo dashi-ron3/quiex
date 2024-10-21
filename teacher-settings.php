@@ -104,7 +104,18 @@ header("Pragma: no-cache");
             </section>
 
 
-            <!-- Insert appearance section between profile and help-->
+            <section id="appearance">
+                <div class="content">
+                    <h2>Appearance</h2>
+                    <label for="theme-select">Choose a theme:</label>
+                    <select name="theme-select" id="theme-select">
+                        <option value="light">Light Theme</option>
+                        <option value="dark">Dark Theme</option>
+                        <option value="purple">Purple Theme</option>
+                    </select>
+                    <!--<button id="save-theme-btn">Save Changes</button>-->
+                </div>
+            </section>
 
             <section id="help">
                 <div class="content">
