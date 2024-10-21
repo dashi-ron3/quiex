@@ -34,4 +34,18 @@ CREATE TABLE lb (
 -- INSERT INTO lb (name, profile_pic, points) VALUES 
 -- ("Student1", "desktop_wp.jpg", "1000"),
 
+-- Quiz info for study companion
+CREATE TABLE IF NOT EXISTS quizzes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    title VARCHAR(255),
+    started_at DATETIME,
+    finished_at DATETIME,
+    time_taken TIME,
+    marks INT,
+    total_marks INT,
+    points INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 SELECT * from users;
