@@ -7,6 +7,18 @@ history.pushState(null, null, location.href);
         history.go(1);
     };
 
+document.getElementById('fileToUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+        if (file) {
+            document.getElementById('saveButton').style.display = 'inline-block';
+        }
+    reader.readAsDataURL(file);
+});
+
+document.getElementById('saveButton').addEventListener('click', function() {
+    document.getElementById('saveButton').style.display = 'none';
+});
+
 function enableEdit() {
     document.getElementById('username').removeAttribute('readonly');
     document.getElementById('name').removeAttribute('readonly');
