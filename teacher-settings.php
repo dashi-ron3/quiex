@@ -60,7 +60,6 @@ header("Pragma: no-cache");
                     </div>
                     <div class="username">
                         <h3><?php echo htmlspecialchars($_SESSION['username']); ?></h3>
-                        <p><?php echo !empty($_SESSION['age']) ? htmlspecialchars($_SESSION['age']) . ' years old' : 'N/A'; ?>, <?php echo !empty($_SESSION['gr_level']) ? htmlspecialchars($_SESSION['gr_level']) : 'N/A'; ?></p>
                     </div>
                 </div>
             
