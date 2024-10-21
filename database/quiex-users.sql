@@ -17,4 +17,15 @@ CREATE TABLE assessments (
     descrip text
 );
 
+CREATE TABLE lb (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    profile_pic VARCHAR(255) NOT NULL,
+    points INT NOT NULL
+);
+
+-- FOR TESTING OF LEADERBOARD
+-- INSERT INTO lb (name, profile_pic, points) VALUES 
+-- ("Student1", "desktop_wp.jpg", "1000"),
+
 SELECT * from users;
