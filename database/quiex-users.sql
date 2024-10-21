@@ -10,18 +10,24 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE assessments (
--- subject VARCHAR(255)
+    --upQuiz INT AUTO_INCREMENT PRIMARY KEY,
+    --id INT,
+    -- subject VARCHAR(255)
     title text,
     status VARCHAR(255),
     lastUsed DATE,
     descrip text
+    --FOREIGN KEY (quizID) REFERENCES Quiz Table_name(quizID)
 );
 
 CREATE TABLE lb (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    --quizID INT AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     profile_pic VARCHAR(255) NOT NULL,
     points INT NOT NULL
+    --FOREIGN KEY (quizID) REFERENCES Quiz Table_name(quizID),
+    --FOREIGN KEY (id) REFERENCES users(id)
 );
 
 -- FOR TESTING OF LEADERBOARD
