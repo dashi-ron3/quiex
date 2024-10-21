@@ -5,6 +5,7 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 h1 {
@@ -93,10 +94,8 @@ p {
 
 .think-img {
     position: absolute;
-    left: 0;
-    bottom: 0;
-    margin-top: 50px;
-    margin-right: auto;
+    margin-top: 450px;
+    margin-right: 1200px;
 }
 
 .bolt-img {
@@ -107,9 +106,8 @@ p {
 
 .brain-img {
     position: absolute;
-    right: 0;
-    bottom: 0;
-    margin-right: 20px;
+    margin-left: 1200px;
+    margin-top: 590px;
 }
 
 .identification-input {
