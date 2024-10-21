@@ -40,7 +40,7 @@ header("Pragma: no-cache");
 
             <ul>
                 <li><a href="#profile">PROFILE</a></li>
-                <li><a href="#">APPEARANCE</a></li>
+                <li><a href="#appearance">APPEARANCE</a></li>
                 <li><a href="#help">HELP</a></li>
                 <li><a href="user-access-control.php">LOG OUT</a></li>
             </ul>
