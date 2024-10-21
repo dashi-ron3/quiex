@@ -33,6 +33,7 @@ function startTimer() {
 
         if (timeLeft <= 0) {
             clearInterval(timer);
+            currentQuestion++;
             nextQuestion();
         }
     }, 1000);
@@ -89,21 +90,21 @@ function handleAnswerClick() {
         alert(isCorrect ? 'Correct!' : `Incorrect! The correct answer was ${questionData.correct}.`);
         currentQuestion++;
         nextQuestion();
-    }, 1000);
+    }, 1000); 
 }
 
 function handleIdentificationSubmit() {
     const input = document.getElementById('identificationAnswer');
     const answer = input.value.trim().toUpperCase();
     const correctAnswer = questions[currentQuestion].answer;
-    const isCorrect = answer === correctAnswer;
+    const isCorrect = answer === correctAnswer; 
 
     input.style.backgroundColor = isCorrect ? 'green' : 'red';
-    input.style.color = 'white';
+    input.style.color = 'white'; 
 
     setTimeout(() => {
         alert(isCorrect ? 'Correct!' : `Incorrect! The correct answer was ${correctAnswer}.`);
-        currentQuestion++;
+        currentQuestion++; 
         nextQuestion();
     }, 1000);
 }
