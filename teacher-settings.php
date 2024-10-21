@@ -153,5 +153,3 @@ header("Pragma: no-cache");
     <script src="javascript/teacher-appearance.js" defer></script>
 </body>
 </html>
-
-    
