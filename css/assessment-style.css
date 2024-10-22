@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f4f7;
+    background-color: #CBD5E0;
 }
 
 .navbar {
@@ -24,7 +24,7 @@ body {
 
 .page-name {
     position: relative;
-    height: 150px;
+    height: 100px;
     margin: 0px;
 }
 
@@ -60,18 +60,25 @@ body {
 .sidebar .subject img {
     width: 100%;
     height: auto;
+    display: block;
 }
 
 .subject {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
     margin: 10px 0;
-    padding: 15px;
+    padding: 10px;
     background-color: #ffffff;
     width: 100%;
     text-align: center;
     border-radius: 10px;
     cursor: pointer;
+    position: relative;
+}
+
+button { 
+    background-color: transparent;
+    border: none;
 }
 
 .subject:hover {
@@ -79,7 +86,13 @@ body {
 }
 
 .subject h3 { 
-    color: #1c274a;
+    color: #ffffff;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 17px;
+    padding: 10px;
 }
 
 .content {
@@ -97,7 +110,7 @@ h1 {
 
 .assessment {
     background-color: #cbd9e6;
-    border-radius: 10px;
+    border-radius: 20px;
     margin: 20px 0;
     padding: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
@@ -120,14 +133,8 @@ h1 {
     font-size: 18px;
 }
 
-/* .status {
-    font-size: 18px;
-    font-weight: bold;
-    /* margin-top: 5px;
-} */
-
 .last-used {
-    background-color: #2f4070;
+    background-color: #32659a;
     color: white;
     padding: 5px 10px;
     border-radius: 20px;
@@ -139,6 +146,12 @@ h1 {
 }
 
 .edit {
+    text-decoration: none;
+    color: #113366;
+    font-size: 16px;
+}
+
+.view {
     text-decoration: none;
     color: #113366;
     font-size: 16px;

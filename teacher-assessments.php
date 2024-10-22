@@ -1,3 +1,37 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "15a5m249ph", "testing");
+if (mysqli_connect_errno()) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Handle sharing updates.
+if (isset($_POST['assessment_title'])) {
+    $assessmentTitle = mysqli_real_escape_string($conn, $_POST['assessment_title']);
+
+    // Check if the checkbox was checked or not
+    $isShared = isset($_POST['share']) ? 1 : 0;  // 1 if checked, 0 if unchecked
+
+    // Update the 'shared' status based on the checkbox state.
+    $updateQuery = "UPDATE assessments SET shared = $isShared WHERE title = '$assessmentTitle'";
+
+    // Execute the update query and check for success
+    if ($conn->query($updateQuery) !== TRUE) {
+        echo "Error updating record: " . $conn->error;  // Display error if query fails
+    }
+}
+
+// Fetch the list of unique subjects
+$subjectsQuery = "SELECT DISTINCT subject FROM assessments";
+$subjectsResult = $conn->query($subjectsQuery);
+
+// Get the selected subject from the URL, if any
+$subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
+
+// Fetch the assessments for the selected subject
+$sql = "SELECT title, status, lastUsed, descrip, shared FROM assessments WHERE subject = '$subject'";
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +46,7 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                <a href="teacher-page.php"><img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50"></a>
             </div>
         </nav>
     </header>
@@ -24,32 +58,33 @@
     <div class="container">
 
         <div class="sidebar">
-            <div class="subject">
-                <img src="assets/sub-folder.png" alt="biology folder">
-                <h3>BIOLOGY</h3>
-            </div>
-            <div class="subject">
-                <img src="assets/sub-folder.png" alt="biology folder">
-                <h3>CHEMISTRY</h3>
-            </div>
-            <div class="subject">
-                <img src="assets/sub-folder.png" alt="biology folder">
-                <h3>CALCULUS</h3>
-            </div>
+            <?php
+            if ($subjectsResult->num_rows > 0) {
+                // Loop through each unique subject and create a button.
+                while ($row = $subjectsResult->fetch_assoc()) {
+                    $subjectName = htmlspecialchars($row['subject']);
+            ?>
+                    <div class="subject">
+                        <form method="GET" action="">
+                            <input type="hidden" name="subject" value="<?php echo $subjectName; ?>">
+                            <button type="submit">
+                                <img src="assets/sub-folder.png" alt="<?php echo $subjectName; ?> folder">
+                                <h3><?php echo strtoupper($subjectName); ?></h3>
+                            </button>
+                        </form>
+                    </div>
+            <?php
+                }
+            } else {
+                echo "<p>No subjects found.</p>";
+            }
+            ?>
         </div>
 
         <div class="content">
-            <h1>BIOLOGY</h1>
+            <h1><?php echo htmlspecialchars(strtoupper($subject)); ?></h1>
 
             <?php
-            $conn = mysqli_connect("localhost", "root", "15a5m249ph", "testing");
-            if (mysqli_connect_errno()) {
-                die("Connection failed: " . mysqli_connect_error());
-            }
-
-            $sql = "SELECT title, status, lastUsed, descrip FROM assessments";
-            $result = $conn->query($sql);
-
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
             ?>
@@ -64,8 +99,16 @@
                         </div>
                         <p class="details"><?php echo htmlspecialchars($row['descrip']); ?></p>
                         <div class="share">
-                            <label for="share-<?php echo $row['title']; ?>">SHARE TO PUBLIC: </label>
-                            <input type="checkbox" id="share-<?php echo $row['title']; ?>">
+                            <form method="POST" action="">
+                                <input type="hidden" name="assessment_title" value="<?php echo htmlspecialchars($row['title']); ?>">
+                                <label for="share-<?php echo htmlspecialchars($row['title']); ?>">SHARE TO PUBLIC: </label>
+                                <input
+                                    type="checkbox"
+                                    id="share-<?php echo htmlspecialchars($row['title']); ?>"
+                                    name="share"
+                                    <?php echo $row['shared'] ? 'checked' : ''; ?>
+                                    onchange="this.form.submit()">
+                            </form>
                         </div>
                     </div>
             <?php

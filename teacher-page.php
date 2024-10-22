@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QuiEx Main Page Teacher's View">
-    <link rel="icon" href="assets/logo-quiex.ico"/>
+    <link rel="icon" href="assets/logo-quiex.ico" />
     <title>QuiEx</title>
     <link rel="stylesheet" href="css/teacher-page.css">
     <link rel="stylesheet" href="css/loading-screen.css">
     <script src="javascript/teacher-page.js" defer></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
 </head>
+
 <body>
-    
+
     <div id="loading-screen">
         <img src="assets/QuiEx-Logo.png" alt="Logo" id="logo" width="100" height="200">
     </div>
@@ -31,7 +33,7 @@
                         <div class="dropdown-content">
                             <a href="create-assessment.php">Create Assessment</a>
                             <a href="#">Questions Archive</a>
-                            <a href="#">Assessments</a>
+                            <a href="teacher-assessments.php">Assessments</a>
                         </div>
                     </div>
                     <a href="teacher-settings.php">SETTINGS</a>
@@ -58,13 +60,13 @@
                 <div class="slide">
                     <div class="container">
                         <div class="left-section">
-                        <div class="text-content">
+                            <div class="text-content">
                                 <h1>QuiEx Features</h1>
                                 <p>Create, publish, and many more! Our platform offers a wide range of features for efficiency on your part!</p>
                             </div>
                         </div>
                         <div class="right-section">
-                            <img src="assets/teacher-homepage.png" alt="Illustration of a teacher teaching" class="illustration" width="600" height="500">     
+                            <img src="assets/teacher-homepage.png" alt="Illustration of a teacher teaching" class="illustration" width="600" height="500">
                         </div>
                     </div>
                 </div>
@@ -100,7 +102,7 @@
                         <a href="#">Assessments</a>
                         <div class="hover-content">
                             <p>A test storage.</p>
-                            <button>Enter</button>
+                            <button onclick="window.location.href='teacher-assessments.php'">Enter</button>
                         </div>
                     </div>
                 </div>
@@ -120,13 +122,14 @@
                 <div class="contact-info">
                     Contact Us:
                     <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
-                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
-                    </svg>
-                    quiexteam@gmail.com<p>
+                            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z" />
+                        </svg>
+                        quiexteam@gmail.com
+                    <p>
                     <p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
-                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
-                    </svg>    
-                    Brgy. Milagrosa, Calamba, Laguna</p>
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6" />
+                        </svg>
+                        Brgy. Milagrosa, Calamba, Laguna</p>
                     <p class="copyright">&copy; Copyright 2024 QuiEx</p>
                 </div>
             </div>
@@ -135,4 +138,5 @@
     </div>
     <script src="javascript/loading-screen.js"></script>
 </body>
+
 </html>

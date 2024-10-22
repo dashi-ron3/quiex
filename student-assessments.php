@@ -1,3 +1,21 @@
+<?php
+$conn = mysqli_connect("localhost", "root", "15a5m249ph", "testing");
+if (mysqli_connect_errno()) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$subjectsQuery = "SELECT DISTINCT subject FROM assessments";
+$subjectsResult = $conn->query($subjectsQuery);
+
+$subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
+
+// $sql = "SELECT title, status, lastUsed, descrip FROM assessments WHERE subject = '$subject'";
+// Example SQL for student side to fetch shared assessments.
+$sql = "SELECT title, status, lastUsed, descrip FROM assessments WHERE shared = 1 AND subject = '$subject'";
+
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +30,7 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                <a href="student-page.php"><img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50"></a>
             </div>
         </nav>
     </header>
@@ -23,58 +41,56 @@
 
     <div class="container">
         <div class="sidebar">
-            <div class="subject">
-                <img src="assets/bio-folder.png" alt="biology folder">
-                <h3>BIOLOGY</h3>
-            </div>
-            <div class="subject">
-                <img src="assets/sub-folder.png" alt="biology folder">
-                <h3>CHEMISTRY</h3>
-            </div>
-            <div class="subject">
-                <img src="assets/sub-folder.png" alt="biology folder">
-                <h3>CALCULUS</h3>
-            </div>
+            <?php
+            if ($subjectsResult->num_rows > 0) {
+                // Loop through each unique subject and create a button.
+                while ($row = $subjectsResult->fetch_assoc()) {
+                    $subjectName = htmlspecialchars($row['subject']);
+            ?>
+                    <div class="subject">
+                        <form method="GET" action="">
+                            <input type="hidden" name="subject" value="<?php echo $subjectName; ?>">
+                            <button type="submit">
+                                <img src="assets/sub-folder.png" alt="<?php echo $subjectName; ?> folder">
+                                <h3><?php echo strtoupper($subjectName); ?></h3>
+                            </button>
+                        </form>
+                    </div>
+            <?php
+                }
+            } else {
+                echo "<p>No subjects found.</p>";
+            }
+            ?>
         </div>
 
         <div class="content">
-            <h1>BIOLOGY</h1>
+            <h1><?php echo htmlspecialchars(strtoupper($subject)); ?></h1>
 
-            <div class="assessment">
-                <div class="last-used">LAST USED ON: 2024/10/08</div>
-                <div class="header">
-                    <div class="title-status">
-                        <div class="title"><strong>Assessment Title:</strong> Lorem Ipsum</div>
-                        <div class="status"><strong>Status:</strong> Done</div>
+            <?php
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+            ?>
+                    <div class="assessment">
+                        <div class="last-used">LAST USED ON: <?php echo htmlspecialchars($row['lastUsed']); ?></div>
+                        <div class="header">
+                            <div class="title-status">
+                                <div class="title"><strong>Assessment Title:</strong> <?php echo htmlspecialchars($row['title']); ?></div>
+                                <div class="status"><strong>Status:</strong> <?php echo htmlspecialchars($row['status']); ?></div>
+                            </div>
+                            <a href="#" class="view"><strong>View</strong></a>
+                        </div>
+                        <p class="details"><?php echo htmlspecialchars($row['descrip']); ?></p>
                     </div>
+            <?php
+                }
+            } else {
+                echo "<p>No assessments found.</p>";
+            }
 
-                </div>
-                <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
-            </div>
-
-            <div class="assessment">
-                <div class="last-used">LAST USED ON: 2024/10/08</div>
-                <div class="header">
-                    <div class="title-status">
-                        <div class="title"><strong>Assessment Title:</strong> Lorem Ipsum</div>
-                        <div class="status"><strong>Status:</strong> Done</div>
-                    </div>
-
-                </div>
-                <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
-            </div>
-
-            <div class="assessment">
-                <div class="last-used">LAST USED ON: 2024/10/08</div>
-                <div class="header">
-                    <div class="title-status">
-                        <div class="title"><strong>Assessment Title:</strong> Lorem Ipsum</div>
-                        <div class="status"><strong>Status:</strong> Done</div>
-                    </div>
-
-                </div>
-                <p class="details">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id et porta fringilla neque platea leo...</p>
-            </div>
+            $conn->close();
+            ?>
         </div>
     </div>
 </body>
