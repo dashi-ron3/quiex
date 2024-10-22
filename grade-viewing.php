@@ -4,15 +4,12 @@
     $DB_PASS = "admin!!!";
     $DB_NAME = "quiex";
 
-    // Create connection
     $conn = new mysqli($DBASE, $DB_USER, $DB_PASS, $DB_NAME);
 
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Query to get username and total marks only
     $sql = "SELECT u.username, q.total_marks 
             FROM quizzes q 
             INNER JOIN users u ON q.user_id = u.id";
