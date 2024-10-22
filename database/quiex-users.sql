@@ -26,6 +26,12 @@ CREATE TABLE assessments (
     --FOREIGN KEY (quizID) REFERENCES Quiz Table_name(quizID)
 );
 
+--FOR TESTING ASSESSMENTS
+-- INSERT INTO assessments (subject, title, status, lastUsed, descrip, shared) VALUES
+-- ('Science', 'Sample Science Quiz', 'In Progress', '2024-02-10', 'An examination of basic physics concepts.', 0),
+-- ('History', 'Sample History Quiz', 'Not Started', '2024-03-01', 'An assignment about World War II.', 0),
+-- ("Biology","Sample Biology Exam", "Done", "2023-11-09", "Sample Test Description.",0);
+
 CREATE TABLE lb (
     --quizID INT AUTO_INCREMENT PRIMARY KEY,
     id INT NOT NULL,
