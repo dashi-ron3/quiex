@@ -4,7 +4,6 @@ if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Handle sharing updates.
 if (isset($_POST['assessment_title'])) {
     $assessmentTitle = mysqli_real_escape_string($conn, $_POST['assessment_title']);
 
@@ -14,20 +13,16 @@ if (isset($_POST['assessment_title'])) {
     // Update the 'shared' status based on the checkbox state.
     $updateQuery = "UPDATE assessments SET shared = $isShared WHERE title = '$assessmentTitle'";
 
-    // Execute the update query and check for success
     if ($conn->query($updateQuery) !== TRUE) {
-        echo "Error updating record: " . $conn->error;  // Display error if query fails
+        echo "Error updating record: " . $conn->error;
     }
 }
 
-// Fetch the list of unique subjects
 $subjectsQuery = "SELECT DISTINCT subject FROM assessments";
 $subjectsResult = $conn->query($subjectsQuery);
 
-// Get the selected subject from the URL, if any
 $subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
 
-// Fetch the assessments for the selected subject
 $sql = "SELECT title, status, lastUsed, descrip, shared FROM assessments WHERE subject = '$subject'";
 $result = $conn->query($sql);
 ?>
@@ -60,7 +55,6 @@ $result = $conn->query($sql);
         <div class="sidebar">
             <?php
             if ($subjectsResult->num_rows > 0) {
-                // Loop through each unique subject and create a button.
                 while ($row = $subjectsResult->fetch_assoc()) {
                     $subjectName = htmlspecialchars($row['subject']);
             ?>

@@ -9,8 +9,6 @@ $subjectsResult = $conn->query($subjectsQuery);
 
 $subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
 
-// $sql = "SELECT title, status, lastUsed, descrip FROM assessments WHERE subject = '$subject'";
-// Example SQL for student side to fetch shared assessments.
 $sql = "SELECT title, status, lastUsed, descrip FROM assessments WHERE shared = 1 AND subject = '$subject'";
 
 $result = $conn->query($sql);
@@ -43,7 +41,6 @@ $result = $conn->query($sql);
         <div class="sidebar">
             <?php
             if ($subjectsResult->num_rows > 0) {
-                // Loop through each unique subject and create a button.
                 while ($row = $subjectsResult->fetch_assoc()) {
                     $subjectName = htmlspecialchars($row['subject']);
             ?>
