@@ -42,7 +42,6 @@
             <tbody>
                 <?php
                 if ($result->num_rows > 0) {
-                    // Output data of each row
                     while($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $row['username'] . "</td>";
