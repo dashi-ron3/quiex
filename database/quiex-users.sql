@@ -15,13 +15,14 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE assessments (
-    --upQuiz INT AUTO_INCREMENT PRIMARY KEY,
+    upAss INT AUTO_INCREMENT PRIMARY KEY,
     --id INT,
-    -- subject VARCHAR(255)
+    subject VARCHAR(255)
     title text,
     status VARCHAR(255),
     lastUsed DATE,
-    descrip text
+    descrip text,
+    shared TINYINT(1) DEFAULT (0)
     --FOREIGN KEY (quizID) REFERENCES Quiz Table_name(quizID)
 );
 
