@@ -11,16 +11,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'] ?? '';
     $age = $_POST['age'] ?? '';
     $gr_level = $_POST['gr_level'] ?? '';
+    $password = $_POST['password'] ?? '';
 
     error_log("Username: $username, Email: $email, Name: $name, Age: $age, Education Level: $gr_level");
 
-    if (empty($name) || empty($email)|| empty($gr_level)) {
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    
+    if (empty($username) || empty($email)|| empty($password)) {
         echo json_encode(['status' => 'error', 'message' => 'Please fill out all required fields.']);
         exit;
     }
 
-    $sql = "INSERT INTO quiex.users (id, username, email, name, age, gr_level)
-            VALUES (?, ?, ?, ?, ?)
+    $sql = "INSERT INTO quiex.users (id, username, email, name, age, gr_level, password)
+            VALUES (?, ?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE 
                 email = VALUES(email),
                 name = VALUES(name), 
@@ -28,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 gr_level = VALUES(gr_level)";
 
     if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("issis", $id, $username, $email, $name, $age, $gr_level);
+        $stmt->bind_param("issis", $id, $username, $email, $name, $age, $gr_level, $hashed_password);
 
         if ($stmt->execute()) {
             if ($stmt->affected_rows > 0) {
