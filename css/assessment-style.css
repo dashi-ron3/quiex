@@ -12,7 +12,6 @@ body {
 .navbar {
     width: 100%;
     background-color: #CBD5E0;
-    padding: 10px 20px;
     display: flex;
     justify-content: space-between; /* Space out elements */
     align-items: center;
@@ -28,11 +27,23 @@ body {
     margin: 0px;
 }
 
-.page-name img{ 
-    margin: 20px;
-    padding: 0;
-    max-width: 30%;
-    height: auto;
+.logo-page-name-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    width: 100%;              
+    padding: 0 30px;           
+    box-sizing: border-box;     
+}
+
+.page-name img {
+    max-height: 130px;
+    height: auto;    
+}
+
+.logo img {
+    width: 140px;
+    height: 50px;
 }
 
 .container {

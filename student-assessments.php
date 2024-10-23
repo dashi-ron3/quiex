@@ -27,15 +27,25 @@ $result = $conn->query($sql);
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">
+            <!-- <div class="logo">
                 <a href="student-page.php"><img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50"></a>
+            </div> -->
+            <div class="logo-page-name-container">
+                <div class="logo">
+                    <a href="student-page.php">
+                        <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                    </a>
+                </div>
+                <div class="page-name">
+                    <img src="assets/assessment.png" alt="page title">
+                </div>
             </div>
         </nav>
     </header>
 
-    <div class="page-name">
+    <!-- <div class="page-name">
         <img src="assets/assessment.png" alt="page title">
-    </div>
+    </div> -->
 
     <div class="container">
         <div class="sidebar">
