@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "15a5m249ph", "testing");
+$conn = mysqli_connect("localhost", "root", "15a5m249ph", "quiex");
 if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -27,9 +27,6 @@ $result = $conn->query($sql);
 <body>
     <header>
         <nav class="navbar">
-            <!-- <div class="logo">
-                <a href="student-page.php"><img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50"></a>
-            </div> -->
             <div class="logo-page-name-container">
                 <div class="logo">
                     <a href="student-page.php">
@@ -42,10 +39,6 @@ $result = $conn->query($sql);
             </div>
         </nav>
     </header>
-
-    <!-- <div class="page-name">
-        <img src="assets/assessment.png" alt="page title">
-    </div> -->
 
     <div class="container">
         <div class="sidebar">
