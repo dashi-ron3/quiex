@@ -5,24 +5,80 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
-h1 {
-    margin-top: 20px;
-    font-size: 5rem;
-    text-align: center;
+.title {
+    display: flex;  
+    align-items: center;
+    justify-content: center;
     margin-bottom: 10px;
 }
 
-.container {
-    background-color: #fffdfd;
-    width: 500px;
-    height: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 20px;
-    box-shadow: -10px 10px 0 rgba(0, 0, 0, 1);
-    margin-top: 0;
-    padding: 20px;
+.logo {
+    height: 50px;
+}
+
+h1 {
+    margin: 0 10px 0 0;
+    font-size: 5rem;
+    color: #203f69;
+}
+
+table {
+    width: 800px;
+    border-collapse: collapse; 
+    margin: 20px auto; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); 
+}
+
+th, td {
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+}
+
+th {
+    background-color: #203f69;
+    color: #ffffff;
+    border-bottom: 2px solid #f1f1f1;
+}
+
+tr:nth-child(odd) {
+    background-color: #eff6fc;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #e3f2fd;
+}
+
+td {
+    border: 1px solid #dddddd;
+}
+
+.editable-field {
+    display: inline-block; 
+    width: 80%; 
+    padding: 5px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    transition: border-color 0.3s; 
+}
+
+.editable-field:focus {
+    border-color: #203f69; 
+}
+
+.pencil-icon {
+    background: none; 
+    border: none; 
+    color: #203f69; 
+    cursor: pointer; 
+}
+
+.pencil-icon:hover {
+    color: #ff5722; 
 }
