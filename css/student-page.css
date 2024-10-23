@@ -199,21 +199,18 @@ header {
     line-height: 1.5;
 }
 
-#assessment {
-    margin-top: 100px;
+#assessment, #study-companion {
+    margin-top: 200px;
 }
 
-.assessment {
-    margin-top: 150px;
-}
-
-.assessment h1 {
+.assessment h1, .study-companion h1 {
     font-weight: 800;
-    font-size: 4.5rem;
     color: #1A202C;
-    text-align: right;
-    margin-right: 70px;
 }
+
+.assessment h1{text-align: right; font-size: 4.5rem; margin-right: 55px;}
+
+.study-companion h1{font-size: 4rem; margin-left: 55px;}
 
 .assessment-container {
     display: flex;
@@ -231,9 +228,8 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 20vh;
-    margin: 13vh 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    height: 35vh;
+    margin: 13vh 13px;
     position: relative;
     border-radius: 10px;
 }
@@ -250,8 +246,20 @@ header {
     z-index: -1;
 }
 
+.assessment-options button {
+    cursor: pointer;
+    padding: 5px 15px;
+    background-color: #d0e1f9;
+    border-radius: 8px;
+    border: 1px solid #1A202C;
+    transition: transform 0.3s ease;
+}
+
+.assessment-options button:hover {transform: scale(1.1);}
+
 .hover-content {
     display: none;
+    margin: 10px;
 }
 
 .assessment-options:hover .hover-content {
@@ -267,6 +275,44 @@ header {
 
 footer {
     background-color: #374664;
-    padding: 10px;
+    color: white;
+    padding: 20px;
     z-index: 1;
+    font-size: 14px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+footer p {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+footer .contact-info {
+    text-align: left;
+    margin-top: 10px;
+}
+
+footer .contact-info p {
+    margin: 5px;
+}
+
+footer .copyright {
+    text-align: left;
+    margin-top: 20px;
+}
+
+footer .copyright::before {
+    content: "";
+    display: block;
+    width: 240px;
+    height: 2px;
+    background-color: white;
+    margin-bottom: 10px;
 }
