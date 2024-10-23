@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "15a5m249ph";
-$dbname = "testing";
+$dbname = "quiex";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch all students, ordered by points, highest first
-$sql = "SELECT name, profile_pic, points FROM lb ORDER BY points DESC";
+$sql = "SELECT name, profile_pic, points FROM leaderboard ORDER BY points DESC";
 $result = $conn->query($sql);
 
 // Create arrays for top 3 and rest of the students

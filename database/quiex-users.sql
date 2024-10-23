@@ -14,32 +14,43 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE assessments (
+CREATE TABLE IF NOT EXISTS assessments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255),
+    content TEXT,
+    status ENUM('draft', 'published') DEFAULT 'draft',
+    unique_code VARCHAR(10) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE assessments ADD COLUMN time_limit INT(11) DEFAULT 0;
+
+CREATE TABLE uploadAss (
     upAss INT AUTO_INCREMENT PRIMARY KEY,
-    --id INT,
-    subject VARCHAR(255)
+    quizId INT NOT NULL,
+    subject VARCHAR(255),
     title text,
     status VARCHAR(255),
     lastUsed DATE,
     descrip text,
-    shared TINYINT(1) DEFAULT (0)
-    --FOREIGN KEY (quizID) REFERENCES Quiz Table_name(quizID)
+    shared TINYINT(1) DEFAULT (0),
+    FOREIGN KEY (quizId) REFERENCES assessments(id)
 );
 
---FOR TESTING ASSESSMENTS
+-- FOR TESTING ASSESSMENTS
 -- INSERT INTO assessments (subject, title, status, lastUsed, descrip) VALUES
 -- ('Science', 'Sample Science Quiz', 'In Progress', '2024-02-10', 'An examination of basic physics concepts.'),
 -- ('History', 'Sample History Quiz', 'Not Started', '2024-03-01', 'An assignment about World War II.'),
 -- ("Biology","Sample Biology Exam", "Done", "2023-11-09", "Sample Test Description.");
 
-CREATE TABLE lb (
-    --quizID INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE leaderboard (
+   --  --quizID INT AUTO_INCREMENT PRIMARY KEY,
     id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     profile_pic VARCHAR(255) NOT NULL,
     points INT NOT NULL
-    --FOREIGN KEY (quizID) REFERENCES Quiz Table_name(quizID),
-    --FOREIGN KEY (id) REFERENCES users(id)
+    -- FOREIGN KEY (quizID) REFERENCES Quiz Table_name(quizID),
+	-- FOREIGN KEY (id) REFERENCES users(id)
 );
 
 -- FOR TESTING OF LEADERBOARD

@@ -8,7 +8,7 @@ $dsn = 'mysql:host=localhost;dbname=quiex';
 
 $servername = "localhost";
 $db_username = "root";
-$db_password = "yannigonzales";
+$db_password = "15a5m249ph";
 $dbname = "quiex";
 
 $conn = new mysqli($servername, $db_username, $db_password, $dbname);
@@ -27,4 +27,3 @@ try {
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
-?>

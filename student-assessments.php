@@ -4,12 +4,12 @@ if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$subjectsQuery = "SELECT DISTINCT subject FROM assessments";
+$subjectsQuery = "SELECT DISTINCT subject FROM uploadedAss";
 $subjectsResult = $conn->query($subjectsQuery);
 
 $subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
 
-$sql = "SELECT title, status, lastUsed, descrip FROM assessments WHERE shared = 1 AND subject = '$subject'";
+$sql = "SELECT title, status, lastUsed, descrip FROM uploadedAss WHERE shared = 1 AND subject = '$subject'";
 
 $result = $conn->query($sql);
 ?>

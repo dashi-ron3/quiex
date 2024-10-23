@@ -11,19 +11,19 @@ if (isset($_POST['assessment_title'])) {
     $isShared = isset($_POST['share']) ? 1 : 0;  // 1 if checked, 0 if unchecked
 
     // Update the 'shared' status based on the checkbox state.
-    $updateQuery = "UPDATE assessments SET shared = $isShared WHERE title = '$assessmentTitle'";
+    $updateQuery = "UPDATE uploadedAss SET shared = $isShared WHERE title = '$assessmentTitle'";
 
     if ($conn->query($updateQuery) !== TRUE) {
         echo "Error updating record: " . $conn->error;
     }
 }
 
-$subjectsQuery = "SELECT DISTINCT subject FROM assessments";
+$subjectsQuery = "SELECT DISTINCT subject FROM uploadedAss";
 $subjectsResult = $conn->query($subjectsQuery);
 
 $subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
 
-$sql = "SELECT title, status, lastUsed, descrip, shared FROM assessments WHERE subject = '$subject'";
+$sql = "SELECT title, status, lastUsed, descrip, shared FROM uploadedAss WHERE subject = '$subject'";
 $result = $conn->query($sql);
 ?>
 
