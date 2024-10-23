@@ -22,12 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_id']) && isset($_
     $total_marks_stmt->fetch();
     $total_marks_stmt->close();
 
-    if ($total_marks > 0) {
+    if ($total_marks > 0) { 
         $points = ($marks_obtained / $total_marks) * 100;
     } else {
-        $points = 0;
+        $points = 0; 
     }
-    
+
     $update_sql = "UPDATE quizzes SET marks = ?, points = ? WHERE user_id = ?";
     $stmt = $conn->prepare($update_sql);
     
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_id']) && isset($_
         
         if ($stmt->execute()) {
             header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+            exit(); 
         } else {
             echo "<div style='color: red;'>Error updating marks: " . $stmt->error . "</div>";
         }
@@ -57,18 +57,18 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuiEx</title>
-    <link rel="stylesheet" href="css/grades.css">
+    <link rel="stylesheet" href="css/gradeview.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
     <style>
         .editable-field {
-            display: none;
+            display: none; 
         }
         .edit-mode .editable-field {
-            display: inline-block;
+            display: inline-block; 
         }
         .edit-mode .display-field {
-            display: none;
+            display: none; 
         }
         .pencil-icon {
             cursor: pointer;
@@ -80,7 +80,7 @@ $result = $conn->query($sql);
     <script>
         function editMarks(rowId) {
             const row = document.getElementById('row-' + rowId);
-            row.classList.toggle('edit-mode');
+            row.classList.toggle('edit-mode'); 
         }
     </script>
 </head>
@@ -113,7 +113,7 @@ $result = $conn->query($sql);
                         echo "<td>" . htmlspecialchars($row['email']) . "</td>";
 
                         echo "<td>" . htmlspecialchars($row['total_marks']) . "</td>";
-
+                        
                         echo "<td>";
                         echo "<span class='display-field'>" . htmlspecialchars($row['obtained_marks']) . "</span>";
                         echo "<form method='POST' action='' class='editable-field'>";
@@ -121,10 +121,10 @@ $result = $conn->query($sql);
                         echo "<input type='hidden' name='user_id' value='" . htmlspecialchars($row['id']) . "'>";
                         echo "<button type='submit'>Save</button>";
                         echo "</form>";
-                        echo "<button class='pencil-icon' onclick='editMarks(" . htmlspecialchars($row['id']) . ")'><i class='fas fa-pencil-alt'></i></button>";
+                        echo "<button class='pencil-icon' onclick='editMarks(" . htmlspecialchars($row['id']) . ")'><i class='fas fa-pencil-alt'></i></button>"; 
                         echo "</td>";
 
-                        echo "<td>" . htmlspecialchars($row['points']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['points']) . "</td>"; 
                         echo "</tr>";
                     }
                 } else {
@@ -133,6 +133,10 @@ $result = $conn->query($sql);
                 ?>
             </tbody>
         </table>
+        <form method="POST" action="download-grade.php" style="text-align: center; margin-bottom: 20px;">
+            <button type="submit">Download</button>
+        </form>
+
     </div>
 </body>
 </html>
