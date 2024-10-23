@@ -2,14 +2,14 @@ body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     background-color: #CBD5E0;
     margin: 0;
-    padding-top: 70px; 
+    padding-top: 50px; 
     overflow-x: hidden;
 }
 
 header {
     width: 100%;
     background-color: #CBD5E0;
-    padding: 10px 20px;
+    padding: 9px 15px;
     position: fixed;
     top: 0;
     left: 0;
@@ -32,7 +32,6 @@ header {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 5px;
 }
 
 .container h1 {
@@ -62,6 +61,26 @@ header {
     .left-panel, .right-panel {
         width: 100%; 
     }
+}
+
+.randomizer {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.randomizer img {
+    width: 30px;
+    height: 30px;
+}
+
+.randomizer:hover img {
+    opacity: 0.7;
+}
+
+.timer-section {
+    font-size: 1rem;
 }
 
 .panel-header {
@@ -110,8 +129,8 @@ header {
 }
 
 .question-input textarea {
-    width: 70%;
-    min-height: 50px; 
+    width: 50%;
+    min-height: 100px; 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -138,7 +157,6 @@ header {
 }
 
 .navigation-arrows {
-    display: flex;
     justify-content: space-between;
     position: fixed;
     width: 100%; 
@@ -147,7 +165,7 @@ header {
     z-index: 100;
 }
 
-.arrow {
+.prev {
     background: #007bff;
     color: #fff;
     border: none;
@@ -158,7 +176,23 @@ header {
     z-index: 10;
 }
 
-.arrow:hover {
+.prev:hover {
+    background-color: #0056b3;
+}
+
+.next {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+    margin-left: 300px;
+}
+
+.next:hover {
     background-color: #0056b3;
 }
 
@@ -184,29 +218,71 @@ header {
 }
 
 .points-section input {
-    width: 100px;
-    padding: 10px;
+    width: 90px;
+    padding: 5px;
 }
 
-.file-upload {
+.file-upload-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    position: relative;
+    border-radius: 10px;
+    max-width: 300px;
     margin-bottom: 20px;
 }
 
-.file-upload button {
-    background-color: #ccc;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
+.file-upload-header {
+    display: flex;
+    justify-content: flex-end;
 }
+
+.remove-icon {
+    font-size: 20px;
+    color: #f00;
+    cursor: pointer;
+}
+
+.file-upload {
+    margin-top: 10px;
+}
+
+#preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#preview img, #preview video {
+    max-width: 200px;
+    max-height: 150px; 
+    object-fit: contain; 
+    position: relative;
+}
+
+.preview-item {
+    position: relative;
+}
+
+.remove-preview {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    color: #f00;
+    cursor: pointer;
+    background-color: #fff;
+    border-radius: 50%;
+    padding: 2px 5px;
+}
+
 
 .btn-submit {
     display: block;
-    margin: 20px auto;
+    margin: 30px auto;
     background-color: #022343;
     color: white;
-    padding: 15px 30px;
-    font-size: 1.2rem;
+    padding: 10px 20px;
+    font-size: 0.9rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -236,20 +312,4 @@ header {
     .container h1 {
         font-size: 2rem;
     }
-}
-
-.randomizer {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-
-.randomizer img {
-    width: 30px;
-    height: 30px;
-}
-
-.randomizer:hover img {
-    opacity: 0.7;
 }
