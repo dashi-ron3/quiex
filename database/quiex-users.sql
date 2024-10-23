@@ -2,6 +2,7 @@ CREATE DATABASE quiex;
 
 USE quiex;
 
+-- user registration, login, and data for the user profile in settings
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
@@ -14,6 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- create assessment
 CREATE TABLE IF NOT EXISTS assessments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255),
@@ -25,6 +27,7 @@ CREATE TABLE IF NOT EXISTS assessments (
 
 ALTER TABLE assessments ADD COLUMN time_limit INT(11) DEFAULT 0;
 
+-- uploaded assessments
 CREATE TABLE uploadAss (
     upAss INT AUTO_INCREMENT PRIMARY KEY,
     quizId INT NOT NULL,
@@ -43,6 +46,7 @@ CREATE TABLE uploadAss (
 -- ('History', 'Sample History Quiz', 'Not Started', '2024-03-01', 'An assignment about World War II.'),
 -- ("Biology","Sample Biology Exam", "Done", "2023-11-09", "Sample Test Description.");
 
+-- leaderboard
 CREATE TABLE leaderboard (
    --  --quizID INT AUTO_INCREMENT PRIMARY KEY,
     id INT NOT NULL,
@@ -59,7 +63,7 @@ CREATE TABLE leaderboard (
 
 -- study companion --
 
--- quizzes table (connected to users)
+-- quizzes table (connected to users) SAMPLE
 CREATE TABLE IF NOT EXISTS quizzes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -73,7 +77,7 @@ CREATE TABLE IF NOT EXISTS quizzes (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
--- questions table (connected to quizzes)
+-- questions table (connected to quizzes) SAMPLE
 CREATE TABLE IF NOT EXISTS questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     quiz_id INT,
@@ -82,7 +86,7 @@ CREATE TABLE IF NOT EXISTS questions (
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
 );
 
--- choices table (connected to questions)
+-- choices table (connected to questions) SAMPLE
 CREATE TABLE IF NOT EXISTS choices (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question_id INT,
@@ -91,7 +95,7 @@ CREATE TABLE IF NOT EXISTS choices (
     FOREIGN KEY (question_id) REFERENCES questions(id)
 );
 
--- user answers table (connected to questions and quizzes)
+-- user answers table (connected to questions and quizzes) SAMPLE
 CREATE TABLE IF NOT EXISTS user_answers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     quiz_id INT,
@@ -103,12 +107,12 @@ CREATE TABLE IF NOT EXISTS user_answers (
     FOREIGN KEY (answer_id) REFERENCES choices(id)
 );
 
--- sample data for study companion, hardcoding only
--- sample user
+-- SAMPLE data for study companion, hardcoding only 
+-- SAMPLE user
 INSERT INTO users (username, email, password) 
 VALUES ('student1', 'student1@example.com', 'password123');
 
--- sample quiz
+-- SAMPLE quiz
 INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, points) 
 VALUES 
 (1, 'Sample Quiz 1', '2024-10-20 10:00:00', '2024-10-20 10:30:00', '00:30:00', 0, 20, 0);
