@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS quizzes (
     time_taken TIME,
     marks INT,
     total_marks INT,
-    points INT,
+    points INT, -- points = score
     is_graded BOOLEAN DEFAULT 1,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -162,12 +162,12 @@ VALUES ('student1', 'student1@example.com', 'password123');
 
 -- SAMPLE quiz
 -- GRADED QUIZ
-INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, score, is_graded) 
+INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, points, is_graded) -- points = score
 VALUES 
 (1, 'Sample Quiz 1', '2024-10-20 10:00:00', '2024-10-20 10:30:00', '00:30:00', 0, 20, 0, 1);
 
 -- PACTICE ASSESSMENT, NOT GRADED
-INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, score, is_graded) 
+INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, points, is_graded) -- points = score
 VALUES 
 (1, 'Sample Quiz 2', '2024-10-21 11:00:00', '2024-10-21 11:30:00', '00:30:00', 0, 20, 0, 0);
 
