@@ -27,6 +27,37 @@ CREATE TABLE IF NOT EXISTS assessments (
 
 ALTER TABLE assessments ADD COLUMN time_limit INT(11) DEFAULT 0;
 
+-- save questions in the database
+CREATE TABLE quiex_questions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    assessment_id INT NOT NULL,
+    question_type VARCHAR(255) NOT NULL,
+    question_text TEXT NOT NULL,
+    points INT NOT NULL,
+    FOREIGN KEY (assessment_id) REFERENCES assessments(id) ON DELETE CASCADE
+);
+
+-- save choices in the database
+CREATE TABLE quiex_choices (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question_id INT NOT NULL,
+    choice_text VARCHAR(255) NOT NULL,
+    is_correct BOOLEAN DEFAULT FALSE,  -- Optional: To mark if this choice is correct
+    FOREIGN KEY (question_id) REFERENCES quiex_questions(id) ON DELETE CASCADE
+);
+
+-- to fetch the assessment content
+CREATE TABLE assessment_results (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    assessment_id INT NOT NULL,
+    question_id INT NOT NULL,
+    answer_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (assessment_id) REFERENCES assessments(id),
+    FOREIGN KEY (question_id) REFERENCES quiex_questions(id),
+    FOREIGN KEY (answer_id) REFERENCES quiex_choices(id)
+);
+
 -- uploaded assessments
 CREATE TABLE uploadedAss (
     upAss INT AUTO_INCREMENT PRIMARY KEY,
@@ -251,5 +282,3 @@ INSERT INTO user_answers (quiz_id, question_id, answer_id, is_correct) VALUES
 (2, 5, 2, FALSE);  -- William Shakespeare (incorrect)
 
 -- study companion --
-
-SELECT * from users;
