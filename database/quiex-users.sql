@@ -107,15 +107,16 @@ CREATE TABLE IF NOT EXISTS user_answers (
     FOREIGN KEY (answer_id) REFERENCES choices(id)
 );
 
--- SAMPLE data for study companion, hardcoding only 
--- SAMPLE user
-INSERT INTO users (username, email, password) 
-VALUES ('student1', 'student1@example.com', 'password123');
-
--- SAMPLE quiz
-INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, points) 
+-- SAMPLE data for study companion, hardcoding only
+-- GRADED QUIZ
+INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, score, is_graded) 
 VALUES 
-(1, 'Sample Quiz 1', '2024-10-20 10:00:00', '2024-10-20 10:30:00', '00:30:00', 0, 20, 0);
+(1, 'Sample Quiz 1', '2024-10-20 10:00:00', '2024-10-20 10:30:00', '00:30:00', 0, 20, 0, 1);
+
+-- PACTICE ASSESSMENT, NOT GRADED
+INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, score, is_graded) 
+VALUES 
+(1, 'Sample Quiz 2', '2024-10-21 11:00:00', '2024-10-21 11:30:00', '00:30:00', 0, 20, 0, 0);
 
 -- SAMPLE QUESTIONS
 INSERT INTO questions (quiz_id, text, type) VALUES
@@ -129,17 +130,13 @@ INSERT INTO questions (quiz_id, text, type) VALUES
 (1, 'What is the largest planet in our solar system?', 'Multiple Choice'),
 (1, 'What is the currency of Japan?', 'Multiple Choice'),
 (1, 'What is the powerhouse of the cell?', 'Multiple Choice'),
-(1, 'Who wrote ''Pride and Prejudice''?', 'Multiple Choice'),
-(1, 'What is the smallest continent?', 'Multiple Choice'),
-(1, 'What is the hardest natural substance on Earth?', 'Multiple Choice'),
-(1, 'Who is known as the Father of Geometry?', 'Multiple Choice'),
-(1, 'What is the largest ocean on Earth?', 'Multiple Choice'),
-(1, 'Which element is a diamond made of?', 'Multiple Choice'),
-(1, 'What is the main language spoken in Egypt?', 'Multiple Choice'),
-(1, 'Who discovered penicillin?', 'Multiple Choice'),
-(1, 'What is the term for an animal that only eats plants?', 'Multiple Choice'),
-(1, 'What is the capital of Canada?', 'Multiple Choice');
+(2, 'What is the chemical formula for table salt?', 'Multiple Choice'),
+(2, 'What planet is known as the Red Planet?', 'Multiple Choice'),
+(2, 'What is the capital city of France?', 'Multiple Choice'),
+(2, 'What is the process by which plants make food?', 'Multiple Choice'),
+(2, 'Who wrote "Hamlet"?', 'Multiple Choice');
 
+SELECT * FROM choices;
 INSERT INTO choices (question_id, text, is_correct) VALUES
 (1, 'H2O', TRUE),
 (1, 'CO2', FALSE),
@@ -191,55 +188,52 @@ INSERT INTO choices (question_id, text, is_correct) VALUES
 (10, 'Ribosome', FALSE),
 (10, 'Endoplasmic Reticulum', FALSE),
 
-(11, 'Jane Austen', TRUE),
-(11, 'Emily Brontë', FALSE),
-(11, 'Charles Dickens', FALSE),
-(11, 'Mark Twain', FALSE),
+(11, 'NaCl', TRUE),
+(11, 'H2O', FALSE),
+(11, 'CO2', FALSE),
+(11, 'O2', FALSE),
 
-(12, 'Australia', TRUE),
-(12, 'Europe', FALSE),
-(12, 'Antarctica', FALSE),
-(12, 'South America', FALSE),
+(12, 'Earth', FALSE),
+(12, 'Venus', FALSE),
+(12, 'Mars', TRUE),
+(12, 'Jupiter', FALSE),
 
-(13, 'Diamond', TRUE),
-(13, 'Gold', FALSE),
-(13, 'Iron', FALSE),
-(13, 'Sapphire', FALSE),
+(13, 'London', FALSE),
+(13, 'Berlin', FALSE),
+(13, 'Paris', TRUE),
+(13, 'Rome', FALSE),
 
-(14, 'Euclid', TRUE),
-(14, 'Pythagoras', FALSE),
-(14, 'Archimedes', FALSE),
-(14, 'Galileo', FALSE),
+(14, 'Respiration', FALSE),
+(14, 'Digestion', FALSE),
+(14, 'Photosynthesis', TRUE),
+(14, 'Fermentation', FALSE),
 
-(15, 'Atlantic Ocean', FALSE),
-(15, 'Indian Ocean', FALSE),
-(15, 'Arctic Ocean', FALSE),
-(15, 'Pacific Ocean', TRUE),
+(15, 'William Shakespeare', TRUE),
+(15, 'Charles Dickens', FALSE),
+(15, 'Mark Twain', FALSE),
+(15, 'Homer', FALSE);
 
-(16, 'Carbon', TRUE),
-(16, 'Oxygen', FALSE),
-(16, 'Nitrogen', FALSE),
-(16, 'Silicon', FALSE),
+-- SAMPLE user answers for Quiz 1
+INSERT INTO user_answers (quiz_id, question_id, answer_id, is_correct) VALUES
+(1, 1, 4, FALSE),  -- H2O (incorrect)
+(1, 2, 3, TRUE),   -- Leonardo da Vinci (correct)
+(1, 3, 2, FALSE),  -- 1912 (incorrect)
+(1, 4, 2, TRUE),   -- Avocado (correct)
+(1, 5, 1, TRUE),   -- 300,000 km/s (correct)
+(1, 6, 3, FALSE),  -- Carbon Dioxide (incorrect)
+(1, 7, 1, TRUE),   -- George Washington (correct)
+(1, 8, 2, FALSE),  -- Jupiter (incorrect)
+(1, 9, 1, TRUE),   -- Yen (correct)
+(1, 10, 2, TRUE);  -- Mitochondria (correct)
 
-(17, 'Arabic', TRUE),
-(17, 'English', FALSE),
-(17, 'French', FALSE),
-(17, 'Spanish', FALSE),
+-- SAMPLE user answers for Quiz 2
+INSERT INTO user_answers (quiz_id, question_id, answer_id, is_correct) VALUES
+(2, 1, 1, TRUE),   -- NaCl (correct)
+(2, 2, 2, FALSE),  -- Mars (incorrect)
+(2, 3, 3, TRUE),   -- Paris (correct)
+(2, 4, 1, FALSE),  -- Photosynthesis (incorrect)
+(2, 5, 2, FALSE);  -- William Shakespeare (incorrect)
 
-(18, 'Marie Curie', FALSE),
-(18, 'Alexander Fleming', TRUE),
-(18, 'Louis Pasteur', FALSE),
-(18, 'Isaac Newton', FALSE),
-
-(19, 'Carnivore', FALSE),
-(19, 'Omnivore', FALSE),
-(19, 'Herbivore', TRUE),
-(19, 'Insectivore', FALSE),
-
-(20, 'Toronto', FALSE),
-(20, 'Ottawa', TRUE),
-(20, 'Vancouver', FALSE),
-(20, 'Montreal', FALSE);
 -- study companion --
 
 SELECT * from users;

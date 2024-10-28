@@ -5,6 +5,11 @@
     font-family: Arial, sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
+
 body {
     background-color: #d3dfea;
     padding: 20px;
@@ -13,9 +18,14 @@ body {
 /* container styles */
 .container {
     display: flex;
-    gap: 20px;
-    height: 100vh;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 75px; 
+    max-width: 1800px; 
+    margin: auto; 
 }
+
 
 .divider {
     border: none;
@@ -36,6 +46,7 @@ body {
     overflow-y: auto;
     font-size: 0.9rem;
     text-align: center;
+    margin-top: 20px;
 }
 
 .left-container h1 {
@@ -97,8 +108,8 @@ body {
 
 /* right-container styles */
 .right-container {
-    width: 75%;
-    max-height: 100vh;
+    width: 45%;
+    max-height: fit-content;
     background-color: #d3dfea;
     padding: 20px;
     border-radius: 10px;
@@ -192,7 +203,6 @@ body {
     display: flex;
     align-items: center;
     border-radius: 15px;
-    max-width: 35%;
 }
 
 .quiz-list {
@@ -239,6 +249,7 @@ body {
     background-color: #f9f9f9;
     flex-shrink: 0;
     min-height: 80px;
+    position: relative;
 }
 
 .individual-container h3 {
@@ -326,4 +337,46 @@ body {
     width: 625px;
     height: 75px;
     object-fit: contain;
+}
+
+.button-container {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 40px;
+    background-color: #32659a;
+    color: #7d97ba;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+    fill: #7d97ba;
+    stroke: #7d97ba;
+    stroke-width: 1.5;
+    transition: fill 0.3s;
+}
+
+.button:hover {
+    background-color: #204569;
+}
+
+.button svg {
+    width: 25px;
+    height: 25px;
+    fill: #cbd9e6;
 }
