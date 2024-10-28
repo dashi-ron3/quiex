@@ -36,6 +36,12 @@
                             <a href="teacher-assessments.php">Assessments</a>
                         </div>
                     </div>
+                    <div class="dropdown">
+                        <a href="#grade" class="drpbtn">GRADE VIEWING</a>
+                        <div class="dropdown-content">
+                            <a href="grade-viewing.php">View Grades</a>
+                        </div>
+                    </div>
                     <a href="teacher-settings.php">SETTINGS</a>
                 </div>
             </nav>
@@ -103,6 +109,20 @@
                         <div class="hover-content">
                             <p>A test storage.</p>
                             <button onclick="window.location.href='teacher-assessments.php'">Enter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="grade">
+            <div class="grade">
+                <h1> GRADE VIEWING </h1>
+                <div class="grade-options">
+                        <a href="#">View Grades</a>
+                        <div class="hover-content">
+                            <p>View and manage your students' grades.</p>
+                            <button onclick="window.location.href='grade-viewing.php'">Enter</button>
                         </div>
                     </div>
                 </div>
