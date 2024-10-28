@@ -104,7 +104,8 @@ CREATE TABLE IF NOT EXISTS quizzes (
     time_taken TIME,
     marks INT,
     total_marks INT,
-    points INT,
+    score INT,
+    is_graded BOOLEAN DEFAULT 1,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -154,7 +155,12 @@ INSERT INTO student_scores (assessmentTitle, studentName, score, totalPoints, in
 ('Sample Science Quiz', 'Jane Johnson', 77, 85, '2,8'),
 ('Sample Science Quiz', 'Alice Smith', 94, 100, '4');
 
--- SAMPLE data for study companion, hardcoding only
+-- SAMPLE data for study companion, hardcoding only 
+-- SAMPLE user
+INSERT INTO users (username, email, password) 
+VALUES ('student1', 'student1@example.com', 'password123');
+
+-- SAMPLE quiz
 -- GRADED QUIZ
 INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, score, is_graded) 
 VALUES 
