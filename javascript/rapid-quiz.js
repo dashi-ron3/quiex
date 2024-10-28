@@ -41,7 +41,7 @@ function startTimer() {
 }
 
 function nextQuestion() {
-    if (currentQuestion < totalQuestions) { 
+    if (currentQuestion < totalQuestions) {
         const questionData = questions[currentQuestion];
         document.querySelector('.container p').innerText = questionData.question;
 
@@ -64,20 +64,23 @@ function nextQuestion() {
 
             const submitButton = document.createElement('button');
             submitButton.innerText = 'Submit';
-            submitButton.classList.add('identification-submit'); 
+            submitButton.classList.add('identification-submit');
             submitButton.onclick = handleIdentificationSubmit;
 
             document.querySelector('.answer-box').appendChild(input);
             document.querySelector('.answer-box').appendChild(submitButton);
         }
 
-        updateQuestionNumber(); 
-        startTimer(); 
+        updateQuestionNumber();
+        startTimer();
     } else {
         clearInterval(timer);
-        alert('Quiz Complete!');
+        alert(`Quiz Complete! Your final score is: ${score}`);
+        document.querySelector('.restart-button').style.display = 'block'; 
     }
 }
+
+
 
 function handleAnswerClick() {
     const questionData = questions[currentQuestion];
@@ -93,7 +96,6 @@ function handleAnswerClick() {
     }
 
     setTimeout(() => {
-        alert(isCorrect ? 'Correct!' : `Incorrect! The correct answer was ${questionData.correct}.`);
         currentQuestion++; 
         nextQuestion();
     }, 1000); 
@@ -115,7 +117,6 @@ function handleIdentificationSubmit() {
     }
 
     setTimeout(() => {
-        alert(isCorrect ? 'Correct!' : `Incorrect! The correct answer was ${correctAnswer}.`);
         currentQuestion++; 
         nextQuestion();
     }, 1000); 
@@ -128,5 +129,21 @@ function startQuiz() {
     updateQuestionNumber();
     nextQuestion();
 }
+
+function restartQuiz() {
+    clearInterval(timer);
+    currentQuestion = 0; 
+    score = 0; 
+    document.getElementById('score').innerText = score; 
+    questions.sort(() => Math.random() - 0.5);
+
+    document.querySelector('.restart-button').style.display = 'none'; 
+    document.querySelector('.container p').innerText = ''; 
+    document.querySelector('.answer-box').innerHTML = ''; 
+    updateQuestionNumber();
+    startQuiz(); 
+}
+
+
 
 document.querySelector('.start-button').addEventListener('click', startQuiz);
