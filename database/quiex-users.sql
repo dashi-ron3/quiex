@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS quizzes (
     time_taken TIME,
     marks INT,
     total_marks INT,
-    score INT,
+    points INT,
     is_graded BOOLEAN DEFAULT 1,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
