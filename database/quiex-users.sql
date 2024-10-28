@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS assessments (
 ALTER TABLE assessments ADD COLUMN time_limit INT(11) DEFAULT 0;
 
 -- uploaded assessments
-CREATE TABLE uploadAss (
+CREATE TABLE uploadedAss (
     upAss INT AUTO_INCREMENT PRIMARY KEY,
     quizId INT NOT NULL,
     subject VARCHAR(255),
@@ -41,7 +41,7 @@ CREATE TABLE uploadAss (
 );
 
 -- FOR TESTING ASSESSMENTS
--- INSERT INTO assessments (subject, title, status, lastUsed, descrip) VALUES
+-- INSERT INTO uploadedAss (subject, title, status, lastUsed, descrip) VALUES
 -- ('Science', 'Sample Science Quiz', 'In Progress', '2024-02-10', 'An examination of basic physics concepts.'),
 -- ('History', 'Sample History Quiz', 'Not Started', '2024-03-01', 'An assignment about World War II.'),
 -- ("Biology","Sample Biology Exam", "Done", "2023-11-09", "Sample Test Description.");
