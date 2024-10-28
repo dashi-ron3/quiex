@@ -107,6 +107,22 @@ CREATE TABLE IF NOT EXISTS user_answers (
     FOREIGN KEY (answer_id) REFERENCES choices(id)
 );
 
+CREATE TABLE student_scores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    assessmentTitle VARCHAR(255) NOT NULL,
+    studentName VARCHAR(255) NOT NULL,
+    score INT NOT NULL,
+    totalPoints INT NOT NULL,
+    incorrectQuestions VARCHAR(255)
+);
+
+-- SAMPLE DATA FOR student scores
+INSERT INTO student_scores (assessmentTitle, studentName, score, totalPoints, incorrectQuestions) VALUES
+('Sample Science Quiz', 'Alice Smith', 90, 100, '1,3'),
+('Sample Science Quiz', 'John Doe', 65, 90, '2,5,6'),
+('Sample Science Quiz', 'Jane Johnson', 77, 85, '2,8'),
+('Sample Science Quiz', 'Alice Smith', 94, 100, '4');
+
 -- SAMPLE data for study companion, hardcoding only
 -- GRADED QUIZ
 INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, score, is_graded) 
