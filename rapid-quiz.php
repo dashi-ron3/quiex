@@ -83,6 +83,7 @@
         <img src="assets/think.png" alt="Man Thinking" class="think-img" width="250" height="400">
         <img src="assets/lightning.png" alt="Lightning" class="bolt-img" width="300" height="300">
         <img src="assets/brain.png" alt="Brain" class="brain-img" width="120" height="100">
+        <button class="restart-button" onclick="restartQuiz()" style="display: none;">Restart Quiz</button>
         <div class="score">
             <div class="score-box">
                 <h2>Score: <span id="score">0</span></h2>
