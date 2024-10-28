@@ -276,6 +276,69 @@ header {
     color: #1A202C;
 }
 
+#grade {
+    margin-top: 100px;
+}
+
+.grade {
+    margin-top: 150px;
+}
+
+.grade h1 {
+    font-weight: 800;
+    font-size: 4.5rem;
+    color: #1A202C;
+    text-align: left;
+    margin-left: 70px;
+}
+
+.grade-container {
+    display: flex;
+    margin: auto;
+    width: 80vw;
+}
+
+.grade-options {
+    background-color: #fff;
+    text-align: center;
+    flex: 1 1 30%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 35vh;
+    width: 60vh;
+    margin: 13vh 13px;
+    position: relative;
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 20vh;
+    margin-top: 20vh;
+}
+
+.grade-options::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    width: 100%;
+    height: 100%;
+    background-color: #1A202C;
+    border-radius: 10px;
+    z-index: -1;
+}
+
+.grade-options:hover .hover-content {
+    display: block; 
+}
+
+.grade-options a {
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1A202C;
+}
+
 footer {
     background-color: #374664;
     color: white;
