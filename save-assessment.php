@@ -49,14 +49,14 @@ if (isset($input['title']) && isset($input['questions']) && isset($input['status
             $questionText = $question['questionText'];
             $points = isset($question['points']) && is_numeric($question['points']) ? (int)$question['points'] : 0;  // Ensure points is an integer
         
-            $sqlQuestion = "INSERT INTO questions (assessment_id, question_type, question_text, points) VALUES (?, ?, ?, ?)";
+            $sqlQuestion = "INSERT INTO quiex_questions (assessment_id, question_type, question_text, points) VALUES (?, ?, ?, ?)";
             $stmtQuestion = $pdo->prepare($sqlQuestion);
             $stmtQuestion->execute([$assessmentId, $questionType, $questionText, $points]);
         
             $questionId = $pdo->lastInsertId();
-            if (!empty($question['choices']) && is_array($question['choices'])) {
-                foreach ($question['choices'] as $choice) {
-                    $sqlChoice = "INSERT INTO choices (question_id, choice_text) VALUES (?, ?)";
+            if (!empty($question['quiex_choices']) && is_array($question['quiex_choices'])) {
+                foreach ($question['quiex_choices'] as $choice) {
+                    $sqlChoice = "INSERT INTO quiex_choices (question_id, choice_text) VALUES (?, ?)";
                     $stmtChoice = $pdo->prepare($sqlChoice);
                     $stmtChoice->execute([$questionId, $choice]);
                 }

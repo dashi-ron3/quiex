@@ -1,10 +1,21 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $maxFileSize = 10 * 1024 * 1024; 
+
     if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath = $_FILES['file']['tmp_name'];
         $fileName = $_FILES['file']['name'];
+        $fileSize = $_FILES['file']['size'];
         $fileType = $_FILES['file']['type'];
         $uploadFileDir = 'uploads-assessments/';
+
+        if ($fileSize > $maxFileSize) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'File size exceeds the 10MB limit.'
+            ]);
+            exit;
+        }
 
         if (!is_dir($uploadFileDir)) {
             mkdir($uploadFileDir, 0777, true);

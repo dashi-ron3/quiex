@@ -1,22 +1,22 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-
-    if (isset($input['fileName'])) {
-        $fileName = $input['fileName'];
+    if (isset($_POST['fileName'])) {
+        $fileName = $_POST['fileName'];
         $filePath = 'uploads-assessments/' . $fileName;
 
         if (file_exists($filePath)) {
             if (unlink($filePath)) {
-                echo 'success';
+                echo json_encode(['status' => 'success']);
             } else {
-                echo 'error';
+                echo json_encode(['status' => 'error', 'message' => 'Error deleting the file.']);
             }
         } else {
-            echo 'file not found';
+            echo json_encode(['status' => 'error', 'message' => 'File not found.']);
         }
     } else {
-        echo 'no file specified';
+        echo json_encode(['status' => 'error', 'message' => 'No file specified.']);
     }
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request method.']);
 }
 ?>

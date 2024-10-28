@@ -29,24 +29,6 @@
                     <input type="text" placeholder="Enter title">
                 </div>
 
-                <div class="timer-section">
-                    <h4>Time Remaining: <span id="timer-display">00:00:00</span></h4>
-                    <label for="total-time-input">Set Timer:</label>
-                    <input type="number" id="total-time-input" placeholder="Enter time in minutes..." min="0">
-                    <br>
-                    <button id="start-timer">Start Timer</button>
-                </div>
-
-                <div class="q-bank">
-                    <h4>Access Question Archive</h4>
-                    <button class="archive">Archive</button>
-                </div>
-
-                <div class="instructions">
-                    <h4>Creating an Assessment</h4>
-                    <li></li>
-                </div>
-
                 <div id="save-assessment">
                     <button id="save-btn">Save Assessment</button>
                 </div>
@@ -77,6 +59,7 @@
                             <label for="question">Question:</label> <br>
                             <textarea id="question" rows="3" required></textarea>
                         </div>
+                        <button class="archive">Archive</button>
 
                         <div class="add-choice-section hidden">
                             <button class="btn" onclick="addChoice(1)">Add Choice</button>
@@ -89,7 +72,7 @@
                         <form id="uploadForm" enctype="multipart/form-data" action="file-upload.php" method="POST">
                             <div class="file-upload-box">
                                 <div class="file-upload-header">
-                                    <span class="remove-icon">&times;</span>
+                                    <span class="remove-icon" onclick="resetFileInput()">&times;</span>
                                 </div>
                                 <div class="file-upload">
                                     <input type="file" id="file-upload" accept="image/*,video/*" name="file" required>
@@ -108,15 +91,18 @@
                                 $fileType = mime_content_type($filePath);
 
                                 if (strpos($fileType, 'image') !== false) {
-                                    echo "<div class='preview-item' data-file-name='$file'><img src='$filePath' alt='$file' width='200' height='150' /><span class='remove-preview'>&times;</span></div>";
+                                    echo "<div class='preview-item' data-file-name='$file'><img src='$filePath' alt='$file' width='200' height='150' /><span class='remove-preview' onclick='deleteFile(\"$file\")'>&times;</span></div>";
                                 } elseif (strpos($fileType, 'video') !== false) {
-                                    echo "<div class='preview-item' data-file-name='$file'><video src='$filePath' controls width='200' height='150'></video><span class='remove-preview'>&times;</span></div>";
+                                    echo "<div class='preview-item' data-file-name='$file'><video src='$filePath' controls width='200' height='150'></video><span class='remove-preview' onclick='deleteFile(\"$file\")'>&times;</span></div>";
                                 }
                             }
                             ?>
                         </div>
 
+
                         <div id="upload-error" style="color: red;"></div>
+
+                        <script src="javascript/delete-file.js" defer></script>
 
                         <div class="points-section">
                             <label for="points1">Points:</label> <br>
