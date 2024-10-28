@@ -33,7 +33,7 @@
                             <a href="#">Rapid Quiz</a>
                         </div>
                     </div>
-                    <a href="#study-companion">STUDY COMPANION</a>
+                    <a href="study-companion.php">STUDY COMPANION</a>
                     <a href="student-settings.php">SETTINGS</a>
                 </div>
             </nav>
@@ -103,15 +103,6 @@
                             <button>Enter</button>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="study-companion">
-            <div class="study-companion"> 
-                <h1>STUDY COMPANION</h1>
-                <div class="sc-container">
-                    
                 </div>
             </div>
         </section>
