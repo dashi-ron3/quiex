@@ -1,5 +1,5 @@
 <?php
-require_once('tcpdf/TCPDF-main/tcpdf.php');
+require_once('tcpdf/tcpdf.php');
 session_start();
 
 $servername = "localhost";
