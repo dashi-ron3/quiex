@@ -24,3 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+function setUserType(type) {
+    document.getElementById("userTypeInput").value = type;
+    document.getElementById("confirmBtn").classList.remove("hidden");
+}
