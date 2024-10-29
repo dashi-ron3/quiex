@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QuiEx Guest Mode">
     <title>QuiEx</title>
-    <link rel="stylesheet" href="css/guest-page.css">
+    <link rel="stylesheet" href="css/guest.css">
     <script src="javascript/guest-page.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
@@ -44,7 +44,7 @@
                     <div class="text-content">
                             <h1>QuiEx Features</h1>
                             <p>Our platform offers a wide range of features to enhance your learning experience...</p>
-                            <button onclick="window.location.href='classification.php'">Sign Up</button>
+                            <button onclick="window.location.href='#preview'">View</button>
                         </div>
                     </div>
                     <div class="right-section">
@@ -58,6 +58,34 @@
             <span class="dot active" onclick="currentSlide(1)"></span>
             <span class="dot" onclick="currentSlide(2)"></span>
         </div>
+    </section>
+    <section id="preview">
+        <div class="create">
+            <h1>FEATURES</h1>
+            <div class="create-container">
+                <div class="create-options">
+                    <a href="#">Take and Create Assessments</a>
+                    <div class="hover-content">
+                        <p>For students and teachers to take or create assessments.</p>
+                    </div>
+                </div>
+
+                <div class="create-options">
+                    <a href="#">Study Companion</a>
+                    <div class="hover-content">
+                        <p>For students to submit and view feedbacks as well as download an assessment's summary to serve as a reviewer.</p>
+                    </div>
+                </div>
+
+                <div class="create-options">
+                    <a href="#">Grade Viewing</a>
+                    <div class="hover-content">
+                        <p>For teachers to view and modify a student's grade.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="signup" onclick="window.location.href='classification.php'">Sign Up</button>
     </section>
 
     <footer>
