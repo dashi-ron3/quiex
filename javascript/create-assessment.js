@@ -77,13 +77,11 @@ function saveAssessment(status) {
             status: status
         }),
     })
-    .then(response => response.text())
-    .then(text => {
-        try {
-            return JSON.parse(text);
-        } catch (err) {
-            throw new Error('Invalid JSON: ' + text);
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        return response.json();
     })
     .then(data => {
         if (data.status === 'success') {
@@ -254,10 +252,4 @@ document.getElementById('next-question').addEventListener('click', function() {
     showQuestion(currentQuestionIndex + 1);
 });
 
-document.querySelectorAll('.question-block').forEach(question => {
-    question.style.display = 'none';
-});
-
-if (document.querySelector('.question-block')) {
-    showQuestion(0);
-}
+showQuestion(0);
