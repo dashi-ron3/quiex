@@ -31,31 +31,28 @@ ALTER TABLE assessments ADD COLUMN time_limit INT(11) DEFAULT 0;
 CREATE TABLE quiex_questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     assessment_id INT NOT NULL,
-    question_type VARCHAR(255) NOT NULL,
+    question_type ENUM('multiple-choice', 'true-false', 'long-answer', 'short-answer', 'checkboxes') NOT NULL,
     question_text TEXT NOT NULL,
-    points INT NOT NULL,
+    points INT DEFAULT 0,
     FOREIGN KEY (assessment_id) REFERENCES assessments(id) ON DELETE CASCADE
 );
 
--- save choices in the database
+-- quiex choices
 CREATE TABLE quiex_choices (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question_id INT NOT NULL,
     choice_text VARCHAR(255) NOT NULL,
-    is_correct BOOLEAN DEFAULT FALSE,  -- Optional: To mark if this choice is correct
     FOREIGN KEY (question_id) REFERENCES quiex_questions(id) ON DELETE CASCADE
 );
 
--- to fetch the assessment content
-CREATE TABLE assessment_results (
+-- img or vid upload
+CREATE TABLE files (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    assessment_id INT NOT NULL,
     question_id INT NOT NULL,
-    answer_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (assessment_id) REFERENCES assessments(id),
-    FOREIGN KEY (question_id) REFERENCES quiex_questions(id),
-    FOREIGN KEY (answer_id) REFERENCES quiex_choices(id)
+    file_path VARCHAR(255) NOT NULL,
+    file_type ENUM('image', 'video') NOT NULL, 
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (question_id) REFERENCES quiex_questions(id) ON DELETE CASCADE
 );
 
 -- uploaded assessments
