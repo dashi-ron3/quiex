@@ -11,15 +11,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-//if (isset($_SESSION['user_id'])) {
-//    $user_id = $_SESSION['user_id'];
-//} else {
-//    header("Location: login.php");
-//    exit();
-//}
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    header("Location: login.php");
+    exit();
+}
 
 // Sample user ID
-$user_id = 1;
+//$user_id = 1;
 
 if (isset($_GET['quiz_id'])) {
     $quiz_id = $_GET['quiz_id'];
@@ -92,7 +92,7 @@ if (isset($_GET['quiz_id'])) {
                             <td colspan="2">
                                 <?php 
                                 if ($quiz['is_graded']) {
-                                    echo $quiz['score'];
+                                    echo $quiz['points'];
                                 } else {
                                     echo "N/A";
                                 }

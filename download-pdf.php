@@ -12,15 +12,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-//if (isset($_SESSION['user_id'])) {
-//    $user_id = $_SESSION['user_id'];
-//} else {
-//    header("Location: login.php");
-//    exit();
-//}
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    header("Location: login.php");
+    exit();
+}
 
 // Sample user ID
-$user_id = 1;
+//$user_id = 1;
 
 if (isset($_GET['quiz_id'])) {
     $quiz_id = $_GET['quiz_id'];
@@ -45,7 +45,7 @@ if (isset($_GET['quiz_id'])) {
     $pdf->Cell(0, 10, "Finished on: " . date('m/d/y h:i A', strtotime($quiz['finished_at'])), 0, 1);
     $pdf->Cell(0, 10, "Time taken: " . gmdate('H:i:s', strtotime($quiz['finished_at']) - strtotime($quiz['started_at'])), 0, 1);
     $pdf->Cell(0, 10, "Marks: {$quiz['marks']} out of {$quiz['total_marks']}", 0, 1);
-    $pdf->Cell(0, 10, "Score: " . ($quiz['is_graded'] ? "{$quiz['score']}" : "N/A"), 0, 1);
+    $pdf->Cell(0, 10, "Score: " . ($quiz['is_graded'] ? "{$quiz['points']}" : "N/A"), 0, 1);
 
     // questions and answers
     $pdf->Ln(10);

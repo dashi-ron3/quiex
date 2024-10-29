@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['email'])) {
-    header("Location: login.php");
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
     exit();
 }
 
@@ -42,7 +42,7 @@ header("Pragma: no-cache");
                 <li><a href="#profile">PROFILE</a></li>
                 <li><a href="#appearance">APPEARANCE</a></li>
                 <li><a href="#help">HELP</a></li>
-                <li><a href="user-access-control.php">LOG OUT</a></li>
+                <li><a href="logout.php">LOG OUT</a></li>
             </ul>
 
             <div class="illustration">
