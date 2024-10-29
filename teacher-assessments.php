@@ -48,7 +48,7 @@ if (isset($_POST['assessment_title'])) {
     $updateQuery = "UPDATE uploadedAss SET shared = $isShared WHERE title = '$assessmentTitle'";
 
     if ($conn->query($updateQuery) !== FALSE) {
-        echo "Error updating record: " . $conn->error;
+        $conn->error;
     }
 }
 

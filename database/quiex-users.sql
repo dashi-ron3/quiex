@@ -31,6 +31,13 @@ CREATE TABLE IF NOT EXISTS assessments (
 
 ALTER TABLE assessments ADD COLUMN time_limit INT(11) DEFAULT 0;
 
+INSERT INTO assessments (subject, title, content, created_at) VALUES
+("Math", "Sample title", "this is a sample content", "2024-10-21 11:00:00"),
+("Math", "Math Quiz 2", "this is a sample content", "2024-10-26 10:00:00"),
+("Science", "Science Quiz 1", "this is sample content 2", "2024-10-21 12:00:00");
+
+SELECT * FROM assessments;
+
 -- save questions in the database
 CREATE TABLE quiex_questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -48,6 +55,8 @@ CREATE TABLE quiex_choices (
     choice_text VARCHAR(255) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES quiex_questions(id) ON DELETE CASCADE
 );
+
+SELECT * FROM quiex_choices;
 
 -- img or vid upload
 CREATE TABLE files (
@@ -71,6 +80,8 @@ CREATE TABLE uploadedAss (
     shared TINYINT(1) DEFAULT (0),
     FOREIGN KEY (quizId) REFERENCES assessments(id)
 );
+
+SELECT * FROM uploadedAss;
 
 -- FOR TESTING ASSESSMENTS
 -- INSERT INTO uploadedAss (subject, title, status, lastUsed, descrip) VALUES
