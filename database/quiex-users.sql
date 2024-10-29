@@ -21,6 +21,7 @@ ALTER TABLE users ADD COLUMN user_type ENUM('student', 'teacher') NOT NULL;
 -- create assessment
 CREATE TABLE IF NOT EXISTS assessments (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    subject VARCHAR(255),
     title VARCHAR(255),
     content TEXT,
     status ENUM('draft', 'published') DEFAULT 'draft',
@@ -146,7 +147,8 @@ CREATE TABLE student_scores (
     studentName VARCHAR(255) NOT NULL,
     score INT NOT NULL,
     totalPoints INT NOT NULL,
-    incorrectQuestions VARCHAR(255)
+    incorrectQuestions VARCHAR(255),
+    FOREIGN KEY (quizId) REFERENCES quizzes(id)
 );
 
 -- SAMPLE DATA FOR student scores

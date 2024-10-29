@@ -4,25 +4,59 @@ if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+$subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
+
+if ($subject) {
+    // Query to get all quizzes from assessments for this subject
+    $getQuizzesQuery = "
+        SELECT id, title, status, created_at AS lastUsed, content AS descrip
+        FROM assessments
+        WHERE subject = '$subject'
+    ";
+    $quizzesResult = $conn->query($getQuizzesQuery);
+
+    if ($quizzesResult->num_rows > 0) {
+        while ($quiz = $quizzesResult->fetch_assoc()) {
+            $quizId = $quiz['id'];
+
+            // Check if this specific quizId already exists in uploadedAss
+            $checkQuizQuery = "SELECT COUNT(*) AS count FROM uploadedAss WHERE quizId = $quizId";
+            $checkQuizResult = $conn->query($checkQuizQuery);
+            $row = $checkQuizResult->fetch_assoc();
+
+            // Insert only if this quiz does not exist
+            if ($row['count'] == 0) {
+                $insertQuizQuery = "
+                    INSERT INTO uploadedAss (quizId, subject, title, status, lastUsed, descrip)
+                    VALUES ($quizId, '$subject', '{$quiz['title']}', '{$quiz['status']}', '{$quiz['lastUsed']}', '{$quiz['descrip']}')
+                ";
+                if ($conn->query($insertQuizQuery) !== TRUE) {
+                    echo "Error inserting quiz: " . $conn->error;
+                }
+            }
+        }
+    }
+}
+
+
+// Check if the checkbox was checked or not
+$isShared = isset($_POST['share']) ? 1 : 0;  // 1 if checked, 0 if unchecked
+
+// Update the 'shared' status based on the checkbox state.
 if (isset($_POST['assessment_title'])) {
     $assessmentTitle = mysqli_real_escape_string($conn, $_POST['assessment_title']);
-
-    // Check if the checkbox was checked or not
-    $isShared = isset($_POST['share']) ? 1 : 0;  // 1 if checked, 0 if unchecked
-
-    // Update the 'shared' status based on the checkbox state.
     $updateQuery = "UPDATE uploadedAss SET shared = $isShared WHERE title = '$assessmentTitle'";
 
-    if ($conn->query($updateQuery) !== TRUE) {
+    if ($conn->query($updateQuery) !== FALSE) {
         echo "Error updating record: " . $conn->error;
     }
 }
 
-$subjectsQuery = "SELECT DISTINCT subject FROM uploadedAss";
+// Fetching subjects
+$subjectsQuery = "SELECT DISTINCT subject FROM assessments";
 $subjectsResult = $conn->query($subjectsQuery);
 
-$subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
-
+// Fetching assessments from uploadedAss
 $sql = "SELECT title, status, lastUsed, descrip, shared FROM uploadedAss WHERE subject = '$subject'";
 $result = $conn->query($sql);
 ?>
@@ -54,7 +88,6 @@ $result = $conn->query($sql);
     </header>
 
     <div class="container">
-
         <div class="sidebar">
             <?php
             if ($subjectsResult->num_rows > 0) {
