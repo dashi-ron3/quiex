@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS user_answers (
 
 CREATE TABLE student_scores (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    quizId INT,
     assessmentTitle VARCHAR(255) NOT NULL,
     studentName VARCHAR(255) NOT NULL,
     score INT NOT NULL,
