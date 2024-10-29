@@ -59,7 +59,13 @@
                             <label for="question">Question:</label> <br>
                             <textarea id="question" rows="3" required></textarea>
                         </div>
-                        <button class="archive">Archive</button>
+
+                        <button class="archive">Archive</button><br>
+
+                        <div class="correct-answer-input">
+                            <label for="correct-answer">Correct Answer:</label>
+                            <input type="text" id="correct-answer" placeholder="Enter correct answer">
+                        </div>
 
                         <div class="add-choice-section hidden">
                             <button class="btn" onclick="addChoice(1)">Add Choice</button>
