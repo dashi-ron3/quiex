@@ -15,6 +15,9 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- user type classification during sign up
+ALTER TABLE users ADD COLUMN user_type ENUM('student', 'teacher') NOT NULL;
+
 -- create assessment
 CREATE TABLE IF NOT EXISTS assessments (
     id INT AUTO_INCREMENT PRIMARY KEY,
