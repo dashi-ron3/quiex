@@ -116,15 +116,40 @@ body {
     margin-bottom: 10px;
 }
 .right-section button {
-    text-align: center;
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px; 
-    background-color: #ffffff;
-    color: #0d1b2a;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #FFFFFF;
+    background-color: #1A202C;
     border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 20px auto;
+    display: block;
+}
+
+.right-section button:hover {
+    background-color: #2D3748;
+}
+
+.right-section p {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #1A202C;
+}
+
+.right-section p a {
+    color: #1A202C;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.right-section .terms {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #4A5568;
+}
+
+.right-section .terms a {
+    color: #4A5568;
+    text-decoration: none;
 }
