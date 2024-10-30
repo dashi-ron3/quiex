@@ -191,19 +191,8 @@ INSERT INTO questions (quiz_id, text, type) VALUES
 (1, 'Who painted the Mona Lisa?', 'Multiple Choice'),
 (1, 'In which year did the Titanic sink?', 'Multiple Choice'),
 (1, 'What is the main ingredient in guacamole?', 'Multiple Choice'),
-(1, 'What is the speed of light?', 'Multiple Choice'),
-(1, 'Which gas do plants absorb from the atmosphere?', 'Multiple Choice'),
-(1, 'Who was the first President of the United States?', 'Multiple Choice'),
-(1, 'What is the largest planet in our solar system?', 'Multiple Choice'),
-(1, 'What is the currency of Japan?', 'Multiple Choice'),
-(1, 'What is the powerhouse of the cell?', 'Multiple Choice'),
-(2, 'What is the chemical formula for table salt?', 'Multiple Choice'),
-(2, 'What planet is known as the Red Planet?', 'Multiple Choice'),
-(2, 'What is the capital city of France?', 'Multiple Choice'),
-(2, 'What is the process by which plants make food?', 'Multiple Choice'),
-(2, 'Who wrote "Hamlet"?', 'Multiple Choice');
+(1, 'What is the speed of light?', 'Multiple Choice');
 
-SELECT * FROM choices;
 INSERT INTO choices (question_id, text, is_correct) VALUES
 (1, 'H2O', TRUE),
 (1, 'CO2', FALSE),
@@ -228,77 +217,16 @@ INSERT INTO choices (question_id, text, is_correct) VALUES
 (5, '300,000 km/s', TRUE),
 (5, '150,000 km/s', FALSE),
 (5, '450,000 km/s', FALSE),
-(5, '750,000 km/s', FALSE),
-
-(6, 'Oxygen', FALSE),
-(6, 'Nitrogen', FALSE),
-(6, 'Carbon Dioxide', TRUE),
-(6, 'Hydrogen', FALSE),
-
-(7, 'George Washington', TRUE),
-(7, 'Thomas Jefferson', FALSE),
-(7, 'Abraham Lincoln', FALSE),
-(7, 'John Adams', FALSE),
-
-(8, 'Earth', FALSE),
-(8, 'Jupiter', TRUE),
-(8, 'Saturn', FALSE),
-(8, 'Neptune', FALSE),
-
-(9, 'Yen', TRUE),
-(9, 'Won', FALSE),
-(9, 'Dollar', FALSE),
-(9, 'Peso', FALSE),
-
-(10, 'Nucleus', FALSE),
-(10, 'Mitochondria', TRUE),
-(10, 'Ribosome', FALSE),
-(10, 'Endoplasmic Reticulum', FALSE),
-
-(11, 'NaCl', TRUE),
-(11, 'H2O', FALSE),
-(11, 'CO2', FALSE),
-(11, 'O2', FALSE),
-
-(12, 'Earth', FALSE),
-(12, 'Venus', FALSE),
-(12, 'Mars', TRUE),
-(12, 'Jupiter', FALSE),
-
-(13, 'London', FALSE),
-(13, 'Berlin', FALSE),
-(13, 'Paris', TRUE),
-(13, 'Rome', FALSE),
-
-(14, 'Respiration', FALSE),
-(14, 'Digestion', FALSE),
-(14, 'Photosynthesis', TRUE),
-(14, 'Fermentation', FALSE),
-
-(15, 'William Shakespeare', TRUE),
-(15, 'Charles Dickens', FALSE),
-(15, 'Mark Twain', FALSE),
-(15, 'Homer', FALSE);
+(5, '750,000 km/s', FALSE);
 
 -- SAMPLE user answers for Quiz 1
 INSERT INTO user_answers (quiz_id, question_id, answer_id, is_correct) VALUES
-(1, 1, 4, FALSE),  -- H2O (incorrect)
-(1, 2, 3, TRUE),   -- Leonardo da Vinci (correct)
-(1, 3, 2, FALSE),  -- 1912 (incorrect)
-(1, 4, 2, TRUE),   -- Avocado (correct)
-(1, 5, 1, TRUE),   -- 300,000 km/s (correct)
-(1, 6, 3, FALSE),  -- Carbon Dioxide (incorrect)
-(1, 7, 1, TRUE),   -- George Washington (correct)
-(1, 8, 2, FALSE),  -- Jupiter (incorrect)
-(1, 9, 1, TRUE),   -- Yen (correct)
-(1, 10, 2, TRUE);  -- Mitochondria (correct)
-
--- SAMPLE user answers for Quiz 2
-INSERT INTO user_answers (quiz_id, question_id, answer_id, is_correct) VALUES
-(2, 1, 1, TRUE),   -- NaCl (correct)
-(2, 2, 2, FALSE),  -- Mars (incorrect)
-(2, 3, 3, TRUE),   -- Paris (correct)
-(2, 4, 1, FALSE),  -- Photosynthesis (incorrect)
-(2, 5, 2, FALSE);  -- William Shakespeare (incorrect)
+(1, 1, 4, FALSE),  -- NaCl (incorrect)
+(1, 2, 7, TRUE),   -- Leonardo da Vinci (correct)
+(1, 3, 11, FALSE),  -- 1920 (incorrect)
+(1, 4, 14, TRUE),   -- Avocado (correct)
+(1, 5, 17, TRUE);   -- 300,000 km/s (correct)
 
 -- study companion --
+
+SELECT * FROM user_answers;
