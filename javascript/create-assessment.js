@@ -1,23 +1,23 @@
 let currentQuestionIndex = 0;
 
-document.getElementById('save-btn').addEventListener('click', function() {
+document.getElementById('save-btn').addEventListener('click', function () {
     saveAssessment('draft');
 });
 
-document.getElementById('publish-btn').addEventListener('click', function() {
+document.getElementById('publish-btn').addEventListener('click', function () {
     saveAssessment('published');
 });
 
 function saveAssessment(status) {
     let title = document.querySelector('input[placeholder="Enter title"]').value;
-    let subject = document.getElementById('subject').value; // Capture subject input
+    let subject = document.getElementById('subject').value; 
 
     if (!title) {
         alert('Please enter an assessment title.');
         return;
     }
 
-    if (!subject) {  // Validate that the subject is provided
+    if (!subject) { 
         alert('Please enter a subject for the assessment.');
         return;
     }
@@ -108,14 +108,14 @@ function saveAssessment(status) {
 
 function loadAssessment() {
     const savedTitle = localStorage.getItem('assessmentTitle');
-    const savedSubject = localStorage.getItem('assessmentSubject');  // Load the saved subject
+    const savedSubject = localStorage.getItem('assessmentSubject');
     const savedQuestions = localStorage.getItem('assessmentQuestions');
 
     if (savedTitle) {
         document.querySelector('input[placeholder="Enter title"]').value = savedTitle;
     }
 
-    if (savedSubject) {  // Set the loaded subject in the input field
+    if (savedSubject) { 
         document.getElementById('subject').value = savedSubject;
     }
 
@@ -213,13 +213,13 @@ function handleQuestionTypeChange(selectElement) {
     addChoiceSection.classList.add("hidden");
     choicesContainer.classList.add("hidden");
 
-    if (selectedType === "multiple-choice" || selectedType === "true-false" || selectedType === "short-answer" || selectedType === "long-answer" || selectedType === "checkboxes") {
+    if (selectedType === "multiple-choice" || selectedType === "checkboxes") {
         addChoiceSection.classList.remove("hidden");
         choicesContainer.classList.remove("hidden");
     }
 }
 
-document.getElementById('add_question').addEventListener('click', function() {
+document.getElementById('add_question').addEventListener('click', function () {
     const questionsContainer = document.getElementById('questions-container');
     const questionCount = questionsContainer.children.length + 1;
 
@@ -263,12 +263,10 @@ function updateNavigationButtons() {
     nextBtn.style.display = currentQuestionIndex === questions.length - 1 ? 'none' : 'inline-block';
 }
 
-document.getElementById('prev-question').addEventListener('click', function() {
+document.getElementById('prev-question').addEventListener('click', function () {
     showQuestion(currentQuestionIndex - 1);
 });
 
-document.getElementById('next-question').addEventListener('click', function() {
+document.getElementById('next-question').addEventListener('click', function () {
     showQuestion(currentQuestionIndex + 1);
 });
-
-showQuestion(0);
