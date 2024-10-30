@@ -10,9 +10,15 @@ document.getElementById('publish-btn').addEventListener('click', function() {
 
 function saveAssessment(status) {
     let title = document.querySelector('input[placeholder="Enter title"]').value;
+    let subject = document.getElementById('subject').value; // Capture subject input
 
     if (!title) {
         alert('Please enter an assessment title.');
+        return;
+    }
+
+    if (!subject) {  // Validate that the subject is provided
+        alert('Please enter a subject for the assessment.');
         return;
     }
 
@@ -64,6 +70,7 @@ function saveAssessment(status) {
     }
 
     localStorage.setItem('assessmentTitle', title);
+    localStorage.setItem('assessmentSubject', subject);
     localStorage.setItem('assessmentQuestions', JSON.stringify(questions));
 
     fetch('save-assessment.php', {
@@ -101,10 +108,15 @@ function saveAssessment(status) {
 
 function loadAssessment() {
     const savedTitle = localStorage.getItem('assessmentTitle');
+    const savedSubject = localStorage.getItem('assessmentSubject');  // Load the saved subject
     const savedQuestions = localStorage.getItem('assessmentQuestions');
 
     if (savedTitle) {
         document.querySelector('input[placeholder="Enter title"]').value = savedTitle;
+    }
+
+    if (savedSubject) {  // Set the loaded subject in the input field
+        document.getElementById('subject').value = savedSubject;
     }
 
     if (savedQuestions) {

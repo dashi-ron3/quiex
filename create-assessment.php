@@ -27,6 +27,8 @@
                 <div class="panel-body">
                     <h2>Assessment Title</h2>
                     <input type="text" placeholder="Enter title">
+                    <h2>Subject</h2>
+                    <input type="text" placeholder="Enter subject" id="subject">
                 </div>
 
                 <div id="save-assessment">

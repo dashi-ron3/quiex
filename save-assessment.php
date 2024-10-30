@@ -24,8 +24,9 @@ try {
 $input = json_decode(file_get_contents('php://input'), true);
 error_log(print_r($input, true));
 
-if (isset($input['title'], $input['questions'], $input['status'])) {
+if (isset($input['title'], $input['subject'], $input['questions'], $input['status'])) {
     $title = $input['title'];
+    $subject = $input['subject']; // Capture subject input
     $questions = $input['questions'];
     $status = $input['status'];
 
@@ -39,9 +40,9 @@ if (isset($input['title'], $input['questions'], $input['status'])) {
     }
 
     try {
-        $sql = "INSERT INTO assessments (title, status, unique_code) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO assessments (title, subject, status, unique_code) VALUES (?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$title, $status, $unique_code]);
+        $stmt->execute([$title, $subject, $status, $unique_code]);
 
         $assessmentId = $pdo->lastInsertId();
         if (!$assessmentId) {
