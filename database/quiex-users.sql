@@ -29,8 +29,6 @@ CREATE TABLE IF NOT EXISTS assessments (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-ALTER TABLE assessments ADD COLUMN time_limit INT(11) DEFAULT 0;
-
 INSERT INTO assessments (subject, title, content, created_at) VALUES
 ("Math", "Sample title", "this is a sample content", "2024-10-21 11:00:00"),
 ("Math", "Math Quiz 2", "this is a sample content", "2024-10-26 10:00:00"),
@@ -53,6 +51,7 @@ CREATE TABLE quiex_choices (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question_id INT NOT NULL,
     choice_text VARCHAR(255) NOT NULL,
+    is_correct BOOLEAN DEFAULT 0,
     FOREIGN KEY (question_id) REFERENCES quiex_questions(id) ON DELETE CASCADE
 );
 
