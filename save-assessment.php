@@ -26,7 +26,6 @@ error_log(print_r($input, true));
 
 if (isset($input['title'], $input['subject'], $input['questions'], $input['status'])) {
     $title = $input['title'];
-    $subject = $input['subject']; // Capture subject input
     $questions = $input['questions'];
     $status = $input['status'];
 
@@ -53,22 +52,26 @@ if (isset($input['title'], $input['subject'], $input['questions'], $input['statu
             $questionType = $question['questionType'];
             $questionText = $question['questionText'];
             $points = isset($question['points']) && is_numeric($question['points']) ? (int)$question['points'] : 0;
+            $correctAnswer = isset($question['correctAnswer']) ? $question['correctAnswer'] : null; // Adjust based on JS changes
 
             $sqlQuestion = "INSERT INTO quiex_questions (assessment_id, question_type, question_text, points) VALUES (?, ?, ?, ?)";
             $stmtQuestion = $pdo->prepare($sqlQuestion);
             $stmtQuestion->execute([$assessmentId, $questionType, $questionText, $points]);
 
             $questionId = $pdo->lastInsertId();
-            if (!empty($question['quiex_choices']) && is_array($question['quiex_choices'])) {
-                foreach ($question['quiex_choices'] as $choice) {
-                    error_log("Choice: " . print_r($choice, true));
+
+            if (!empty($question['choices']) && is_array($question['choices'])) {
+                foreach ($question['choices'] as $choice) {
                     if (!empty($choice)) {
-                        try {
-                            $sqlChoice = "INSERT INTO quiex_choices (question_id, choice_text) VALUES (?, ?)";
-                            $stmtChoice = $pdo->prepare($sqlChoice);
-                            $stmtChoice->execute([$questionId, $choice]);
-                        } catch (PDOException $e) {
-                            error_log("Error inserting choice: " . $e->getMessage());
+                        $sqlChoice = "INSERT INTO quiex_choices (question_id, choice_text) VALUES (?, ?)";
+                        $stmtChoice = $pdo->prepare($sqlChoice);
+                        $stmtChoice->execute([$questionId, $choice]);
+
+                        if ($choice === $correctAnswer) {
+                            $correctChoiceId = $pdo->lastInsertId();
+                            $sqlUpdateCorrectAnswer = "UPDATE quiex_choices SET is_correct = 1 WHERE id = ?";
+                            $stmtUpdate = $pdo->prepare($sqlUpdateCorrectAnswer);
+                            $stmtUpdate->execute([$correctChoiceId]);
                         }
                     }
                 }
