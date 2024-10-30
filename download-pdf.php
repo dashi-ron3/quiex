@@ -15,12 +15,12 @@ if ($conn->connect_error) {
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 } else {
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 
 // Sample user ID
-//$user_id = 1;
+// $user_id = 1;
 
 if (isset($_GET['quiz_id'])) {
     $quiz_id = $_GET['quiz_id'];
@@ -57,6 +57,15 @@ if (isset($_GET['quiz_id'])) {
         $pdf->SetTextColor(...$defaultTextColor);
 
         $choices = $conn->query("SELECT * FROM choices WHERE question_id = {$question['id']}");
+
+        $user_answer_query = "
+            SELECT ua.answer_id
+            FROM user_answers ua
+            WHERE ua.quiz_id = $quiz_id AND ua.question_id = {$question['id']}
+        ";
+        $user_answer = $conn->query($user_answer_query)->fetch_assoc();
+        $user_answer_id = $user_answer ? $user_answer['answer_id'] : null;
+
         while ($choice = $choices->fetch_assoc()) {
             $user_answer_query = "
                 SELECT ua.answer_id
@@ -65,27 +74,29 @@ if (isset($_GET['quiz_id'])) {
             ";
             $user_answer = $conn->query($user_answer_query)->fetch_assoc();
             $user_answer_id = $user_answer ? $user_answer['answer_id'] : null;
-
-            if ($choice['is_correct']) {
+        
+            if ($choice['id'] == $user_answer_id && $choice['is_correct']) {
                 $pdf->SetTextColor(111, 180, 110); // green
-                $pdf->Cell(0, 10, "- {$choice['text']}", 0, 1);
+                $pdf->Cell(0, 10, "- {$choice['text']} (Your Answer)", 0, 1);
+            } elseif ($choice['is_correct']) {
+                $pdf->SetTextColor(111, 180, 110); // green
+                $pdf->Cell(0, 10, "- {$choice['text']} (Correct Answer)", 0, 1);
+            } elseif ($user_answer_id == $choice['id']) {
+                $pdf->SetTextColor(255, 0, 0); // red
+                $pdf->Cell(0, 10, "- {$choice['text']} (Your Answer)", 0, 1);
             } else {
-                if ($user_answer_id == $choice['id']) {
-                    $pdf->SetTextColor(255, 0, 0); // red
-                    $pdf->Cell(0, 10, "- {$choice['text']} (Your Answer)", 0, 1);
-                } else {
-                    $pdf->SetTextColor(0, 0, 0); // black
-                    $pdf->Cell(0, 10, "- {$choice['text']}", 0, 1);
-                }
+                $pdf->SetTextColor(0, 0, 0); // black
+                $pdf->Cell(0, 10, "- {$choice['text']}", 0, 1);
             }
         }
+        
+
         $pdf->SetTextColor(...$defaultTextColor);
         $pdf->Ln(5);
         $i++;
     }
 
-
-    $pdf->Output("{$quiz['title']}_Review.pdf", 'D');
+    $pdf->Output("{$quiz['title']} Review.pdf", 'D');
 }
 
 $conn->close();
