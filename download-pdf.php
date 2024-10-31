@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 // Sample user ID
-// $user_id = 1;
+//$user_id = 1;
 
 if (isset($_GET['quiz_id'])) {
     $quiz_id = $_GET['quiz_id'];
@@ -33,66 +33,90 @@ if (isset($_GET['quiz_id'])) {
     }
 
     $pdf = new TCPDF();
+    $pdf->setPrintHeader(false);
+    $pdf->setPrintFooter(false);
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetAuthor('QuiEx');
     $pdf->SetTitle($quiz['title']);
     $pdf->AddPage();
+    $pdf->SetFont('helvetica', '', 12);
 
-    // quiz info
+    $pdf->SetFont('helvetica', 'B', 16);
     $pdf->Cell(0, 10, $quiz['title'] . " Review", 0, 1, 'C');
-    $pdf->Ln(8);
-    $pdf->Cell(0, 10, "Started on: " . date('m/d/y h:i A', strtotime($quiz['started_at'])), 0, 1);
-    $pdf->Cell(0, 10, "Finished on: " . date('m/d/y h:i A', strtotime($quiz['finished_at'])), 0, 1);
-    $pdf->Cell(0, 10, "Time taken: " . gmdate('H:i:s', strtotime($quiz['finished_at']) - strtotime($quiz['started_at'])), 0, 1);
-    $pdf->Cell(0, 10, "Marks: {$quiz['marks']} out of {$quiz['total_marks']}", 0, 1);
-    $pdf->Cell(0, 10, "Score: " . ($quiz['is_graded'] ? "{$quiz['points']}" : "N/A"), 0, 1);
+    $pdf->Ln(5);
 
-    // questions and answers
-    $pdf->Ln(10);
+$containerWidth = $pdf->getPageWidth() - $pdf->getMargins()['left'] - $pdf->getMargins()['right'];
+$pdf->SetFont('helvetica', '', 12);
+$pdf->MultiCell($containerWidth, 12, "Started on: " . date('m/d/y h:i A', strtotime($quiz['started_at'])) . "\n" .
+                                       "Finished on: " . date('m/d/y h:i A', strtotime($quiz['finished_at'])) . "\n" .
+                                       "Time taken: " . gmdate('H:i:s', strtotime($quiz['finished_at']) - strtotime($quiz['started_at'])) . "\n" .
+                                       "Marks: {$quiz['marks']} out of {$quiz['total_marks']}\n" .
+                                       "Score: " . ($quiz['is_graded'] ? "{$quiz['points']}" : "N/A"), 
+              0, 'C', 0, 1, '', '', true);
+$pdf->Ln(5);
+
+
+
     $i = 1;
     while ($question = $questions->fetch_assoc()) {
-        $pdf->Cell(0, 10, "Question $i: {$question['text']}", 0, 1);
+        $containerWidth = 180;
+        $baseContainerHeight = 50;
+        $spacing = 15;
+        $startY = $pdf->GetY();
 
-        $defaultTextColor = [0, 0, 0]; // black
-        $pdf->SetTextColor(...$defaultTextColor);
+        if ($startY + $baseContainerHeight + $spacing > $pdf->getPageHeight() - $pdf->getMargins()['bottom']) {
+            $pdf->AddPage();
+            $startY = $pdf->GetY();
+        }
 
+        $questionHeight = $pdf->getStringHeight($containerWidth, "Question $i: {$question['text']}") + 5;
+        $choicesHeight = 0;
+        
         $choices = $conn->query("SELECT * FROM choices WHERE question_id = {$question['id']}");
+        while ($choice = $choices->fetch_assoc()) {
+            $choicesHeight += $pdf->getStringHeight($containerWidth, "- {$choice['text']}") + 5;
+        }
 
-        $user_answer_query = "
-            SELECT ua.answer_id
-            FROM user_answers ua
-            WHERE ua.quiz_id = $quiz_id AND ua.question_id = {$question['id']}
-        ";
+        $totalHeight = $questionHeight + $choicesHeight + 10;
+        $containerHeight = max($baseContainerHeight, $totalHeight);
+
+        $pdf->SetFillColor(245, 245, 245);
+        $pdf->Rect(15, $startY, $containerWidth, $containerHeight, 'DF');
+        $pdf->SetDrawColor(0, 0, 0);
+        $pdf->Rect(15, $startY, $containerWidth, $containerHeight, 'D');
+
+        $pdf->SetFont('helvetica', 'B', 12);
+        $pdf->MultiCell($containerWidth, 10, "Question $i: {$question['text']}", 0, 'L', 0, 1, '15', $startY + 5);
+
+        $user_answer_query = "SELECT ua.answer_id FROM user_answers ua WHERE ua.quiz_id = $quiz_id AND ua.question_id = {$question['id']}";
         $user_answer = $conn->query($user_answer_query)->fetch_assoc();
         $user_answer_id = $user_answer ? $user_answer['answer_id'] : null;
 
+        $pdf->SetY($startY + $questionHeight + 10);
+        $choices = $conn->query("SELECT * FROM choices WHERE question_id = {$question['id']}");
         while ($choice = $choices->fetch_assoc()) {
-            $user_answer_query = "
-                SELECT ua.answer_id
-                FROM user_answers ua
-                WHERE ua.quiz_id = $quiz_id AND ua.question_id = {$question['id']}
-            ";
-            $user_answer = $conn->query($user_answer_query)->fetch_assoc();
-            $user_answer_id = $user_answer ? $user_answer['answer_id'] : null;
-        
-            if ($choice['id'] == $user_answer_id && $choice['is_correct']) {
-                $pdf->SetTextColor(111, 180, 110); // green
-                $pdf->Cell(0, 10, "- {$choice['text']} (Your Answer)", 0, 1);
-            } elseif ($choice['is_correct']) {
-                $pdf->SetTextColor(111, 180, 110); // green
-                $pdf->Cell(0, 10, "- {$choice['text']} (Correct Answer)", 0, 1);
-            } elseif ($user_answer_id == $choice['id']) {
-                $pdf->SetTextColor(255, 0, 0); // red
-                $pdf->Cell(0, 10, "- {$choice['text']} (Your Answer)", 0, 1);
-            } else {
-                $pdf->SetTextColor(0, 0, 0); // black
-                $pdf->Cell(0, 10, "- {$choice['text']}", 0, 1);
-            }
-        }
-        
+            $is_user_answer = ($choice['id'] == $user_answer_id);
+            $is_correct_answer = $choice['is_correct'];
+            $choice_text = "- {$choice['text']}";
 
-        $pdf->SetTextColor(...$defaultTextColor);
-        $pdf->Ln(5);
+            if ($is_correct_answer && $is_user_answer) {
+                $pdf->SetTextColor(111, 180, 110);
+                $choice_text .= " (Your Answer)";
+            } elseif ($is_correct_answer) {
+                $pdf->SetTextColor(111, 180, 110);
+                $choice_text .= " (Correct Answer)";
+            } elseif ($is_user_answer) {
+                $pdf->SetTextColor(255, 0, 0);
+                $choice_text .= " (Your Answer)";
+            } else {
+                $pdf->SetTextColor(0, 0, 0);
+            }
+
+            $pdf->MultiCell($containerWidth - 10, 8, $choice_text, 0, 'L', 0, 1, '25');
+        }
+
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->Ln($spacing);
         $i++;
     }
 
