@@ -212,7 +212,7 @@ header {
 
 .study-companion h1{font-size: 4rem; margin-left: 55px;}
 
-.assessment-container {
+.assessment-container, .student-container {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -229,6 +229,7 @@ header {
     justify-content: center;
     align-items: center;
     height: 35vh;
+    width: 60vh;
     margin: 13vh 13px;
     position: relative;
     border-radius: 10px;
@@ -272,6 +273,60 @@ header {
     font-weight: 800;
     color: #1A202C;
 }
+
+.student-container {
+    background-color: #fff;
+    text-align: center;
+    flex: 1 1 30%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 35vh;
+    margin: 13vh 13px;
+    position: relative;
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 20vh;
+    margin-top: 20vh;
+}
+
+.student-container::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -10px;
+    width: 100%;
+    height: 100%;
+    background-color: #1A202C;
+    border-radius: 10px;
+    z-index: -1;
+}
+
+.student-container:hover .hover-content {
+    display: block; 
+}
+
+.student-container a {
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1A202C;
+}
+
+button {
+    cursor: pointer;
+    display: flex;
+    margin: auto;
+    margin-bottom: 50px;
+    padding: 5px 15px;
+    background-color: #d0e1f9;
+    border-radius: 8px;
+    border: 1px solid #1A202C;
+    transition: transform 0.3s ease;
+}
+
+button:hover {transform: scale(1.1);}
 
 footer {
     background-color: #374664;
