@@ -15,6 +15,10 @@ const questions = [
     { type: 'multiple-choice', question: 'Which planet is known as the "Red Planet"?', answers: ['Earth', 'Venus', 'Mars', 'Jupiter'], correct: 'Mars' },
     { type: 'identification', question: 'What is the chemical symbol for gold?', answer: 'AU' },
     { type: 'identification', question: 'Who painted the Mona Lisa?', answer: 'LEONARDO DA VINCI' },
+    { type: 'multiple-choice', question: 'What is the capital of Taiwan?', answers: ['KAOHSIUNG', 'TAITUNG', 'HSINCHU', 'TAIPEI'], correct: 'TAIPEI' },
+    { type: 'identification', question: 'Which blood cells are responsible for transporting oxygen in the body?', answer: 'RED BLOOD CELLS' },
+    { type: 'multiple-choice', question: 'Which organ in the human body is responsible for filtering blood?', answers: ['HEART', 'KIDNEYS', 'LUNGS', 'BRAIN'], correct: 'KIDNEYS' },
+    { type: 'identification', question: 'What is the most abundant gas in Earth’s atmosphere?', answer: 'NITROGEN' },
 ];
 
 questions.sort(() => Math.random() - 0.5);
