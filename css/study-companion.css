@@ -9,14 +9,13 @@ a {
     text-decoration: none;
 }
 
-
 body {
     background-color: #d3dfea;
     padding: 20px;
 }
 
-/* container styles */
 .container {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -24,8 +23,8 @@ body {
     gap: 75px; 
     max-width: 1800px; 
     margin: auto; 
+    padding: 20px;
 }
-
 
 .divider {
     border: none;
@@ -35,7 +34,6 @@ body {
     width: 100%px;
 }
 
-/* left-container styles */
 .left-container {
     width: 20%;
     max-height: fit-content;
@@ -85,6 +83,12 @@ body {
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.pdf-button:hover {
+    transform: scale(1.05);
+    background-color: #2a7f2c;
 }
 
 .finish-review {
@@ -99,14 +103,13 @@ body {
     font-size: 1.2rem;
     line-height: 1.2;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .finish-review:hover {
     background-color: #2c3b50;
 }
 
-
-/* right-container styles */
 .right-container {
     width: 45%;
     max-height: fit-content;
@@ -192,6 +195,7 @@ body {
 .correct, .nav-correct {
     background-color: #6fb46e;
 }
+
 .wrong, .nav-wrong {
     background-color: #cb5b5b;
 }
@@ -284,7 +288,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* back to top button */
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -320,7 +323,6 @@ body {
     margin: 0;
 }
 
-/* header styles */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -379,4 +381,51 @@ body {
     width: 25px;
     height: 25px;
     fill: #cbd9e6;
+}
+
+.quizzes-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 50px;
+    max-width: 1440px;
+    margin: 20px auto;
+}
+
+.quiz-container {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border: 1px solid #ddd;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: -8px 8px 0 #393c40, 0 8px 0 #393c40;
+}
+
+.quiz-container p {
+    font-weight: bold;
+}
+
+.quiz-container:hover {
+    transform: translateY(-15px);
+}
+
+.quiz-container h3 {
+    font-size: 1.5rem;
+    color: #32659a;
+    margin-bottom: 10px;
+}
+
+.quiz-container .quiz-link {
+    text-decoration: none;
+    color: #007acc;
+    font-weight: bold;
+    padding: 10px 15px;
+    background-color: #d3dfea;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.quiz-container .quiz-link:hover {
+    background-color: #32659a;
+    color: #f9f9f9;
 }
