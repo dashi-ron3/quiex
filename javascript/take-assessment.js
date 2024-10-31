@@ -8,9 +8,7 @@ function loadAssessment(assessmentCode) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            unique_code: assessmentCode
-        })
+        body: JSON.stringify({ unique_code: assessmentCode })
     })
     .then(response => response.json())
     .then(data => {
@@ -72,13 +70,13 @@ function prevQuestion() {
 }
 
 function submitAssessment() {
-    fetch('path/to/submit/assessment.php', {
+    fetch('submit-assessment.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            assessmentId: getAssessmentIdFromCode(assessmentCode), 
+            assessmentId: questions[0].assessment_id, 
             answers: answers
         })
     })
@@ -93,10 +91,15 @@ function submitAssessment() {
     .catch(error => console.error('Error:', error));
 }
 
-const urlParams = new URLSearchParams(window.location.search);
-const assessmentCode = urlParams.get('code'); 
-loadAssessment(assessmentCode);
-
+document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const assessmentCode = urlParams.get('code'); 
+    if (assessmentCode) {
+        loadAssessment(assessmentCode);
+    } else {
+        alert('Assessment code is required.');
+    }
+});
 
 // text reader
 
