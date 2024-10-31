@@ -1,19 +1,28 @@
 <?php
+session_start();
 include 'config/connection.php';
 header('Content-Type: application/json');
 
 $input = json_decode(file_get_contents('php://input'), true);
-$unique_code = $input['unique_code'];
+$unique_code = $input['unique_code'] ?? null;
+$assessmentId = $input['assessmentId'] ?? null;
 
-if (!$unique_code) {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid unique code']);
+if (!$unique_code && !$assessmentId) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid unique code or assessment ID']);
     exit();
 }
 
 try {
-    $sql = "SELECT id, title FROM assessments WHERE unique_code = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$unique_code]);
+    if ($unique_code) {
+        $sql = "SELECT id, title FROM assessments WHERE unique_code = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$unique_code]);
+    } else {
+        $sql = "SELECT id, title FROM assessments WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$assessmentId]);
+    }
+    
     $assessment = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$assessment) {
@@ -31,7 +40,7 @@ try {
 
     foreach ($questions as &$question) {
         $questionId = $question['id'];
-        $sqlChoices = "SELECT id, choice_text FROM quiex_choices WHERE question_id = ?";
+        $sqlChoices = "SELECT id, choice_text, is_correct FROM quiex_choices WHERE question_id = ?";
         $stmtChoices = $pdo->prepare($sqlChoices);
         $stmtChoices->execute([$questionId]);
         $question['choices'] = $stmtChoices->fetchAll(PDO::FETCH_ASSOC);
@@ -39,8 +48,10 @@ try {
 
     echo json_encode([
         'status' => 'success',
-        'title' => $title,
-        'questions' => $questions
+        'assessment' => [
+            'title' => $title,
+            'questions' => $questions
+        ]
     ]);
 
 } catch (PDOException $e) {
