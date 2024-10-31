@@ -142,3 +142,65 @@ p {
     height: 30px;
     margin-left: 1200px;
 }
+
+.restart-button {
+    padding: 5px 10px;
+    font-size: 0.5rem;
+    background-color: #bd5656;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.restart-button:hover {
+    background-color: #511c1c;
+}
+
+@keyframes fadeMoveUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.start-screen img {
+    animation: fadeMoveUp 2s ease-in-out forwards;
+}
+
+.quiz-screen .think-img, .bolt-img {
+    animation: scale 1.5s infinite ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-10px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(10px);
+    }
+}
+
+.clock-img {
+    animation: shake 0.6s ease-in-out infinite;
+}
