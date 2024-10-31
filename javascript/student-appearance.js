@@ -1,40 +1,40 @@
-function goBack() {
-    window.location.href = 'student-page.php';
-}
-
 const setStudentTheme = (theme) => {
+    console.log("Setting theme to:", theme);
     document.documentElement.classList.remove('light', 'dark', 'purple');
     document.documentElement.classList.add(theme);
-    localStorage.setItem('studentTheme', theme);
 
-    const logo = document.getElementById('logo');
-    if (theme === 'dark') {
-        logo.src = 'assets/Dark_QuiEx-Logo.png';
-    } else {
-        logo.src = 'assets/QuiEx-Logo.png';
-    }
-};
-
-const loadStudentTheme = () => {
-    const savedTheme = localStorage.getItem('studentTheme');
-    if (savedTheme) {
-        setStudentTheme(savedTheme);
-        document.getElementById('theme-select').value = savedTheme;
-    } else {
-        setStudentTheme('light'); // default theme
-    }
+    fetch('update-theme.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ theme: theme })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("Server response:", data);
+        if (data.status !== 'success') {
+            console.error('Failed to save theme:', data.message);
+        } else {
+            console.log("Theme saved successfully!");
+        }
+    })
+    .catch(error => console.error('Error saving theme:', error));
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadStudentTheme();
+    const savedTheme = document.documentElement.dataset.theme;
+    console.log("Loaded saved theme:", savedTheme);
+
+    if (savedTheme) {
+        setStudentTheme(savedTheme);
+        document.getElementById('theme-select').value = savedTheme;
+    }
 
     document.getElementById('theme-select').addEventListener('change', function() {
         setStudentTheme(this.value);
     });
 
-    document.getElementById('save-theme-btn').addEventListener('click', function() {
-        const currentTheme = document.getElementById('theme-select').value;
-        setStudentTheme(currentTheme);
-        alert(`Theme "${currentTheme}" has been saved for student!`);
+    document.getElementById('saveThemeButton').addEventListener('click', function() {
+        const selectedTheme = document.getElementById('theme-select').value;
+        setStudentTheme(selectedTheme);
     });
 });
