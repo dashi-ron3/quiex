@@ -5,21 +5,23 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column; 
     align-items: center;  
     height: 100vh;
+    padding-top: 100px; 
 }
 
 .navbar {
+    position: fixed;
     width: 100%;
     background-color: #CBD5E0;
     display: flex;
-    justify-content: space-between; /* Space out elements */
+    justify-content: space-between; 
     align-items: center;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .page-name {
@@ -55,7 +57,7 @@ body {
     margin: 0 auto;
     padding: 50px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .top-three {
@@ -76,7 +78,6 @@ body {
     text-align: center;
 }
 
-/* Position for the top three */
 .player-1 {
     order: 2;
     transform: translateY(-30px); /* Slightly raised for 1st place */
@@ -101,7 +102,6 @@ body {
     color: gold;
 }
 
-/* Star styling */
 .star {
     position: absolute;
     top: 93px;

@@ -76,7 +76,7 @@ $result = $conn->query($sql);
         <nav class="navbar">
             <div class="logo-page-name-container">
                 <div class="logo">
-                    <a href="student-page.php">
+                    <a href="teacher-page.php">
                         <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
                     </a>
                 </div>
