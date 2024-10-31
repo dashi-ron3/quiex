@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: index.php");
+//     exit();
+// }
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -41,12 +41,16 @@ header("Pragma: no-cache");
                     <div class="dropdown">
                         <a href="#assessment" class="dropbtn">ASSESSMENT</a>
                         <div class="dropdown-content">
-                            <a href="#">Practice Assessment</a>
                             <a href="#">Take Assessment</a>
                             <a href="#">Rapid Quiz</a>
                         </div>
                     </div>
-                    <a href="study-companion.php">STUDY COMPANION</a>
+                    <div class="dropdown">
+                        <a href="study-companion.php">STUDY COMPANION</a>
+                        <div class="dropdown-content">
+                            <a href="#study-companion">Student Summary</a>
+                        </div>
+                    </div>
                     <a href="student-settings.php">SETTINGS</a>
                 </div>
             </nav>
@@ -94,14 +98,6 @@ header("Pragma: no-cache");
                 <h1>ASSESSMENT</h1>
                 <div class="assessment-container">
                     <div class="assessment-options">
-                        <a href="#">Practice Assessment</a>
-                        <div class="hover-content">
-                            <p>Practice your knowledge with public assessments to ready yourself on future tests!</p>
-                            <button>Enter</button>
-                        </div>
-                    </div>
-
-                    <div class="assessment-options">
                         <a href="#">Take Assessment</a>
                         <div class="hover-content">
                             <p>Join a private class assessment!</p>
@@ -119,6 +115,60 @@ header("Pragma: no-cache");
                 </div>
             </div>
         </section>
+
+        <section id="study-companion">
+            <div class="study-companion">
+                <h1>STUDY COMPANION</h1>
+                <div class="student-container">
+                    <a href="#">Student Summary</a>
+                    <div class="hover-content">
+                        <!-- Example Data Start -->
+                        <h2>Finished Assessments</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Assessment Title</th>
+                                    <th>Score</th>
+                                    <th>Total Points</th>
+                                    <th>Incorrect Questions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Sample data rows -->
+                                <tr>
+                                    <td>Sample Science Quiz</td>
+                                    <td>90</td>
+                                    <td>100</td>
+                                    <td>1, 3</td>
+                                </tr>
+                                <tr>
+                                    <td>Sample Science Quiz</td>
+                                    <td>65</td>
+                                    <td>90</td>
+                                    <td>2, 5, 6</td>
+                                </tr>
+                                <tr>
+                                    <td>Sample Quiz 1</td>
+                                    <td>77</td>
+                                    <td>85</td>
+                                    <td>2, 8</td>
+                                </tr>
+                                <tr>
+                                    <td>Sample Quiz 2</td>
+                                    <td>94</td>
+                                    <td>100</td>
+                                    <td>4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Example Data End -->
+                    </div>
+                </div>
+            </div>
+            <button onclick="window.location.href='#home'">Home</button>
+        </section>
+        
+
 
         <footer>
             <div class="footer-content">
