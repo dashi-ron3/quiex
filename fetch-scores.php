@@ -7,9 +7,19 @@ if (mysqli_connect_errno()) {
 if (isset($_POST['assessment_title'])) {
     $assessmentTitle = mysqli_real_escape_string($conn, $_POST['assessment_title']);
 
-    $query = "SELECT studentName, score, totalPoints, incorrectQuestions 
-              FROM student_scores 
-              WHERE assessmentTitle = '$assessmentTitle'";
+    // Updated query to join quizzes, assessments, users, and user_answers tables
+    $query = "SELECT 
+                users.name AS studentName,
+                quizzes.points AS score,
+                quizzes.total_marks AS totalPoints,
+                GROUP_CONCAT(choices.id) AS incorrectQuestions
+              FROM quizzes
+              JOIN assessments ON assessments.title = quizzes.title
+              JOIN users ON users.id = quizzes.user_id
+              LEFT JOIN user_answers ON user_answers.quiz_id = quizzes.id
+              LEFT JOIN choices ON choices.id = user_answers.answer_id AND user_answers.is_correct = 0
+              WHERE assessments.title = '$assessmentTitle'
+              GROUP BY users.name, quizzes.points, quizzes.total_marks";
 
     $result = $conn->query($query);
 

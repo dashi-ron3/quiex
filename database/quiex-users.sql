@@ -18,6 +18,11 @@ CREATE TABLE IF NOT EXISTS users (
 -- user type classification during sign up
 ALTER TABLE users ADD COLUMN user_type ENUM('student', 'teacher') NOT NULL;
 
+INSERT INTO users (username, email, name, age, gr_level, password, user_type)
+VALUES 
+('john_doe', 'john@example.com', 'John Doe', 16, '10th Grade', 'password123', 'student'),
+('jane_smith', 'jane@example.com', 'Jane Smith', 15, '10th Grade', 'password123', 'student');
+
 -- create assessment
 CREATE TABLE IF NOT EXISTS assessments (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -29,10 +34,10 @@ CREATE TABLE IF NOT EXISTS assessments (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO assessments (subject, title, content, created_at) VALUES
-("Math", "Sample title", "this is a sample content", "2024-10-21 11:00:00"),
-("Math", "Math Quiz 2", "this is a sample content", "2024-10-26 10:00:00"),
-("Science", "Science Quiz 1", "this is sample content 2", "2024-10-21 12:00:00");
+INSERT INTO assessments (subject, title, content, status, unique_code, created_at)
+VALUES 
+('Math','Math Quiz 1', 'Basic Algebra Quiz', 'published', 'MATH101', "2024-10-21 11:00:00");
+
 
 SELECT * FROM assessments;
 
@@ -83,14 +88,14 @@ CREATE TABLE uploadedAss (
 SELECT * FROM uploadedAss;
 
 -- FOR TESTING ASSESSMENTS
--- INSERT INTO uploadedAss (subject, title, status, lastUsed, descrip) VALUES
--- ('Science', 'Sample Science Quiz', 'In Progress', '2024-02-10', 'An examination of basic physics concepts.'),
+INSERT INTO uploadedAss (subject, title, status, lastUsed, descrip) VALUES
+('Science', 'Sample Science Quiz 1', 'In Progress', '2024-02-10', 'An examination of basic physics concepts.');
 -- ('History', 'Sample History Quiz', 'Not Started', '2024-03-01', 'An assignment about World War II.'),
 -- ("Biology","Sample Biology Exam", "Done", "2023-11-09", "Sample Test Description.");
 
 -- leaderboard
 CREATE TABLE leaderboard (
-   --  --quizID INT AUTO_INCREMENT PRIMARY KEY,
+    -- quizID INT AUTO_INCREMENT PRIMARY KEY,
     id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     profile_pic VARCHAR(255) NOT NULL,
@@ -119,6 +124,12 @@ CREATE TABLE IF NOT EXISTS quizzes (
     is_graded BOOLEAN DEFAULT 1,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, points, total_marks)
+VALUES 
+(1, 'Math Quiz 1', '2024-01-01 10:00:00', '2024-01-01 10:30:00', '00:30:00', 80, 100),
+(2, 'Math Quiz 1', '2024-01-01 10:00:00', '2024-01-01 10:30:00', '00:30:00', 60, 100);
+
 
 -- questions table (connected to quizzes) SAMPLE
 CREATE TABLE IF NOT EXISTS questions (
@@ -149,6 +160,9 @@ CREATE TABLE IF NOT EXISTS user_answers (
     FOREIGN KEY (question_id) REFERENCES questions(id),
     FOREIGN KEY (answer_id) REFERENCES choices(id)
 );
+
+SELECT * FROM user_answers;
+
 
 CREATE TABLE student_scores (
     id INT AUTO_INCREMENT PRIMARY KEY,
