@@ -97,11 +97,15 @@ header("Pragma: no-cache");
             <div class="assessment">
                 <h1>ASSESSMENT</h1>
                 <div class="assessment-container">
+                    
                     <div class="assessment-options">
                         <a href="#">Take Assessment</a>
                         <div class="hover-content">
                             <p>Join a private class assessment!</p>
-                            <button>Enter</button>
+                            <form action="check-assessment.php" method="POST">
+                            <input type="text" id="assessment-code" name="assessment_code" placeholder="eg. uB09kt3Y" required>
+                            <br><br> <button onclick="redirectToAssessment()">Enter</button>
+                            </form>
                         </div>
                     </div>
 
