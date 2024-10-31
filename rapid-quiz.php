@@ -54,7 +54,7 @@
 <body>
     <div class="start-screen">
         <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="500" height="200">
-        <h2>Rapid Quiz</h2>
+        <h2>Are you ready?</h2>
         <button class="start-button" onclick="startQuiz()">Start</button>
     </div>
 
