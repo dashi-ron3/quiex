@@ -96,3 +96,55 @@ function submitAssessment() {
 const urlParams = new URLSearchParams(window.location.search);
 const assessmentCode = urlParams.get('code'); 
 loadAssessment(assessmentCode);
+
+
+// text reader
+
+let hasRead = false;
+let selectedVoice = null;
+
+function loadVoices() {
+    const voices = window.speechSynthesis.getVoices();
+    console.log("Available voices:", voices);
+
+    if (voices.length > 2) {
+        selectedVoice = voices[2];
+    } else {
+        console.error("Not enough voices available. Falling back to the first voice.");
+        selectedVoice = voices[0];
+    }
+}
+
+function readText() {
+    const textContainer = document.getElementById('text-container');
+    const textToRead = textContainer.innerText;
+
+    setTimeout(() => {
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.lang = 'en-US';
+
+        if (selectedVoice) {
+            utterance.voice = selectedVoice;
+        } else {
+            console.warn("No voice selected.");
+        }
+
+        window.speechSynthesis.speak(utterance);
+    }, 1000); // 1000 miliseconds = 1 second delay before automatically speaking
+}
+
+window.onload = function() {
+    loadVoices();
+
+    window.speechSynthesis.onvoiceschanged = function() {
+        loadVoices();
+
+        if (!hasRead) {
+            readText();
+            hasRead = true;
+        }
+    };
+
+    const readButton = document.getElementById('read-button');
+    readButton.addEventListener('click', readText);
+};
