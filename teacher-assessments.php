@@ -126,6 +126,8 @@ $result = $conn->query($sql);
                                 <div class="status"><strong>Status:</strong> <?php echo htmlspecialchars($row['status']); ?></div>
                             </div>
                             <a href="#" class="edit"><strong>Edit</strong></a>
+                            <button type="button" class="score" onclick="fetchScores('<?php echo htmlspecialchars($row['title']); ?>')">Score</button>
+                            
                         </div>
                         <p class="details"><?php echo htmlspecialchars($row['descrip']); ?></p>
                         <div class="share">
@@ -152,21 +154,51 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-    <p>
-        <a href="http://jigsaw.w3.org/css-validator/check/referer">
-            <img style="border:0;width:88px;height:31px"
-                src="http://jigsaw.w3.org/css-validator/images/vcss"
-                alt="Valid CSS!" />
-        </a>
-    </p>
+    <div id="score-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Scores</h2>
+            <div id="modal-score-content">
+                <!-- Scores will be loaded here via AJAX -->
+            </div>
+        </div>
+    </div>
 
-    <p>
-        <a href="http://jigsaw.w3.org/css-validator/check/referer">
-            <img style="border:0;width:88px;height:31px"
-                src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
-                alt="Valid CSS!" />
-        </a>
-    </p>
+    <script>
+        function fetchScores(title) {
+            const modal = document.getElementById('score-modal');
+            const modalContent = document.getElementById('modal-score-content');
+
+            // Show the modal
+            modal.style.display = 'block';
+
+            // Clear previous content
+            modalContent.innerHTML = '<p>Loading...</p>';
+
+            // Fetch scores
+            fetch('fetch-scores.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'assessment_title=' + encodeURIComponent(title)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    modalContent.innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching scores:', error);
+                    modalContent.innerHTML = '<p>Error loading scores. Please try again.</p>';
+                });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('score-modal');
+            modal.style.display = 'none';
+        }
+    </script>
+
 </body>
 
 </html>

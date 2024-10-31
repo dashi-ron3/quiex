@@ -132,6 +132,19 @@ h1 {
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #adadad;
+    gap: 10px;
+}
+
+.edit {
+    text-decoration: none;
+    color: #113366;
+    font-size: 16px;
+    margin-left: auto;
+}
+
+.score {
+    color: #113366;
+    font-size: 16px;
 }
 
 .title-status {
@@ -153,12 +166,6 @@ h1 {
     position: absolute;
     top: -10px; /* Adjust this value to place it slightly above the assessment box */
     right: 15px; /*Align to the right of the container */
-}
-
-.edit {
-    text-decoration: none;
-    color: #113366;
-    font-size: 16px;
 }
 
 .view {
@@ -185,4 +192,64 @@ h1 {
     background-color: #32659a;
     padding: 2px 5px;
     border-radius: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.score-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.score-table th, .score-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.score-table th {
+    background-color: #f2f2f2;
+}
+
+.score-table tr:hover {
+    background-color: #f1f1f1;
 }
