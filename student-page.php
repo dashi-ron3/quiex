@@ -1,15 +1,13 @@
 <?php
 session_start();
 
-// if (!isset($_SESSION['user_id'])) {
-//     header("Location: index.php");
-//     exit();
-// }
+/*if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php");
+    exit();
+}*/
 
 if (!isset($_SESSION['theme'])) {
     $_SESSION['theme'] = 'light';
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
 }
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -36,7 +34,7 @@ header("Pragma: no-cache");
     <img src="assets/QuiEx-Logo.png" alt="Logo" class="loading-logo">
 </div>
 
-    <div id="main-content" style="display: block;">
+    <div id="main-content" style="display: none;">
 
         <header>
             <nav class="navbar">

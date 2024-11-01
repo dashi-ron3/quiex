@@ -1,9 +1,13 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
+/*if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
+}*/
+
+if (!isset($_SESSION['theme'])) {
+    $_SESSION['theme'] = 'light';
 }
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");

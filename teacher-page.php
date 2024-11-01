@@ -1,9 +1,13 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
+/*if (!isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
+}*/
+
+if (!isset($_SESSION['theme'])) {
+    $_SESSION['theme'] = 'light';
 }
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -12,7 +16,7 @@ header("Pragma: no-cache");
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<?php echo htmlspecialchars($_SESSION['theme'] ?? 'light'); ?>">
 
 <head>
     <meta charset="UTF-8">
@@ -22,6 +26,7 @@ header("Pragma: no-cache");
     <title>QuiEx</title>
     <link rel="stylesheet" href="css/teacher-page.css">
     <link rel="stylesheet" href="css/loading-screen.css">
+    <script src="javascript/student-appearance.js" defer></script>
     <script src="javascript/teacher-page.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
 </head>
@@ -37,7 +42,7 @@ header("Pragma: no-cache");
     <header>
         <nav class="navbar">
             <div class="logo">
-                <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
             </div>
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <div class="nav">
