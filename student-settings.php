@@ -27,7 +27,7 @@ header("Pragma: no-cache");
 <body>
     <header>
         <div class="logo">
-            <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+            <img id="logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark-QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
         </div>
     </header>
     <div class="container">

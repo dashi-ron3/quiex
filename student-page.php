@@ -12,7 +12,7 @@ header("Pragma: no-cache");
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<?php echo htmlspecialchars($_SESSION['theme'] ?? 'light'); ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,20 +21,21 @@ header("Pragma: no-cache");
     <title>Student Page | QuiEx</title>
     <link rel="stylesheet" href="css/student-page.css">
     <link rel="stylesheet" href="css/loading-screen.css">
+    <script src="javascript/student-appearance.js" defer></script>
     <script src="javascript/student-page.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body>
-    <div id="loading-screen">
-        <img src="assets/QuiEx-Logo.png" alt="Logo" id="logo" width="100" height="200">
-    </div>
+<div id="loading-screen">
+    <img src="assets/QuiEx-Logo.png" alt="Logo" class="loading-logo">
+</div>
 
-    <div id="main-content" style="display: none;">
+    <div id="main-content" style="display: block;">
 
         <header>
             <nav class="navbar">
                 <div class="logo">
-                    <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                    <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
                 </div>
                 <div class="nav">
                     <a href="#home">HOME</a>
