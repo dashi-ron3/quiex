@@ -34,31 +34,33 @@ header("Pragma: no-cache");
 
     <div id="main-content" style="display: none;">
 
-        <header>
-            <nav class="navbar">
-                <div class="logo">
-                    <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
-                </div>
-                <div class="nav">
-                    <a href="#home">HOME</a>
-                    <div class="dropdown">
-                        <a href="#create" class="dropbtn">CREATE</a>
-                        <div class="dropdown-content">
-                            <a href="create-assessment.php">Create Assessment</a>
-                            <a href="#">Questions Archive</a>
-                            <a href="teacher-assessments.php">Assessments</a>
-                        </div>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+            </div>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            <div class="nav">
+                <a href="#home">HOME</a>
+                <div class="dropdown">
+                    <a href="#create" class="dropbtn">CREATE</a>
+                    <div class="dropdown-content">
+                        <a href="create-assessment.php">Create Assessment</a>
+                        <a href="#">Questions Archive</a>
+                        <a href="teacher-assessments.php">Assessments</a>
                     </div>
-                    <div class="dropdown">
-                        <a href="#grade" class="drpbtn">GRADE VIEWING</a>
-                        <div class="dropdown-content">
-                            <a href="grade-viewing.php">View Grades</a>
-                        </div>
-                    </div>
-                    <a href="teacher-settings.php">SETTINGS</a>
                 </div>
-            </nav>
-        </header>
+                <div class="dropdown">
+                    <a href="#grade" class="drpbtn">GRADE VIEWING</a>
+                    <div class="dropdown-content">
+                        <a href="grade-viewing.php">View Grades</a>
+                    </div>
+                </div>
+                <a href="teacher-settings.php">SETTINGS</a>
+            </div>
+        </nav>
+    </header>
+
 
         <section id="home">
             <div class="slideshow-container">
@@ -170,6 +172,14 @@ header("Pragma: no-cache");
 
     </div>
     <script src="javascript/loading-screen.js"></script>
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('.nav');
+            nav.style.display = (nav.style.display === 'flex') ? 'none' : 'flex';
+        }
+    </script>
+
 </body>
+
 
 </html>
