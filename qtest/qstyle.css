@@ -1,0 +1,123 @@
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Page title styles */
+h1 {
+    background-color: #003da7;
+    color: #fff;
+    padding: 15px;
+    margin: 0;
+}
+
+h3 {
+    color: #003da7;
+    margin: 10px;
+}   
+
+h4 {
+    margin: 10px;
+}
+
+/* Container styles */
+#quizContainer {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Question counter styles */
+#questionCounter {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Question styles */
+p {
+    font-weight: bold;
+    position: fixed;
+    padding-left: 20px;
+}
+
+/* Input field styles */
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+select {
+    width: 95%;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+/* Textarea styles */
+textarea {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Checkbox styles */
+input[type="checkbox"] {
+    margin: 10px 5px;
+}
+
+/* Button styles */
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 20px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Button hover styles */
+button:hover {
+    background-color: #FFD700;
+}
+
+#titleDescription {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px auto;
+    font-weight: bold;
+    max-width: 700px;
+    display: block;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Quiz settings styles */
+#quizSettings {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px auto;
+    font-weight: bold;
+    max-width: 700px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+div {
+    font-weight: bold;
+    display: block;
+}
+
+#image-preview {
+    max-width: 50%;
+}
