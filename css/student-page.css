@@ -1,3 +1,126 @@
+:root,
+:root.light {
+    --bg-color: #d0e1f9;
+    --header-bg-color: #d0e1f9;
+    --sidebar-bg-color: #6b83a3;
+    --sidebar-text-color: #1A202C;
+    --content-bg-color: white;
+    --text-color: #1A202C;
+    --hover-bg-color: #d0e1f9;
+    --input-bg-color: #d0e1f9;
+
+    --navbar: #6b83a3;
+    --logo: #1A202C;
+    --nav: #1A202C;
+    --dropdown: #6b83a3;
+    --dropbtn: #d0e1f9;
+    --dropdown-content: #ffffff;
+    --dropdown-content-text: #1A202C;
+
+    --slideshow-container: #d0e1f9;
+    --slide: #ffffff;
+    --dots-container: #6b83a3;
+    --dot: #CBD5E0;
+
+    --container: #ffffff;
+    --content: #f7fafc;
+    --left-section: #e2e8f0;
+    --illustration: #CBD5E0;
+    --text-content: #1A202C;
+
+    --assessment: #CBD5E0;
+    --study-companion: #CBD5E0;
+    --assessment-container: #f7fafc;
+    --student-container: #f7fafc;
+    --assessment-options: #d0e1f9;
+
+    --hover-content: #6b83a3;
+    --footer-content: #374664;
+    --contact-info: #374664;
+}
+
+:root.dark {
+    --bg-color: #1A202C;
+    --header-bg-color: #1A202C;
+    --sidebar-bg-color: #2D3748;
+    --sidebar-text-color: #F7FAFC;
+    --content-bg-color: #2C5282;
+    --text-color: #F7FAFC;
+    --hover-bg-color: #4A5568;
+    --input-bg-color: #4A5568;
+
+    --navbar: #2D3748;
+    --logo: #F7FAFC;
+    --nav: #CBD5E0;
+    --dropdown: #4A5568;
+    --dropbtn: #2C5282;
+    --dropdown-content: #1A202C;
+    --dropdown-content-text: #F7FAFC;
+
+    --slideshow-container: #1A202C;
+    --slide: #2C5282;
+    --dots-container: #4A5568;
+    --dot: #CBD5E0;
+
+    --container: #2D3748;
+    --content: #1A202C;
+    --left-section: #4A5568;
+    --illustration: #2C5282;
+    --text-content: #CBD5E0;
+
+    --assessment: #4A5568;
+    --study-companion: #4A5568;
+    --assessment-container: #2D3748;
+    --student-container: #2D3748;
+    --assessment-options: #4A5568;
+
+    --hover-content: #2C5282;
+    --footer-content: #1A202C;
+    --contact-info: #CBD5E0;
+}
+
+
+:root.purple {
+    --bg-color: #e3d3f5;
+    --header-bg-color: #e3d3f5;
+    --sidebar-bg-color: #a16bbf;
+    --sidebar-text-color: #1A202C;
+    --content-bg-color: #b68cdb;
+    --text-color: #1A202C;
+    --hover-bg-color: #d0b2e0;
+    --input-bg-color: #e3d3f5;
+
+    --navbar: #a16bbf;
+    --logo: #1A202C;
+    --nav: #1A202C;
+    --dropdown: #a16bbf;
+    --dropbtn: #e3d3f5;
+    --dropdown-content: #ffffff;
+    --dropdown-content-text: #1A202C;
+
+    --slideshow-container: #e3d3f5;
+    --slide: #b68cdb;
+    --dots-container: #a16bbf;
+    --dot: #d0b2e0;
+
+    --container: #ffffff;
+    --content: #f3e8fc;
+    --left-section: #e5cef6;
+    --illustration: #d0b2e0;
+    --text-content: #1A202C;
+
+    --assessment: #d0b2e0;
+    --study-companion: #d0b2e0;
+    --assessment-container: #e3d3f5;
+    --student-container: #e3d3f5;
+    --assessment-options: #d0b2e0;
+
+    --hover-content: #a16bbf;
+    --footer-content: #a16bbf;
+    --contact-info: #1A202C;
+}
+
+
 html {
     scroll-behavior: smooth;
 }
@@ -5,7 +128,7 @@ html {
 body {
     font-family: 'Gothic', sans-serif;
     margin: 0;
-    background-color: #CBD5E0; 
+    background-color: var(--bg-color);
     height: 100vh;
     display: flex;
     flex-direction: column; 
@@ -13,7 +136,7 @@ body {
 
 header {
     width: 100%;
-    background-color: #CBD5E0;
+    background-color: var(--header-bg-color);
     padding: 10px 20px;
     position: fixed;
     top: 0;
@@ -24,11 +147,16 @@ header {
     align-items: center; 
 }
 
+#main-content {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
 .navbar {
     display: flex;
     width: 100%;
     align-items: center;
-    background-color: #CBD5E0; 
+    background-color: var(--header-bg-color); 
     padding: 10px 20px;
     position: fixed;
     top: 0;
@@ -49,7 +177,7 @@ header {
 
 .nav a {
     text-decoration: none;
-    color: #1a1a1a;
+    color: var(--text-color);
     font-size: 18px;
     padding: 10px 20px;
     border-radius: 5px;
@@ -58,8 +186,8 @@ header {
 }
 
 .nav a:hover, .nav a.active {
-    background-color: #fffdfd;  
-    color: #1A202C;  
+    background-color: var(--hover-bg-color);
+    color: var(--text-color);
     font-weight: 700;
     border: 1px solid black;
 }
@@ -76,7 +204,7 @@ header {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #fff;
+    background-color: var(--dropdown);
     margin-top: 10px;
     padding: 10px 0;
     min-width: 160px;
@@ -86,7 +214,7 @@ header {
 }
 
 .dropdown-content a {
-    color: #1A202C;
+    color: var(--text-color);
     padding: 10px 20px;
     text-decoration: none;
     display: block;
@@ -94,7 +222,7 @@ header {
 }
 
 .dropdown-content a:hover {
-    background-color: #fff;
+    background-color: var(--dropbtn);
     border: none;
 }
 
@@ -188,14 +316,14 @@ header {
 
 .text-content h1 {
     font-size: 48px;
-    color: #1A202C;
+    color: var(--text-color);
     margin: 0;
     font-weight: 800;
 }
 
 .text-content p {
     font-size: 16px;
-    color: #1A202C;
+    color: var(--text-color);
     line-height: 1.5;
 }
 
@@ -205,12 +333,19 @@ header {
 
 .assessment h1, .study-companion h1 {
     font-weight: 800;
-    color: #1A202C;
+    color: var(--text-color);
 }
 
-.assessment h1{text-align: right; font-size: 4.5rem; margin-right: 55px;}
+.assessment h1 {
+    text-align: right; 
+    font-size: 4.5rem; 
+    margin-right: 55px;
+}
 
-.study-companion h1{font-size: 4rem; margin-left: 55px;}
+.study-companion h1 {
+    font-size: 4rem; 
+    margin-left: 55px;
+}
 
 .assessment-container, .student-container {
     display: flex;
@@ -221,7 +356,8 @@ header {
 }
 
 .assessment-options {
-    background-color: #fff;
+    background-color: var(--content-bg-color);
+    color: var(--sidebar-text-color);
     text-align: center;
     flex: 1 1 30%; 
     display: flex;
@@ -233,6 +369,7 @@ header {
     margin: 13vh 13px;
     position: relative;
     border-radius: 10px;
+    box-shadow: -10px 10px 0px var(--text-color);
 }
 
 .assessment-options::before {
@@ -242,21 +379,24 @@ header {
     left: -10px;
     width: 100%;
     height: 100%;
-    background-color: #1A202C;
+    background-color: var(--content-bg-color);
     border-radius: 10px;
     z-index: -1;
+    box-shadow: -10px 10px 0px var(--text-color);
 }
 
 .assessment-options button {
     cursor: pointer;
     padding: 5px 15px;
-    background-color: #d0e1f9;
+    background-color: var(--sidebar-bg-color);
     border-radius: 8px;
-    border: 1px solid #1A202C;
+    border: 1px solid var(--text-color);
     transition: transform 0.3s ease;
 }
 
-.assessment-options button:hover {transform: scale(1.1);}
+.assessment-options button:hover {
+    transform: scale(1.1);
+}
 
 .hover-content {
     display: none;
@@ -271,11 +411,12 @@ header {
     text-decoration: none;
     font-size: 2rem;
     font-weight: 800;
-    color: #1A202C;
+    color: var(--text-color);
 }
 
 .student-container {
-    background-color: #fff;
+    background-color: var(--content-bg-color);
+    color: var(--sidebar-text-color);
     text-align: center;
     flex: 1 1 30%; 
     display: flex;
@@ -289,6 +430,7 @@ header {
     margin: auto;
     margin-bottom: 20vh;
     margin-top: 20vh;
+    box-shadow: -10px 10px 0px var(--text-color);
 }
 
 .student-container::before {
@@ -298,9 +440,10 @@ header {
     left: -10px;
     width: 100%;
     height: 100%;
-    background-color: #1A202C;
+    background-color: var(--content-text-color);
     border-radius: 10px;
     z-index: -1;
+    box-shadow: -10px 10px 0px var(--text-color);
 }
 
 .student-container:hover .hover-content {
@@ -311,8 +454,9 @@ header {
     text-decoration: none;
     font-size: 2rem;
     font-weight: 800;
-    color: #1A202C;
+    color: var(--text-color);
 }
+
 
 button {
     cursor: pointer;
@@ -320,17 +464,20 @@ button {
     margin: auto;
     margin-bottom: 50px;
     padding: 5px 15px;
-    background-color: #d0e1f9;
+    background-color: var(--sidebar-bg-color);
     border-radius: 8px;
-    border: 1px solid #1A202C;
+    border: 1px solid var(--text-color);
     transition: transform 0.3s ease;
+    color: var(--text-color);
 }
 
-button:hover {transform: scale(1.1);}
+button:hover {
+    transform: scale(1.1);
+}
 
 footer {
-    background-color: #374664;
-    color: white;
+    background-color: var(--sidebar-bg-color);
+    color: var(--sidebar-text-color);
     padding: 20px;
     z-index: 1;
     font-size: 14px;
@@ -368,6 +515,19 @@ footer .copyright::before {
     display: block;
     width: 240px;
     height: 2px;
-    background-color: white;
+    background-color: var(--sidebar-text-color);
     margin-bottom: 10px;
+}
+
+.main-logo {
+    width: 140px;
+    height: 50px;
+}
+
+.dropdown-content a {
+    color: var(--dropdown-content-text);
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
 }
