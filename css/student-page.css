@@ -120,7 +120,6 @@
     --contact-info: #1A202C;
 }
 
-
 html {
     scroll-behavior: smooth;
 }
@@ -128,7 +127,7 @@ html {
 body {
     font-family: 'Gothic', sans-serif;
     margin: 0;
-    background-color: var(--bg-color);
+    background-color: #CBD5E0; 
     height: 100vh;
     display: flex;
     flex-direction: column; 
@@ -197,6 +196,11 @@ header {
     margin-top: 10px;
 }
 
+.dropdown {
+    position: relative;
+    margin-top: 10px;
+}
+
 .dropbtn {
     cursor: pointer;
 }
@@ -204,17 +208,25 @@ header {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: var(--dropdown);
+    background-color: #fff;
     margin-top: 10px;
     padding: 10px 0;
     min-width: 160px;
     border-radius: 8px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    left: 50%; 
+    transform: translateX(-50%); 
+    max-width: 90vw; 
 }
 
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
 .dropdown-content a {
-    color: var(--text-color);
+    color: #1A202C;
     padding: 10px 20px;
     text-decoration: none;
     display: block;
@@ -222,7 +234,7 @@ header {
 }
 
 .dropdown-content a:hover {
-    background-color: var(--dropbtn);
+    background-color: #fff;
     border: none;
 }
 
@@ -261,12 +273,12 @@ header {
 }
 
 .dots-container {
-    text-align: center;
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    display: flex; 
+    align-items: center; 
+    margin-top: 10px; 
+    justify-content: center;
 }
+
 
 .dot {
     cursor: pointer;
@@ -343,6 +355,7 @@ header {
 }
 
 .study-companion h1 {
+    text-align: left;
     font-size: 4rem; 
     margin-left: 55px;
 }
@@ -530,4 +543,147 @@ footer .copyright::before {
     text-decoration: none;
     display: block;
     text-align: left;
+}
+
+.menu-icon {
+    display: none; 
+    font-size: 24px;
+    cursor: pointer;
+    color: #1A202C;
+    margin-right: 40px;
+}
+
+@media (max-width: 400px) { 
+    body {
+        padding-top: 60px; 
+    }
+
+    header {
+        flex-direction: row; 
+        padding: 5px 0px;
+    }
+
+    .logo {
+        flex: 1;
+    }
+
+    .menu-icon {
+        display: block; 
+        margin-left: auto; 
+    }
+
+    .nav {
+        display: none;
+        flex-direction: column; 
+        position: absolute; 
+        background-color: var(--header-bg-color); 
+        top: 60px; 
+        left: 0;
+        width: 100%; 
+        z-index: 1000; 
+        padding: 10px 0; 
+    }
+
+    .navbar {
+        text-align: center;
+    }
+
+    .nav.active {
+        display: flex;
+    }
+
+    .nav a {
+        padding: 10px 20px; 
+        text-align: center; 
+    }
+
+    .text-content {
+        max-width: 90%; 
+        text-align: justify;
+        padding: 0 10px; 
+    }
+    
+    .text-content h1 {
+        font-size: 5rem;
+        color: #1A202C;
+        margin: 0;
+        font-weight: 800;
+    }
+    
+    .text-content p {
+        font-size: 4vw; 
+        color: #1A202C;
+        line-height: 1.5;
+        word-wrap: break-word; 
+        overflow-wrap: break-word;
+    }
+
+    .slideshow-container {
+        height: 70vh;
+    }
+
+    .text-content h1 {
+        font-size: 28px;
+    }
+
+    .text-content p {
+        font-size: 14px;
+    }
+
+    .illustration {
+        max-width: 90%;
+        height: auto;
+        margin-bottom: 10px; 
+    }
+
+    .dots-container {
+        display: flex; 
+        justify-content: center;
+        margin-top: 20px; 
+    }
+
+    .container, .content, .assessment-container, .student-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 10px;
+    }
+
+    .assessment h1, .study-companion h1 {
+        font-size: 2.5rem;
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    .assessment-options {
+        flex: 1 1 100%;
+        width: 100%;
+        height: auto;
+        margin: 10px 0;
+    }
+
+    .assessment-options a, .student-container a {
+        font-size: 1.5rem;
+    }
+
+    .student-container {
+        flex: 1 1 100%;
+        width: 85%;
+        height: auto;
+        margin: 30px;
+        margin-bottom: 100px;
+    }
+
+    footer {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .contact-info p, footer p {
+        margin: 3px 0;
+    }
 }
