@@ -81,15 +81,15 @@ CREATE TABLE uploadedAss (
     status VARCHAR(255),
     lastUsed DATE,
     descrip text,
-    shared TINYINT(1) DEFAULT (0),
+    shared TINYINT DEFAULT (0),
     FOREIGN KEY (quizId) REFERENCES assessments(id)
 );
 
 SELECT * FROM uploadedAss;
 
 -- FOR TESTING ASSESSMENTS
-INSERT INTO uploadedAss (subject, title, status, lastUsed, descrip) VALUES
-('Science', 'Sample Science Quiz 1', 'In Progress', '2024-02-10', 'An examination of basic physics concepts.');
+INSERT INTO uploadedAss (quizId, subject, title, status, lastUsed, descrip) VALUES
+(1, 'Science', 'Sample Science Quiz 1', 'In Progress', '2024-02-10', 'An examination of basic physics concepts.');
 -- ('History', 'Sample History Quiz', 'Not Started', '2024-03-01', 'An assignment about World War II.'),
 -- ("Biology","Sample Biology Exam", "Done", "2023-11-09", "Sample Test Description.");
 
@@ -242,4 +242,4 @@ INSERT INTO user_answers (quiz_id, question_id, answer_id, is_correct) VALUES
 
 -- study companion --
 
-SELECT * FROM user_answers;
+SELECT * FROM users;
