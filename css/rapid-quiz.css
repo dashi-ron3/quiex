@@ -9,7 +9,7 @@ body {
 }
 
 h1 {
-    margin-top: 80px;
+    margin-top: 120px;
     font-size: 5rem;
     text-align: center;
     margin-bottom: 10px;
@@ -40,7 +40,7 @@ p {
     margin-right: auto;
     border-radius: 20px;
     box-shadow: -10px 10px 0 rgba(0, 0, 0, 1);
-    margin-top: 0;
+    margin-top: 20px;
 }
 .timer {
     font-size: 5rem;
@@ -93,10 +93,13 @@ p {
 }
 
 .think-img {
-    position: absolute;
-    margin-top: 450px;
-    margin-right: 1200px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 0;
+    margin-left: 5vw;
 }
+
 
 .bolt-img {
     position: absolute;
@@ -105,9 +108,10 @@ p {
 }
 
 .brain-img {
-    position: absolute;
-    margin-left: 1200px;
-    margin-top: 590px;
+    position: fixed;
+    bottom: 50px;
+    right: 15px;
+    z-index: 5; 
 }
 
 .identification-input {
@@ -140,7 +144,14 @@ p {
     border: 2px solid #567cbd;
     width: 100px;
     height: 30px;
-    margin-left: 1200px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
 }
 
 .restart-button {
