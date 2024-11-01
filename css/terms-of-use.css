@@ -1,13 +1,45 @@
+:root,
+:root.light {
+    --bg-color: #d0e1f9;
+    --header-bg-color: #d0e1f9;
+    --container-bg-color: white;
+    --text-color: #1A202C;
+    --footer-bg-color: #6b83a3;
+    --footer-text-color: white;
+    --hover-bg-color: #d0e1f9;
+}
+
+:root.dark {
+    --bg-color: #1A202C;
+    --header-bg-color: #1A202C;
+    --container-bg-color: #2D3748;
+    --text-color: #F7FAFC;
+    --footer-bg-color: #2D3748;
+    --footer-text-color: #CBD5E0;
+    --hover-bg-color: #4A5568;
+}
+
+:root.purple {
+    --bg-color: #e3d3f5;
+    --header-bg-color: #e3d3f5;
+    --container-bg-color: #ffffff;
+    --text-color: #1A202C;
+    --footer-bg-color: #a16bbf;
+    --footer-text-color: #1A202C;
+    --hover-bg-color: #d0b2e0;
+}
+
 body {
     margin: 0;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    background-color: #d0e1f9;
-    color: #1A202C;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
 }
 
 header {
     width: 100%;
-    background-color: #d0e1f9;
+    background-color: var(--header-bg-color);
     padding: 10px 20px;
     position: fixed;
     top: 0;
@@ -24,7 +56,7 @@ header h1 {
 .container {
     max-width: 800px;
     margin: 100px auto 50px;
-    background-color: white;
+    background-color: var(--container-bg-color);
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -54,8 +86,8 @@ header h1 {
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #6b83a3;
-    color: white;
+    background-color: var(--footer-bg-color);
+    color: var(--footer-text-color);
     position: relative;
     bottom: 0;
     width: 100%;
@@ -63,4 +95,9 @@ footer {
 
 footer p {
     margin: 0;
+    color: var(--footer-text-color);
+}
+
+footer .contact-info p {
+    color: var(--footer-text-color);
 }
