@@ -193,11 +193,11 @@ VALUES
 
 -- SAMPLE QUESTIONS
 INSERT INTO questions (quiz_id, text, type) VALUES
-(1, 'What is the chemical symbol for water?', 'Multiple Choice'),
-(1, 'Who painted the Mona Lisa?', 'Multiple Choice'),
-(1, 'In which year did the Titanic sink?', 'Multiple Choice'),
-(1, 'What is the main ingredient in guacamole?', 'Multiple Choice'),
-(1, 'What is the speed of light?', 'Multiple Choice');
+(3, 'What is the chemical symbol for water?', 'Multiple Choice'),
+(3, 'Who painted the Mona Lisa?', 'Multiple Choice'),
+(3, 'In which year did the Titanic sink?', 'Multiple Choice'),
+(3, 'What is the main ingredient in guacamole?', 'Multiple Choice'),
+(3, 'What is the speed of light?', 'Multiple Choice');
 
 INSERT INTO choices (question_id, text, is_correct) VALUES
 (1, 'H2O', TRUE),
@@ -227,10 +227,10 @@ INSERT INTO choices (question_id, text, is_correct) VALUES
 
 -- SAMPLE user answers for Quiz 1
 INSERT INTO user_answers (user_id, quiz_id, question_id, answer_id, is_correct) VALUES
-(1, 1, 1, 4, FALSE),  -- NaCl (incorrect)
-(1, 1, 2, 7, TRUE),   -- Leonardo da Vinci (correct)
-(1, 1, 3, 11, FALSE), -- 1920 (incorrect)
-(1, 1, 4, 14, TRUE),  -- Avocado (correct)
-(1, 1, 5, 17, TRUE);  -- 300,000 km/s (correct)
+(3, 3, 1, 4, FALSE),  -- NaCl (incorrect)
+(3, 3, 2, 7, TRUE),   -- Leonardo da Vinci (correct)
+(3, 3, 3, 11, FALSE), -- 1920 (incorrect)
+(3, 3, 4, 14, TRUE),  -- Avocado (correct)
+(3, 3,  5, 17, TRUE);  -- 300,000 km/s (correct)
 
 -- study companion --
