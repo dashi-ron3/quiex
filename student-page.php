@@ -1,13 +1,15 @@
 <?php
 session_start();
 
-/*if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}*/
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: index.php");
+//     exit();
+// }
 
 if (!isset($_SESSION['theme'])) {
     $_SESSION['theme'] = 'light';
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
@@ -34,13 +36,14 @@ header("Pragma: no-cache");
     <img src="assets/QuiEx-Logo.png" alt="Logo" class="loading-logo">
 </div>
 
-    <div id="main-content" style="display: none;">
+    <div id="main-content" style="display: block;">
 
         <header>
             <nav class="navbar">
                 <div class="logo">
                     <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
                 </div>
+                <div class="menu-icon" onclick="toggleMenu()">☰</div>
                 <div class="nav">
                     <a href="#home">HOME</a>
                     <div class="dropdown">
@@ -205,6 +208,12 @@ header("Pragma: no-cache");
         </footer>
 
     </div>
-    <script src="javascript/loading-screen.js"></script>
+    <script src="javascript/loading-screen.js" class="loading-screen"></script>
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('.nav');
+            nav.style.display = (nav.style.display === 'flex') ? 'none' : 'flex';
+        }
+    </script>
 </body>
 </html>
