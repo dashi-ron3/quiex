@@ -1,7 +1,15 @@
 const setStudentTheme = (theme) => {
     console.log("Setting theme to:", theme);
+    
     document.documentElement.classList.remove('light', 'dark', 'purple');
     document.documentElement.classList.add(theme);
+
+    const logo = document.getElementById('logo');
+    if (theme === 'dark') {
+        logo.src = 'assets/Dark_QuiEx-Logo.png';
+    } else {
+        logo.src = 'assets/QuiEx-Logo.png';
+    }
 
     fetch('update-theme.php', {
         method: 'POST',
@@ -31,10 +39,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('theme-select').addEventListener('change', function() {
         setStudentTheme(this.value);
-    });
-
-    document.getElementById('saveThemeButton').addEventListener('click', function() {
-        const selectedTheme = document.getElementById('theme-select').value;
-        setStudentTheme(selectedTheme);
     });
 });
