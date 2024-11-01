@@ -33,7 +33,7 @@ header("Pragma: no-cache");
 </head>
 <body>
 <div id="loading-screen">
-    <img src="assets/QuiEx-Logo.png" alt="Logo" class="loading-logo">
+    <img src="assets/QuiEx-Logo.png" alt="Logo" id="logo" width="100" height="200">
 </div>
 
     <div id="main-content" style="display: block;">
