@@ -12,10 +12,12 @@
 </head>
 <body>
     <header>
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
         <nav class="navbar">
             <div class="logo">
                 <a href="index.php"><img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50"></a>
             </div>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <div class="nav">
                 <a href="#home">HOME</a>
                 <a href="login-page.php">LOGIN</a>
@@ -28,7 +30,7 @@
             <div class="slide active">
                 <div class="container">
                     <div class="left-section">
-                        <img src="assets/student-homepage.png" alt="Illustration of three students studying" class="illustration" width="650" height="450">
+                        <img src="assets/student-homepage.png" alt="Illustration of three students studying" class="illustration1" width="650" height="450">
                     </div>
                     <div class="right-section">
                         <div class="text-content">
@@ -49,7 +51,7 @@
                         </div>
                     </div>
                     <div class="right-section">
-                        <img src="assets/teacher-homepage.png" alt="Illustration of a teacher lecturing two students" class="illustration" width="600" height="500">     
+                        <img src="assets/teacher-homepage.png" alt="Illustration of a teacher lecturing two students" class="illustration2" width="600" height="500">     
                     </div>
                 </div>
             </div>
@@ -92,5 +94,11 @@
     <footer>
         &copy; Copyright 2024 QuiEx
     </footer>
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('.nav');
+            nav.style.display = (nav.style.display === 'flex') ? 'none' : 'flex';
+        }
+    </script>
 </body>
 </html>
