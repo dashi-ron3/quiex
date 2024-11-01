@@ -1,7 +1,12 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "15a5m249ph", "quiex");
+session_start();
+$conn = mysqli_connect("localhost", "root", "pochita12", "quiex");
 if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
+}
+
+if (!isset($_SESSION['theme'])) {
+    $_SESSION['theme'] = 'light';
 }
 
 $subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
@@ -62,13 +67,14 @@ $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<?php echo htmlspecialchars($_SESSION['theme'] ?? 'light'); ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Assessments</title>
     <link rel="stylesheet" href="css/assessment-style.css">
+    <script src="javascript/student-appearance.js" defer></script>
 </head>
 
 <body>
@@ -77,11 +83,11 @@ $result = $conn->query($sql);
             <div class="logo-page-name-container">
                 <div class="logo">
                     <a href="teacher-page.php">
-                        <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                    <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
                     </a>
                 </div>
                 <div class="page-name">
-                    <img src="assets/assessment.png" alt="page title">
+                    <img src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/darkassessments.png' : 'assets/assessment.png'); ?>" alt="page title">
                 </div>
             </div>
         </nav>
@@ -98,7 +104,12 @@ $result = $conn->query($sql);
                         <form method="GET" action="">
                             <input type="hidden" name="subject" value="<?php echo $subjectName; ?>">
                             <button type="submit">
-                                <img src="assets/sub-folder.png" alt="<?php echo $subjectName; ?> folder">
+                            <img src="<?php 
+                                echo htmlspecialchars(
+                                    $_SESSION['theme'] === 'dark' ? 'assets/darksubfolder.png' : 
+                                    ($_SESSION['theme'] === 'purple' ? 'assets/purplesubfolder.png' : 'assets/sub-folder.png')
+                                ); 
+                            ?>" alt="<?php echo $subjectName; ?> folder">
                                 <h3><?php echo strtoupper($subjectName); ?></h3>
                             </button>
                         </form>
