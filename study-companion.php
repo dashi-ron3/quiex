@@ -50,7 +50,7 @@ if (isset($_GET['quiz_id'])) {
             </div>
             <div class="header-content">
                 <div class="header-image">
-                    <img src="assets/studycompanion.png" alt="study companion">
+                    <img src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/darkstudycompanion.png' : 'assets/studycompanion.png'); ?>" alt="study companion">
                 </div>
             </div>
         </nav>
@@ -212,24 +212,25 @@ if (isset($_GET['quiz_id'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<?php echo htmlspecialchars($_SESSION['theme'] ?? 'light'); ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assessment Storage</title>
     <link rel="stylesheet" href="css/study-companion.css">
+    <script src="javascript/student-appearance.js" defer></script>
 </head>
 
 <body>
 <header>
     <nav class="navbar">
         <div class="logo">
-            <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+            <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
         </div>
         <div class="header-content">
             <div class="header-image">
-                <img src="assets/assessment-storage.png" alt="assessment storage">
+                <img src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/darkassessmentstorage.png' : 'assets/assessment-storage.png'); ?>" alt="assessment storage">
             </div>
         </div>
     </nav>
