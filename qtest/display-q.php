@@ -48,7 +48,7 @@ if ($quizId) {
 
 <head>
     <title><?php echo htmlspecialchars($quiz['title'] ?? 'Quiz'); ?></title>
-    <link rel="stylesheet" type="text/css" href="styles2.css">
+    <link rel="stylesheet" type="text/css" href="display-style.css">
 </head>
 
 <body>
@@ -77,7 +77,7 @@ if ($quizId) {
 
             <form id="quizForm" action="submit-quiz.php" method="POST">
                 <input type="hidden" name="quiz_id" value="<?php echo htmlspecialchars($quizId); ?>">
-                
+
                 <?php if (empty($questions)): ?>
                     <p>No questions found for this quiz.</p>
                 <?php else: ?>
