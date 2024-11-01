@@ -121,7 +121,6 @@ CREATE TABLE IF NOT EXISTS quizzes (
     marks INT,
     total_marks INT,
     points INT, -- points = score
-    is_graded BOOLEAN DEFAULT 1,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -152,17 +151,16 @@ CREATE TABLE IF NOT EXISTS choices (
 -- user answers table (connected to questions and quizzes) SAMPLE
 CREATE TABLE IF NOT EXISTS user_answers (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
     quiz_id INT,
     question_id INT,
     answer_id INT,
     is_correct BOOLEAN,
+    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id),
     FOREIGN KEY (question_id) REFERENCES questions(id),
     FOREIGN KEY (answer_id) REFERENCES choices(id)
 );
-
-SELECT * FROM user_answers;
-
 
 CREATE TABLE student_scores (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -189,14 +187,9 @@ VALUES ('student1', 'student1@example.com', 'password123');
 
 -- SAMPLE quiz
 -- GRADED QUIZ
-INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, points, is_graded) -- points = score
+INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, points) -- points = score
 VALUES 
-(1, 'Sample Quiz 1', '2024-10-20 10:00:00', '2024-10-20 10:30:00', '00:30:00', 0, 20, 0, 1);
-
--- PACTICE ASSESSMENT, NOT GRADED
-INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, points, is_graded) -- points = score
-VALUES 
-(1, 'Sample Quiz 2', '2024-10-21 11:00:00', '2024-10-21 11:30:00', '00:30:00', 0, 20, 0, 0);
+(3, 'Sample Quiz 1', '2024-10-20 10:00:00', '2024-10-20 10:30:00', '00:30:00', 0, 20, 0);
 
 -- SAMPLE QUESTIONS
 INSERT INTO questions (quiz_id, text, type) VALUES
@@ -233,13 +226,11 @@ INSERT INTO choices (question_id, text, is_correct) VALUES
 (5, '750,000 km/s', FALSE);
 
 -- SAMPLE user answers for Quiz 1
-INSERT INTO user_answers (quiz_id, question_id, answer_id, is_correct) VALUES
-(1, 1, 4, FALSE),  -- NaCl (incorrect)
-(1, 2, 7, TRUE),   -- Leonardo da Vinci (correct)
-(1, 3, 11, FALSE),  -- 1920 (incorrect)
-(1, 4, 14, TRUE),   -- Avocado (correct)
-(1, 5, 17, TRUE);   -- 300,000 km/s (correct)
+INSERT INTO user_answers (user_id, quiz_id, question_id, answer_id, is_correct) VALUES
+(1, 1, 1, 4, FALSE),  -- NaCl (incorrect)
+(1, 1, 2, 7, TRUE),   -- Leonardo da Vinci (correct)
+(1, 1, 3, 11, FALSE), -- 1920 (incorrect)
+(1, 1, 4, 14, TRUE),  -- Avocado (correct)
+(1, 1, 5, 17, TRUE);  -- 300,000 km/s (correct)
 
 -- study companion --
-
-SELECT * FROM users;
