@@ -51,7 +51,7 @@ $pdf->MultiCell($containerWidth, 12, "Started on: " . date('m/d/y h:i A', strtot
                                        "Finished on: " . date('m/d/y h:i A', strtotime($quiz['finished_at'])) . "\n" .
                                        "Time taken: " . gmdate('H:i:s', strtotime($quiz['finished_at']) - strtotime($quiz['started_at'])) . "\n" .
                                        "Marks: {$quiz['marks']} out of {$quiz['total_marks']}\n" .
-                                       "Score: " . ($quiz['is_graded'] ? "{$quiz['points']}" : "N/A"), 
+                                       "Score: " . $quiz['points'], 
               0, 'C', 0, 1, '', '', true);
 $pdf->Ln(5);
 

@@ -11,15 +11,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_SESSION['user_id'])) {
+/*if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 } else {
     header("Location: index.php");
     exit();
-}
+}*/
 
 // Sample user ID
-//$user_id = 1;
+$user_id = 3;
 
 if (isset($_GET['quiz_id'])) {
     $quiz_id = $_GET['quiz_id'];
@@ -32,20 +32,21 @@ if (isset($_GET['quiz_id'])) {
     }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<?php echo htmlspecialchars($_SESSION['theme'] ?? 'light'); ?>">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $quiz['title']; ?> Review</title>
     <link rel="stylesheet" href="css/study-companion.css">
+    <script src="javascript/student-appearance.js" defer></script>
 </head>
 
 <body>
     <header>
         <nav class="navbar">
             <div class="logo">
-                <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
             </div>
             <div class="header-content">
                 <div class="header-image">
@@ -90,11 +91,7 @@ if (isset($_GET['quiz_id'])) {
                         <td>Score:</td>
                         <td colspan="2">
                             <?php 
-                            if ($quiz['is_graded']) {
-                                echo $quiz['points'];
-                            } else {
-                                echo "N/A";
-                            }
+                            echo htmlspecialchars($quiz['points']);
                             ?>
                         </td>
                     </tr>
@@ -161,8 +158,6 @@ if (isset($_GET['quiz_id'])) {
             
                 $is_user_answer_correct = ($user_answer && $user_answer['is_correct'] == 1);
                 $is_correct_answer_id = ($correct_answer['id'] == $user_answer_id);
-
-                // echo "DEBUG: question id: {$question['id']}, user answer id: {$user_answer_id}, is correct: {$is_user_answer_correct}, correct answer id: {$correct_answer['id']}";
 
             ?>
             <div class="individual-container" id="question-<?php echo $i; ?>">
@@ -247,11 +242,7 @@ if (isset($_GET['quiz_id'])) {
         echo "<h3>" . htmlspecialchars($quiz['title']) . "</h3>";
         
         echo "<div class='quiz-info'>";
-        if ($quiz['is_graded']) {
-            echo "<p>Score: " . htmlspecialchars($quiz['points']) . "</p>";
-        } else {
-            echo "<p>Practice Assessment</p>";
-        }
+        echo "<p>Score: " . htmlspecialchars($quiz['points']) . "</p>";
         echo "</div>";
         
         echo "<a href='?quiz_id=" . $quiz['id'] . "' class='quiz-link'>View Quiz</a>";
@@ -265,7 +256,43 @@ if (isset($_GET['quiz_id'])) {
 
 <?php
     } else {
-        echo "You have no quizzes.";
+        echo '
+        <!DOCTYPE html>
+        <html lang="en">
+        
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Assessment Storage</title>
+            <link rel="stylesheet" href="css/study-companion.css">
+        </head>
+        
+        <body>
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                </div>
+                <div class="header-content">
+                    <div class="header-image">
+                        <img src="assets/assessment-storage.png" alt="assessment storage">
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <div class="container">
+            <div class="quizzes-list">
+                <div class="no-quizzes">
+                    <h3>No quizzes have been taken.</h3>
+                </div>
+            </div>
+        </div>
+        
+        </body>
+        
+        </html>
+        ';
     }
 }
 
