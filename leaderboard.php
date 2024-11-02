@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "15a5m249ph";
+$password = "aventurine";
 $dbname = "quiex";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -57,6 +57,9 @@ $conn->close();
                 </div>
             </div>
         </nav>
+        <div class="mobile-page-name">
+                <img src="assets/leaderboard.png" alt="page title">
+        </div>
     </header>
 
     <div class="leaderboard-container">
