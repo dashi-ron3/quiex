@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
 $username = "root";
-$password = "aventurine";
+$password = "15a5m249ph";
 $dbname = "quiex";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch all students, ordered by points, highest first
-$sql = "SELECT name, profile_pic, points FROM leaderboard ORDER BY points DESC";
+$sql = "SELECT name, points FROM leaderboard ORDER BY points DESC";
 $result = $conn->query($sql);
 
 // Create arrays for top 3 and rest of the students
@@ -69,12 +69,14 @@ $conn->close();
                 <div class="player-card player-<?= $index + 1 ?>"> <!-- Add class to identify player position -->
                     <?php if ($index == 0) { ?>
                         <div class="star gold-star"></div>
+                        <img src="assets/gold_profile.jpg" alt="<?= $student['name'] ?>">
                     <?php } elseif ($index == 1) { ?>
                         <div class="star silver-star"></div>
+                        <img src="assets/silver_profile.jpg" alt="<?= $student['name'] ?>">
                     <?php } else { ?>
                         <div class="star bronze-star"></div>
+                        <img src="assets/bronze_profile.jpg" alt="<?= $student['name'] ?>">
                     <?php } ?>
-                    <img src="<?= $student['profile_pic'] ?>" alt="<?= $student['name'] ?>">
                     <h3><?= $student['name'] ?></h3>
                     <div class="points"><?= $student['points'] ?> points</div>
                 </div>
