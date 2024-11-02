@@ -164,6 +164,23 @@ CREATE TABLE leaderboard (
 -- INSERT INTO lb (name, profile_pic, points) VALUES 
 -- ("Student1", "desktop_wp.jpg", "1000"),
 
+CREATE TABLE student_scores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    quizId INT,
+    assessmentTitle VARCHAR(255) NOT NULL,
+    studentName VARCHAR(255) NOT NULL,
+    score INT NOT NULL,
+    totalPoints INT NOT NULL,
+    incorrectQuestions VARCHAR(255),
+    FOREIGN KEY (quizId) REFERENCES quizzes(id)
+);
+-- SAMPLE DATA FOR student scores
+INSERT INTO student_scores (assessmentTitle, studentName, score, totalPoints, incorrectQuestions) VALUES
+('Sample Science Quiz', 'Alice Smith', 90, 100, '1,3'),
+('Sample Science Quiz', 'John Doe', 65, 90, '2,5,6'),
+('Sample Science Quiz', 'Jane Johnson', 77, 85, '2,8'),
+('Sample Science Quiz', 'Alice Smith', 94, 100, '4');
+
 -- Insert sample data into the quizzes table
 INSERT INTO quizzes (title, subject, description, open_date, close_date, max_attempts, randomize_order)
 VALUES ('Sample Quiz', 'Mathematics', 'This is a sample quiz on basic math concepts.', '2024-11-01 08:00:00', '2024-11-10 23:59:59', 3, 0);
