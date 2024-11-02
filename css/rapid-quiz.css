@@ -55,12 +55,21 @@ p {
     margin: 15px;
 }
 
-.question-number {
-    font-size: 30px;
-    font-weight: bold;
-    color: #333;
-    margin-right: 30%;
+.qnum {
+    display: flex;
+    justify-content: flex-start;
+    width: 40%;
 }
+
+.question-number {
+    font-size: 30px;      
+    font-weight: bold;     
+    color: #333;          
+    margin: 0;          
+    padding: 0;          
+    text-align: left;    
+}
+
 
 .answer-box {
     margin: auto;
@@ -214,4 +223,99 @@ p {
 
 .clock-img {
     animation: shake 0.6s ease-in-out infinite;
+}
+
+
+@media (max-width: 400px) {
+    h1 {
+        margin-top: 80px;
+        font-size: 2.5rem;
+        margin-bottom: 5px;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+    .container {
+        width: 80%;
+        height: auto;
+        margin: 10px auto;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: -5px 5px 0 rgba(0, 0, 0, 1);
+        margin-left: 40px;
+    }
+
+    .timer {
+        font-size: 3rem;
+        margin: 2px;
+    }
+
+    .answer-box {
+        margin: auto;
+        width: 100%; 
+        padding: 10px; 
+        display: flex;
+        flex-wrap: wrap; 
+        gap: 10px; 
+        justify-content: center; 
+    }
+
+    .identification-input {
+        width: 80%;
+        padding: 8px; 
+        font-size: 1.2rem;
+        border-radius: 30px; 
+    }
+
+    .identification-submit {
+        padding: 8px 15px; 
+        font-size: 1.2rem; 
+        border-radius: 30px;
+    }
+
+    .choice {
+        min-width: 170px;
+        flex: 0 0 auto;
+    }
+
+    .think-img {
+        width: 150px; 
+        height: auto;
+    }
+
+    .bolt-img {
+        position: relative;
+        margin: 10px auto;
+        display: block;
+        height: auto;
+        width: 100px; 
+        max-width: 250px; 
+    }
+
+    .clock-img {
+        width: 80px;
+        height: auto;
+    }
+
+    .qnum {
+        display: flex;                
+        justify-content: flex-start;  
+        width: auto;                 
+        margin-right: 300px;                  
+        padding: 0;                 
+    }
+
+    .question-number {
+        font-size: 20px;            
+        font-weight: bold;          
+        color: #333;                 
+        margin: 0;                  
+        padding: 0;                  
+        text-align: left;          
+    }
 }
