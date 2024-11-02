@@ -12,20 +12,30 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_SESSION['user_id'])) {
+/*if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 } else {
     header("Location: index.php");
     exit();
-}
+}*/
 
 // Sample user ID
-//$user_id = 1;
+$user_id = 3;
 
 if (isset($_GET['quiz_id'])) {
     $quiz_id = $_GET['quiz_id'];
 
-    $quiz = $conn->query("SELECT * FROM quizzes WHERE id = $quiz_id AND user_id = $user_id")->fetch_assoc();
+        // Fetch quiz and attempt details
+    $attempt_query = "
+    SELECT attempts.started_at, attempts.submitted_at AS finished_at, 
+        attempts.score AS marks, attempts.max_score AS total_marks, 
+        attempts.score AS points, quizzes.title
+    FROM attempts
+    JOIN quizzes ON attempts.quiz_id = quizzes.id
+    WHERE attempts.user_id = $user_id AND attempts.quiz_id = $quiz_id
+    ";
+    $quiz = $conn->query($attempt_query)->fetch_assoc();
+
     $questions = $conn->query("SELECT * FROM questions WHERE quiz_id = $quiz_id");
 
     if (!$quiz) {
@@ -69,12 +79,12 @@ $pdf->Ln(5);
             $startY = $pdf->GetY();
         }
 
-        $questionHeight = $pdf->getStringHeight($containerWidth, "Question $i: {$question['text']}") + 5;
+        $questionHeight = $pdf->getStringHeight($containerWidth, "Question $i: {$question['question_text']}") + 5;
         $choicesHeight = 0;
         
-        $choices = $conn->query("SELECT * FROM choices WHERE question_id = {$question['id']}");
+        $choices = $conn->query("SELECT * FROM options WHERE question_id = {$question['id']}");
         while ($choice = $choices->fetch_assoc()) {
-            $choicesHeight += $pdf->getStringHeight($containerWidth, "- {$choice['text']}") + 5;
+            $choicesHeight += $pdf->getStringHeight($containerWidth, "- {$choice['option_text']}") + 5;
         }
 
         $totalHeight = $questionHeight + $choicesHeight + 10;
@@ -86,18 +96,23 @@ $pdf->Ln(5);
         $pdf->Rect(15, $startY, $containerWidth, $containerHeight, 'D');
 
         $pdf->SetFont('helvetica', 'B', 12);
-        $pdf->MultiCell($containerWidth, 10, "Question $i: {$question['text']}", 0, 'L', 0, 1, '15', $startY + 5);
+        $pdf->MultiCell($containerWidth, 10, "Question $i: {$question['question_text']}", 0, 'L', 0, 1, '15', $startY + 5);
 
-        $user_answer_query = "SELECT ua.answer_id FROM user_answers ua WHERE ua.quiz_id = $quiz_id AND ua.question_id = {$question['id']}";
-        $user_answer = $conn->query($user_answer_query)->fetch_assoc();
-        $user_answer_id = $user_answer ? $user_answer['answer_id'] : null;
+        $userAnswersQuery = "
+            SELECT a.question_id, a.student_answer, a.correct, o.id AS option_id, o.option_text AS answer_text
+            FROM answers a
+            JOIN options o ON a.student_answer = o.id 
+            WHERE a.attempt_id = (SELECT id FROM attempts WHERE quiz_id = $quiz_id AND user_id = $user_id)
+        ";
+        $user_answer = $conn->query($userAnswersQuery)->fetch_assoc();
+        $user_answer_id = $user_answer ? $user_answer['student_answer'] : null;
 
         $pdf->SetY($startY + $questionHeight + 10);
-        $choices = $conn->query("SELECT * FROM choices WHERE question_id = {$question['id']}");
+        $choices = $conn->query("SELECT * FROM options WHERE question_id = {$question['id']}");
         while ($choice = $choices->fetch_assoc()) {
             $is_user_answer = ($choice['id'] == $user_answer_id);
-            $is_correct_answer = $choice['is_correct'];
-            $choice_text = "- {$choice['text']}";
+            $is_correct_answer = ($user_answer && $user_answer['correct'] == 1);
+            $choice_text = "- {$choice['option_text']}";
 
             if ($is_correct_answer && $is_user_answer) {
                 $pdf->SetTextColor(111, 180, 110);

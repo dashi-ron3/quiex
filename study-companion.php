@@ -11,23 +11,70 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-/*if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    header("Location: index.php");
-    exit();
-}*/
-
 // Sample user ID
 $user_id = 3;
+
+$percentage = null;
 
 if (isset($_GET['quiz_id'])) {
     $quiz_id = $_GET['quiz_id'];
 
-    $quiz = $conn->query("SELECT * FROM quizzes WHERE id = $quiz_id AND user_id = $user_id")->fetch_assoc();
-    $questions = $conn->query("SELECT * FROM questions WHERE quiz_id = $quiz_id");
+    $countableQuestionsQuery = "
+    SELECT q.id, q.question_type, q.correct_answer, a.student_answer
+    FROM questions q
+    LEFT JOIN answers a ON q.id = a.question_id
+    WHERE q.quiz_id = $quiz_id 
+    AND q.question_type IN ('multiple-choice', 'true-false', 'short-answer')
+    AND a.attempt_id = (SELECT id FROM attempts WHERE quiz_id = $quiz_id AND user_id = $user_id)
+    ";
+    $countableQuestions = $conn->query($countableQuestionsQuery);
 
-    if (!$quiz) {
+    $marks = 0;
+    $total_marks = 0;
+    
+    while ($question = $countableQuestions->fetch_assoc()) {
+        // Check if the student's answer matches the correct answer
+        if (trim($question['student_answer']) === trim($question['correct_answer'])) {
+            $marks++;
+        }
+        $total_marks++;
+    }    
+
+    if ($total_marks > 0) {
+        $percentage = ($marks / $total_marks) * 100;
+    } else {
+        $percentage = 0;
+    }
+
+    $questionTypeMap = [
+        'short-answer' => 'Short Answer',
+        'multiple-choice' => 'Multiple Choice',
+        'long-answer' => 'Essay',
+        'true-false' => 'True or False'
+    ];
+
+    $attempt_query = "
+    SELECT attempts.started_at, attempts.submitted_at AS finished_at, 
+        attempts.score AS marks, attempts.max_score AS total_marks, 
+        attempts.score AS points, quizzes.title
+    FROM attempts
+    JOIN quizzes ON attempts.quiz_id = quizzes.id
+    WHERE attempts.user_id = $user_id AND attempts.quiz_id = $quiz_id
+    ";
+    $quiz = $conn->query($attempt_query)->fetch_assoc();
+
+    if ($quiz) { 
+        $marks = $quiz['marks'];
+        $total_marks = $quiz['total_marks'];
+
+        if ($total_marks > 0) {
+            $percentage = ($marks / $total_marks) * 100;
+        } else {
+            $percentage = 0;
+        }
+
+    $questions = $conn->query("SELECT * FROM questions WHERE quiz_id = $quiz_id");
+    } else {
         die("Quiz not found.");
     }
 ?>
@@ -37,7 +84,7 @@ if (isset($_GET['quiz_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $quiz['title']; ?> Review</title>
+    <title><?php echo isset($quiz['title']) ? htmlspecialchars($quiz['title']) : ' Review'; ?></title>
     <link rel="stylesheet" href="css/study-companion.css">
     <script src="javascript/student-appearance.js" defer></script>
 </head>
@@ -89,11 +136,7 @@ if (isset($_GET['quiz_id'])) {
                     </tr>
                     <tr>
                         <td>Score:</td>
-                        <td colspan="2">
-                            <?php 
-                            echo htmlspecialchars($quiz['points']);
-                            ?>
-                        </td>
+                        <td><?php echo number_format($percentage, 0); ?>/100</td>
                     </tr>
                 </table>
                 <hr class="divider">
@@ -106,21 +149,32 @@ if (isset($_GET['quiz_id'])) {
                 <div class="nav-buttons">
                     <?php
                     $i = 1;
-                    while ($question = $questions->fetch_assoc()) {
-                        $user_answer_query = "
-                            SELECT ua.answer_id, ua.is_correct
-                            FROM user_answers ua
-                            WHERE ua.quiz_id = $quiz_id AND ua.question_id = {$question['id']}
-                        ";
-                        $user_answer = $conn->query($user_answer_query)->fetch_assoc();
-                        $correct_answer = $conn->query("SELECT * FROM choices WHERE question_id = {$question['id']} AND is_correct = 1")->fetch_assoc();
 
-                        $is_correct = ($user_answer && $user_answer['answer_id'] == $correct_answer['id']);
-                        $correct_class = $is_correct ? 'nav-correct' : 'nav-wrong';
+                    // Fetch all questions and their user answers, including long answer questions
+                    $countableQuestionsQuery = "
+                        SELECT q.id, q.question_type, q.correct_answer, a.student_answer
+                        FROM questions q
+                        LEFT JOIN answers a ON q.id = a.question_id AND a.attempt_id = (SELECT id FROM attempts WHERE quiz_id = $quiz_id AND user_id = $user_id)
+                        WHERE q.quiz_id = $quiz_id 
+                    ";
+                    $countableQuestions = $conn->query($countableQuestionsQuery);
+
+                    while ($question = $countableQuestions->fetch_assoc()) {
+                        $user_answer = $question['student_answer'] ?? null;
+                        $correct_answer = $question['correct_answer'];
+                        
+                        // Determine button class
+                        if ($question['question_type'] === 'long-answer' || $question['question_type'] === 'essay') {
+                            $correct_class = 'nav-neutral'; // Class for blue button
+                        } else {
+                            // For other types, determine correctness
+                            $is_user_answer_correct = ($user_answer == $correct_answer);
+                            $correct_class = $is_user_answer_correct ? 'nav-correct' : 'nav-wrong';
+                        }
                     ?>
-                    <a href="#question-<?php echo $i; ?>" class="nav-btn-link">
-                        <button class="nav-btn <?php echo $correct_class; ?>"><?php echo $i; ?></button>
-                    </a>
+                        <a href="#question-<?php echo $i; ?>" class="nav-btn-link">
+                            <button class="nav-btn <?php echo $correct_class; ?>"><?php echo $i; ?></button>
+                        </a>
                     <?php
                         $i++;
                     }
@@ -135,64 +189,66 @@ if (isset($_GET['quiz_id'])) {
 
         <div class="right-container">
             <?php
-            $userAnswersQuery = "
-                SELECT ua.question_id, ua.answer_id, ua.is_correct, c.text AS answer_text
-                FROM user_answers ua
-                JOIN choices c ON ua.answer_id = c.id
-                WHERE ua.quiz_id = $quiz_id
-            ";
+                $userAnswersQuery = "
+                SELECT a.question_id, a.student_answer, a.correct, o.option_text AS answer_text
+                FROM answers a
+                JOIN options o ON a.student_answer = o.id 
+                WHERE a.attempt_id = (SELECT id FROM attempts WHERE quiz_id = $quiz_id AND user_id = $user_id)
+                ";
 
             $userAnswers = $conn->query($userAnswersQuery);
             $userAnswerMap = [];
             while ($answer = $userAnswers->fetch_assoc()) {
                 $userAnswerMap[$answer['question_id']] = $answer;
-            }                 
+            }          
 
             $i = 1;
             $questions->data_seek(0);
             while ($question = $questions->fetch_assoc()) {
-                $correct_answer = $conn->query("SELECT * FROM choices WHERE question_id = {$question['id']} AND is_correct = 1")->fetch_assoc();
+                $correct_answer = $question['correct_answer']; // Assuming 'correct_answer' is the column name in the questions table
                 $user_answer = isset($userAnswerMap[$question['id']]) ? $userAnswerMap[$question['id']] : null;
             
-                $user_answer_id = $user_answer ? $user_answer['answer_id'] : null;
-            
-                $is_user_answer_correct = ($user_answer && $user_answer['is_correct'] == 1);
-                $is_correct_answer_id = ($correct_answer['id'] == $user_answer_id);
-
+                $user_answer_text = $user_answer ? $user_answer['student_answer'] : 'No answer';
+                // Compare user answer with the correct answer
+                $is_correct_answer = (trim($correct_answer) === trim($user_answer_text));
             ?>
             <div class="individual-container" id="question-<?php echo $i; ?>">
-                <h3>Question <?php echo $i; ?>: <?php echo $question['type']; ?></h3>
-                <p><?php echo $question['text']; ?></p>
-            
-                <?php if ($question['type'] == 'Multiple Choice') { ?>
-                <ul>
-                    <?php
-                    $choices = $conn->query("SELECT * FROM choices WHERE question_id = {$question['id']}");
-                    while ($choice = $choices->fetch_assoc()) {
-                        $is_user_answer = ($choice['id'] == $user_answer_id);
-                        $is_correct = ($choice['id'] == $correct_answer['id']);
-                        $choice_class = '';
-        
-                        if ($is_user_answer) {
-                            $choice_class = $is_user_answer_correct ? 'correct' : 'wrong';
-                        }
-                        if ($is_correct && !$is_user_answer) {
-                            $choice_class = 'correct';
-                        }
-                    ?>
-                    <li class="<?php echo $choice_class; ?>">
-                        <div class="radio-choice">
-                            <input type="radio" name="question-<?php echo $question['id']; ?>" value="<?php echo $choice['id']; ?>" <?php echo $is_user_answer ? 'checked' : ''; ?> disabled>
-                            <?php echo $choice['text']; ?>
-                        </div>
-                    </li>
-                    <?php } ?>
-                </ul>
+                <h3>Question <?php echo $i; ?>: <?php echo $questionTypeMap[$question['question_type']]; ?></h3>
+                <p><?php echo $question['question_text']; ?></p>
+
+                <?php if ($question['question_type'] == 'multiple-choice') { ?>
+                    <ul>
+                        <?php
+                        // Get the correct answer from the questions table
+                        $correct_answer_text = $question['correct_answer'];
+
+                        // Fetch all choices for the current question
+                        $choices = $conn->query("SELECT * FROM options WHERE question_id = {$question['id']}");
+                        while ($choice = $choices->fetch_assoc()) {
+                            $is_user_answer = ($choice['id'] == $user_answer_text);
+                            $is_correct = ($choice['id'] == $correct_answer_text);
+                            $choice_class = '';
+
+                            if ($is_user_answer) {
+                                $choice_class = $is_correct ? 'correct' : 'wrong'; // Mark as correct or wrong based on user answer
+                            } else if ($is_correct) {
+                                $choice_class = 'correct'; // Mark the correct answer
+                            }
+                        ?>
+                        <li class="<?php echo $choice_class; ?>">
+                            <div class="radio-choice">
+                            <input type="radio" name="question-<?php echo $i; ?>" id="choice-<?php echo $choice['id']; ?>" disabled <?php echo $is_user_answer ? 'checked' : ''; ?>>
+                                <label for="choice-<?php echo $choice['id']; ?>"><?php echo $choice['option_text']; ?></label>
+                            </div>
+                        </li>
+                        <?php } ?>
+                    </ul>
                 <?php } ?>
             </div>
+
             <?php
                 $i++;
-            }                
+            }                 
             ?>
         </div>
 
@@ -206,7 +262,12 @@ if (isset($_GET['quiz_id'])) {
 </html>
 <?php
 } else {
-    $quizzes = $conn->query("SELECT * FROM quizzes WHERE user_id = $user_id");
+    $quizzes_query = "
+    SELECT quizzes.id, quizzes.title, attempts.score AS marks, attempts.max_score AS total_marks
+    FROM quizzes
+    LEFT JOIN attempts ON quizzes.id = attempts.quiz_id AND attempts.user_id = $user_id
+    ";
+    $quizzes = $conn->query($quizzes_query);
 
     if ($quizzes->num_rows > 0) {
 ?>
@@ -239,11 +300,18 @@ if (isset($_GET['quiz_id'])) {
     <div class="quizzes-list">
     <?php
     while ($quiz = $quizzes->fetch_assoc()) {
+        // Calculate the percentage only if total_marks is greater than 0
+        if ($quiz['total_marks'] > 0) {
+            $percentage = ($quiz['marks'] / $quiz['total_marks']) * 100;
+        } else {
+            $percentage = 0; // Prevent division by zero
+        }
+        
         echo "<div class='quiz-container'>";
         echo "<h3>" . htmlspecialchars($quiz['title']) . "</h3>";
         
         echo "<div class='quiz-info'>";
-        echo "<p>Score: " . htmlspecialchars($quiz['points']) . "</p>";
+        echo "<p>Score: " . number_format($percentage, 0) . "/100</p>"; // Displaying percentage
         echo "</div>";
         
         echo "<a href='?quiz_id=" . $quiz['id'] . "' class='quiz-link'>View Quiz</a>";
