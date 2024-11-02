@@ -47,12 +47,3 @@ function initSlideshow() {
 document.addEventListener("DOMContentLoaded", function() {
     initSlideshow();
 });
-
-function redirectToAssessment() {
-    const codeInput = document.getElementById('assessment-code').value;
-    if (codeInput) {
-        window.location.href = `take-assessment.php?code=${encodeURIComponent(codeInput)}`;
-    } else {
-        alert('Please enter an assessment code.');
-    }
-}
