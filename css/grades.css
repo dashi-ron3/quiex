@@ -173,14 +173,6 @@ td {
     margin-right: 70px;
 }
 
-.menu-icon {
-    display: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--sidebar-text-color);
-    margin-right: 40px;
-}
-
 .nav a {
     text-decoration: none;
     color: var(--text-color);
@@ -242,4 +234,92 @@ td {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.menu-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--sidebar-text-color);
+    margin-left: auto; 
+    margin-right: 40px; 
+}
+
+.download {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dl {
+    background-color: var(--h1-color); 
+    color: var(--th-color); 
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+.dl:hover {
+    background-color: var(--hover-bg-color);
+    border: 1px solid var(--h1-color);
+    transform: scale(1.05); 
+}
+
+@media (max-width: 768px) {
+    .nav {
+        display: none; 
+        flex-direction: column; 
+        width: 100%; 
+        position: absolute; 
+        top: 60px; 
+        left: 0;
+        background-color: var(--body-color); 
+    }
+
+    .nav a {
+        text-align: center;
+    }
+
+    .menu-icon {
+        display: block; 
+    }
+
+    .nav.active {
+        display: flex; 
+    }
+    
+    .title {
+        width: 100%;
+        margin-top: 200px;
+        margin-left: 120px;
+        margin-bottom: 20px; 
+        padding: 0 15px; 
+        font-size: 1.5rem; 
+    }
+
+    table {
+        width: 100%; 
+        margin: 10px 0; 
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 20px; 
+    }
+
+    .download {
+        margin-top: 50px;
+        margin-left: 280px;
+    }
+
+    .dropdown {
+        text-align: center;
+    }
+
+    .dropbtn {
+        text-align: center;
+    }
+    
 }
