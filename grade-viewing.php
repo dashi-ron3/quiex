@@ -2,7 +2,7 @@
 session_start();
 $DBASE = "localhost";
 $DB_USER = "root";
-$DB_PASS = "pochita12";
+$DB_PASS = "aventurine";
 $DB_NAME = "quiex";
 
 $conn = new mysqli($DBASE, $DB_USER, $DB_PASS, $DB_NAME);
@@ -97,7 +97,6 @@ $result = $conn->query($sql);
             <div class="logo">
                 <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
             </div>
-            <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <div class="nav">
                 <a href="teacher-page.php">HOME</a>
                 <div class="dropdown">
@@ -116,8 +115,10 @@ $result = $conn->query($sql);
                 </div>
                 <a href="teacher-settings.php">SETTINGS</a>
             </div>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
         </nav>
     </header>
+    
     <div class="title">
         <h1>View Grades</h1> <img src="assets/student-or-teacher.png" alt="Student and Teacher" class="st" width="250px" height="200px">
     </div>
@@ -163,11 +164,17 @@ $result = $conn->query($sql);
                 ?>
             </tbody>
         </table>
-        <form method="POST" action="download-grade.php" style="text-align: center; margin-bottom: 20px;">
-            <button type="submit">Download</button>
+        <form method="POST" action="download-grade.php" class="download">
+            <button type="submit" class="dl">Download</button>
         </form>
 
     </div>
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('.nav');
+            nav.style.display = (nav.style.display === 'flex') ? 'none' : 'flex';
+        }
+    </script>
 </body>
 </html>
 
