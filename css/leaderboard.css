@@ -8,7 +8,6 @@ body {
     flex-direction: column; 
     align-items: center;  
     height: 100vh;
-    padding-top: 100px; 
 }
 
 .navbar {
@@ -80,7 +79,7 @@ body {
 
 .player-1 {
     order: 2;
-    transform: translateY(-30px); /* Slightly raised for 1st place */
+    transform: translateY(-30px);
 }
 .player-2 {
     order: 1;
@@ -160,3 +159,66 @@ table td {
     text-align: center;
 }
 
+.mobile-page-name {
+    display: none;
+    margin-left: 10px;
+
+}
+
+.mobile-page-name img {
+    width: 400px;  
+    height: auto;
+}
+
+.page-name {
+    display: block; 
+}
+
+@media (max-width: 400px) {
+
+    .mobile-page-name {
+        display: block; 
+    }
+    
+    .page-name {
+        display: none; 
+    }
+    
+    .table-container {
+        width: 90%; 
+        padding: 10px; 
+        margin: 10px auto; 
+    }
+    
+    .leaderboard-container {
+        padding: 60px;
+        width: 90%; 
+        max-width: 260px; 
+        margin: 0 auto; 
+    }
+    
+    .top-three {
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+        margin-bottom: 10px; 
+    }
+    
+    .player-card {
+        width: 90%; 
+        max-width: 250px; 
+        padding: 10px; 
+        margin: 0 auto; 
+    }
+    
+    .player-card img {
+        width: 50px; 
+        height: 50px; 
+    }
+    
+    .player-card .points {
+        font-size: 12px; 
+    }
+    
+    
+}
