@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
         ]);
     }
 
-    // Display the results
+    // Display results
     echo "<h2>Your Score: $totalScore / $maxScore</h2>";
     foreach ($results as $questionId => $result) {
         echo "<p>Question ID: $questionId | Correct: " . ($result['correct'] ? 'Yes' : 'No') . " | Points Awarded: {$result['points_awarded']}</p>";
