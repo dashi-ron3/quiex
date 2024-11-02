@@ -38,6 +38,61 @@ INSERT INTO assessments (subject, title, content, status, unique_code, created_a
 VALUES 
 ('Math','Math Quiz 1', 'Basic Algebra Quiz', 'published', 'MATH101', "2024-10-21 11:00:00");
 
+-- Quizzes table to store quiz information
+CREATE TABLE quizzes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    description TEXT,
+    open_date DATETIME,
+    close_date DATETIME,
+    max_attempts INT,
+    randomize_order TINYINT(1)
+);
+
+-- Questions table to store individual quiz questions
+CREATE TABLE questions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    quiz_id INT NOT NULL,
+    question_text TEXT NOT NULL,
+    question_type TEXT NOT NULL,
+    correct_answer TEXT,
+    points INT DEFAULT 0,
+    feedback TEXT,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE
+);
+
+-- Options table for multiple choice answers
+CREATE TABLE options (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question_id INT NOT NULL,
+    option_text VARCHAR(255) NOT NULL,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
+);
+
+-- Attempts table to store user attempts on quizzes
+CREATE TABLE attempts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    quiz_id INT NOT NULL,
+    user_id INT NOT NULL,
+    score INT NOT NULL,
+    max_score INT NOT NULL,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Answers table to store the student's answers
+CREATE TABLE answers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    attempt_id INT NOT NULL,
+    question_id INT NOT NULL,
+    student_answer TEXT NOT NULL,
+    points_awarded INT DEFAULT 0,
+    correct TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (attempt_id) REFERENCES attempts(id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
+);
 
 SELECT * FROM assessments;
 
