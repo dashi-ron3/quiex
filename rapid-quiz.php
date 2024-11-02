@@ -65,8 +65,11 @@
         <div class="title">
             <h1>Rapid Quiz</h1> <img src="assets/timer.png" alt="Timer" class="clock-img" width="100" height="80">
         </div>
-        <div class="question-number" id="questionNumber">
-            1/10
+        <img src="assets/lightning.png" alt="Lightning" class="bolt-img" width="300" height="300">
+        <div class="qnum">
+            <div class="question-number" id="questionNumber">
+                1/10
+            </div>
         </div>
         <div class="container">
             <div class="timer">
@@ -82,7 +85,6 @@
         </div>
 
         <img src="assets/think.png" alt="Man Thinking" class="think-img" width="250" height="400">
-        <img src="assets/lightning.png" alt="Lightning" class="bolt-img" width="300" height="300">
         <img src="assets/brain.png" alt="Brain" class="brain-img" width="120" height="100">
         <button class="restart-button" onclick="restartQuiz()" style="display: none;">Restart Quiz</button>
         <div class="score">
