@@ -1,13 +1,18 @@
 <?php
+session_start();
 $DBASE = "localhost";
 $DB_USER = "root";
-$DB_PASS = "admin!!!";
+$DB_PASS = "pochita12";
 $DB_NAME = "quiex";
 
 $conn = new mysqli($DBASE, $DB_USER, $DB_PASS, $DB_NAME);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
+}
+
+if (!isset($_SESSION['theme'])) {
+    $_SESSION['theme'] = 'light';
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['user_id']) && isset($_POST['marks_obtained'])) {
@@ -52,13 +57,14 @@ $result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<?php echo htmlspecialchars($_SESSION['theme'] ?? 'light'); ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/logo-quiex.ico"/>
     <title>QuiEx</title>
     <link rel="stylesheet" href="css/grades.css">
+    <script src="javascript/student-appearance.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
     <style>
@@ -86,9 +92,32 @@ $result = $conn->query($sql);
     </script>
 </head>
 <body>
-    <div class="logo">
-        <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
-    </div>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
+            </div>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            <div class="nav">
+                <a href="teacher-page.php">HOME</a>
+                <div class="dropdown">
+                    <a href="#create" class="dropbtn">CREATE</a>
+                    <div class="dropdown-content">
+                        <a href="create-assessment.php">Create Assessment</a>
+                        <a href="#">Questions Archive</a>
+                        <a href="teacher-assessments.php">Assessments</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#grade" class="drpbtn">GRADE VIEWING</a>
+                    <div class="dropdown-content">
+                        <a href="grade-viewing.php">View Grades</a>
+                    </div>
+                </div>
+                <a href="teacher-settings.php">SETTINGS</a>
+            </div>
+        </nav>
+    </header>
     <div class="title">
         <h1>View Grades</h1> <img src="assets/student-or-teacher.png" alt="Student and Teacher" class="st" width="250px" height="200px">
     </div>
