@@ -118,7 +118,7 @@ $result = $conn->query($sql);
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
         </nav>
     </header>
-    
+
     <div class="title">
         <h1>View Grades</h1> <img src="assets/student-or-teacher.png" alt="Student and Teacher" class="st" width="250px" height="200px">
     </div>
@@ -164,11 +164,10 @@ $result = $conn->query($sql);
                 ?>
             </tbody>
         </table>
-        <form method="POST" action="download-grade.php" class="download">
-            <button type="submit" class="dl">Download</button>
-        </form>
-
     </div>
+    <form method="POST" action="download-grade.php" class="download">
+        <button type="submit" class="dl">Download</button>
+    </form>
     <script>
         function toggleMenu() {
             const nav = document.querySelector('.nav');
