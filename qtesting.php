@@ -6,7 +6,7 @@
     <meta name="description" content="QuiEx Assessment Maker">
     <link rel="icon" href="assets/logo-quiex.ico"/>
     <title>Create Assessment | QuiEx</title>
-    <link rel="stylesheet" type="text/css" href="css/qstyle.css">
+    <link rel="stylesheet" type="text/css" href="css/create-assessment.css">
     <script src="javascript/qtesting.js" defer></script>
 </head>
 <body>
