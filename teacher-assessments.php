@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost", "root", "pochita12", "quiex");
+$conn = mysqli_connect("localhost", "root", "15a5m249ph", "quiex");
 if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -136,7 +136,7 @@ $result = $conn->query($sql);
                                 <div class="title"><strong>Assessment Title:</strong> <?php echo htmlspecialchars($row['title']); ?></div>
                                 <div class="status"><strong>Status:</strong> <?php echo htmlspecialchars($row['status']); ?></div>
                             </div>
-                            <a href="#" class="edit"><strong>Edit</strong></a>
+                            <!-- <a href="#" class="edit"><strong>Edit</strong></a> -->
                             <button type="button" class="score" onclick="fetchScores('<?php echo htmlspecialchars($row['title']); ?>')">Score</button>
                             
                         </div>
