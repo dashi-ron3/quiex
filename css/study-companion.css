@@ -278,6 +278,10 @@ body {
     background-color: #cb5b5b;
 }
 
+.nav-neutral{
+    background-color: grey;
+}
+
 .correct, .wrong {
     padding: 10px;
     margin-bottom: 10px;
