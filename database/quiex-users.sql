@@ -47,7 +47,7 @@ CREATE TABLE quizzes (
     open_date DATETIME,
     close_date DATETIME,
     max_attempts INT,
-    randomize_order TINYINT(1)
+    randomize_order TINYINT
 );
 
 -- Questions table to store individual quiz questions
@@ -77,6 +77,7 @@ CREATE TABLE attempts (
     user_id INT NOT NULL,
     score INT NOT NULL,
     max_score INT NOT NULL,
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- added
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
@@ -89,7 +90,7 @@ CREATE TABLE answers (
     question_id INT NOT NULL,
     student_answer TEXT NOT NULL,
     points_awarded INT DEFAULT 0,
-    correct TINYINT(1) DEFAULT 0,
+    correct TINYINT DEFAULT 0,
     FOREIGN KEY (attempt_id) REFERENCES attempts(id) ON DELETE CASCADE,
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
@@ -163,129 +164,65 @@ CREATE TABLE leaderboard (
 -- INSERT INTO lb (name, profile_pic, points) VALUES 
 -- ("Student1", "desktop_wp.jpg", "1000"),
 
--- study companion --
+-- Insert sample data into the quizzes table
+INSERT INTO quizzes (title, subject, description, open_date, close_date, max_attempts, randomize_order)
+VALUES ('Sample Quiz', 'Mathematics', 'This is a sample quiz on basic math concepts.', '2024-11-01 08:00:00', '2024-11-10 23:59:59', 3, 0);
 
--- quizzes table (connected to users) SAMPLE
-CREATE TABLE IF NOT EXISTS quizzes (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    title VARCHAR(255),
-    started_at DATETIME,
-    finished_at DATETIME,
-    time_taken TIME,
-    marks INT,
-    total_marks INT,
-    points INT, -- points = score
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, points, total_marks)
+-- Insert sample data into the questions table
+INSERT INTO questions (quiz_id, question_text, question_type, correct_answer, points, feedback)
 VALUES 
-(1, 'Math Quiz 1', '2024-01-01 10:00:00', '2024-01-01 10:30:00', '00:30:00', 80, 100),
-(2, 'Math Quiz 1', '2024-01-01 10:00:00', '2024-01-01 10:30:00', '00:30:00', 60, 100);
+    (1, 'What is 2 + 2?', 'multiple-choice', '4', 1, 'The correct answer is 4.'),
+    (1, 'What is 5 + 5?', 'multiple-choice', '10', 1, 'Incorrect. The correct answer is 10.'),
+    (1, 'Is the Earth flat?', 'true-false', 'false', 1, 'The Earth is not flat.'),
+    (1, 'Is the moon made of cheese?', 'true-false', 'false', 1, 'Incorrect. The moon is not made of cheese.'),
+    (1, 'Explain the process of photosynthesis.', 'long-answer', 'Plants convert sunlight into energy.', 2, 'Correct answer.'),
+    (1, 'What is the process of photosynthesis?', 'long-answer', 'Plants produce oxygen from carbon dioxide.', 2, 'Incorrect answer. The correct process involves converting sunlight into energy.'),
+    (1, 'What is the capital of France?', 'short-answer', 'Paris', 1, 'Correct! Paris is the capital of France.'),
+    (1, 'What is the capital of Germany?', 'short-answer', 'Berlin', 1, 'Incorrect. The capital of Germany is Berlin.');
 
-
--- questions table (connected to quizzes) SAMPLE
-CREATE TABLE IF NOT EXISTS questions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    quiz_id INT,
-    text TEXT,
-    type VARCHAR(50),
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
-);
-
--- choices table (connected to questions) SAMPLE
-CREATE TABLE IF NOT EXISTS choices (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    question_id INT,
-    text TEXT,
-    is_correct BOOLEAN,
-    FOREIGN KEY (question_id) REFERENCES questions(id)
-);
-
--- user answers table (connected to questions and quizzes) SAMPLE
-CREATE TABLE IF NOT EXISTS user_answers (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    quiz_id INT,
-    question_id INT,
-    answer_id INT,
-    is_correct BOOLEAN,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (quiz_id) REFERENCES quizzes(id),
-    FOREIGN KEY (question_id) REFERENCES questions(id),
-    FOREIGN KEY (answer_id) REFERENCES choices(id)
-);
-
-CREATE TABLE student_scores (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    quizId INT,
-    assessmentTitle VARCHAR(255) NOT NULL,
-    studentName VARCHAR(255) NOT NULL,
-    score INT NOT NULL,
-    totalPoints INT NOT NULL,
-    incorrectQuestions VARCHAR(255),
-    FOREIGN KEY (quizId) REFERENCES quizzes(id)
-);
-
--- SAMPLE DATA FOR student scores
-INSERT INTO student_scores (assessmentTitle, studentName, score, totalPoints, incorrectQuestions) VALUES
-('Sample Science Quiz', 'Alice Smith', 90, 100, '1,3'),
-('Sample Science Quiz', 'John Doe', 65, 90, '2,5,6'),
-('Sample Science Quiz', 'Jane Johnson', 77, 85, '2,8'),
-('Sample Science Quiz', 'Alice Smith', 94, 100, '4');
-
--- SAMPLE data for study companion, hardcoding only 
--- SAMPLE user
-INSERT INTO users (username, email, password) 
-VALUES ('student1', 'student1@example.com', 'password123');
-
--- SAMPLE quiz
--- GRADED QUIZ
-INSERT INTO quizzes (user_id, title, started_at, finished_at, time_taken, marks, total_marks, points) -- points = score
+-- Insert sample data into the options table for multiple choice and true/false questions
+INSERT INTO options (question_id, option_text)
 VALUES 
-(3, 'Sample Quiz 1', '2024-10-20 10:00:00', '2024-10-20 10:30:00', '00:30:00', 0, 20, 0);
+    (1, '3'), 
+    (1, '4'), 
+    (1, '5'), 
+    (1, '6'),
+    (2, '10'), 
+    (2, '11'), 
+    (2, '12'), 
+    (2, '9'),
+    (3, 'True'), 
+    (3, 'False'), 
+    (4, 'True'), 
+    (4, 'False');
 
--- SAMPLE QUESTIONS
-INSERT INTO questions (quiz_id, text, type) VALUES
-(3, 'What is the chemical symbol for water?', 'Multiple Choice'),
-(3, 'Who painted the Mona Lisa?', 'Multiple Choice'),
-(3, 'In which year did the Titanic sink?', 'Multiple Choice'),
-(3, 'What is the main ingredient in guacamole?', 'Multiple Choice'),
-(3, 'What is the speed of light?', 'Multiple Choice');
+INSERT INTO users (username, email, name, age, gr_level, password, user_type)
+VALUES 
+('student', 'student@example.com', 'Student', 16, '10th Grade', 'student', 'student');
 
-INSERT INTO choices (question_id, text, is_correct) VALUES
-(1, 'H2O', TRUE),
-(1, 'CO2', FALSE),
-(1, 'O2', FALSE),
-(1, 'NaCl', FALSE),
+-- Insert sample data into the attempts table
+INSERT INTO attempts (quiz_id, user_id, score, max_score, started_at, submitted_at)
+VALUES (1, 3, 3, 4, '2024-11-02 10:00:00', '2024-11-02 10:15:00');
 
-(2, 'Vincent Van Gogh', FALSE),
-(2, 'Pablo Picasso', FALSE),
-(2, 'Leonardo da Vinci', TRUE),
-(2, 'Claude Monet', FALSE),
+-- Insert sample data into the answers table
+INSERT INTO answers (attempt_id, question_id, student_answer, points_awarded, correct)
+VALUES 
+    (1, 1, '4', 1, 1),  -- Correct answer for Question 1
+    (1, 2, '11', 0, 0),  -- Incorrect answer for Question 2
+    (1, 3, 'false', 1, 1),  -- Correct answer for Question 3
+    (1, 4, 'true', 0, 0),  -- Incorrect answer for Question 4
+    (1, 5, 'Plants convert sunlight into energy.', 2, 1),  -- Correct answer for Question 5
+    (1, 6, 'Plants produce oxygen from carbon dioxide.', 0, 0),  -- Incorrect answer for Question 6
+    (1, 7, 'Paris', 1, 1),  -- Correct answer for Question 7
+    (1, 8, 'Berlin', 0, 0);  -- Incorrect answer for Question 8
 
-(3, '1905', FALSE),
-(3, '1912', TRUE),
-(3, '1920', FALSE),
-(3, '1898', FALSE),
+SELECT * FROM users;
+SELECT * FROM quizzes;
+SELECT * FROM questions;
+SELECT * FROM options;
+SELECT * FROM attempts;
+SELECT * FROM answers;
+SELECT * FROM quizzes WHERE id = 1;
+SELECT * FROM options WHERE question_id = 1;
 
-(4, 'Tomato', FALSE),
-(4, 'Avocado', TRUE),
-(4, 'Onion', FALSE),
-(4, 'Pepper', FALSE),
 
-(5, '300,000 km/s', TRUE),
-(5, '150,000 km/s', FALSE),
-(5, '450,000 km/s', FALSE),
-(5, '750,000 km/s', FALSE);
-
--- SAMPLE user answers for Quiz 1
-INSERT INTO user_answers (user_id, quiz_id, question_id, answer_id, is_correct) VALUES
-(3, 3, 1, 4, FALSE),  -- NaCl (incorrect)
-(3, 3, 2, 7, TRUE),   -- Leonardo da Vinci (correct)
-(3, 3, 3, 11, FALSE), -- 1920 (incorrect)
-(3, 3, 4, 14, TRUE),  -- Avocado (correct)
-(3, 3,  5, 17, TRUE);  -- 300,000 km/s (correct)
-
--- study companion --
