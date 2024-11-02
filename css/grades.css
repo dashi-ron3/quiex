@@ -237,12 +237,11 @@ td {
 }
 
 .menu-icon {
-    display: none;
+    display: none; 
     font-size: 24px;
     cursor: pointer;
     color: var(--sidebar-text-color);
-    margin-left: auto; 
-    margin-right: 40px; 
+    margin-left: 200px;
 }
 
 .download {
@@ -257,25 +256,25 @@ td {
     border-radius: 5px; 
     padding: 10px 20px; 
     font-size: 16px; 
-    cursor: pointer;
+    cursor: pointer; 
     transition: background-color 0.3s, transform 0.3s; 
 }
 
 .dl:hover {
-    background-color: var(--hover-bg-color);
+    background-color: var(--hover-bg-color); 
     border: 1px solid var(--h1-color);
     transform: scale(1.05); 
 }
 
-@media (max-width: 768px) {
+@media (max-width: 400px) {
     .nav {
-        display: none; 
+        display: none;
         flex-direction: column; 
-        width: 100%; 
+        width: 100%;
         position: absolute; 
         top: 60px; 
         left: 0;
-        background-color: var(--body-color); 
+        background-color: var(--body-color);
     }
 
     .nav a {
@@ -283,7 +282,7 @@ td {
     }
 
     .menu-icon {
-        display: block; 
+        display: block;
     }
 
     .nav.active {
@@ -291,27 +290,46 @@ td {
     }
     
     .title {
-        width: 100%;
-        margin-top: 200px;
-        margin-left: 120px;
+        width: 50%;
+        margin-left: 90px;
         margin-bottom: 20px; 
-        padding: 0 15px; 
-        font-size: 1.5rem; 
+        padding: 0 20px; 
+    }
+
+    .title h1 {
+        font-size: 50px;
+    }
+
+    .title img {
+        width: 100%;
+        height: auto;
+    }
+
+    .container {
+        overflow-x: auto; 
+        width: 100%;
+        margin: 0 auto; 
     }
 
     table {
         width: 100%; 
-        margin: 10px 0; 
     }
 
     th, td {
-        padding: 10px;
-        font-size: 20px; 
+        padding: 10px; 
+        font-size: 14px; 
     }
 
     .download {
         margin-top: 50px;
-        margin-left: 280px;
+        margin-left: 10px;
+    }
+
+    .dropdown-content {
+        display: none;
+    }
+    .dropdown-content.active {
+        display: block;
     }
 
     .dropdown {
