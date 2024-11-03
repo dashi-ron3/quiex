@@ -4,7 +4,7 @@ session_start();
 // Database credentials
 $servername = "localhost";
 $db_username = "root";
-$db_password = "yannigonzales";
+$db_password = "pochita12";
 $dbname = "quiex";
 
 // Establish a database connection
@@ -40,15 +40,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
     $quizTitleStmt = $pdo->prepare("SELECT title FROM quizzes WHERE id = :quiz_id");
     $quizTitleStmt->execute([':quiz_id' => $quizId]);
     $quizTitleData = $quizTitleStmt->fetch(PDO::FETCH_ASSOC);
-    
     if (!$quizTitleData) {
         die("Quiz not found.");
     }
-    
     $quizTitle = htmlspecialchars($quizTitleData['title']);
 
     // Calculate the total score and gather question results
-    foreach ($answers as $questionId => $studentAnswer) {
+    foreach ($answers as $questionId => $studentAnswerId) {
+        // Get the correct answer and point value
         $correctAnswerStmt = $pdo->prepare("SELECT correct_answer, points FROM questions WHERE id = :questionId");
         $correctAnswerStmt->execute([':questionId' => $questionId]);
         $correctAnswerData = $correctAnswerStmt->fetch(PDO::FETCH_ASSOC);
@@ -58,19 +57,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
             $pointValue = (int)$correctAnswerData['points'];
             $maxScore += $pointValue;
 
-            if ($studentAnswer == $correctAnswer) {
+            // Fetch the actual text of the student's answer
+            $optionStmt = $pdo->prepare("SELECT option_text FROM options WHERE id = :optionId");
+            $optionStmt->execute([':optionId' => $studentAnswerId]);
+            $studentAnswerData = $optionStmt->fetch(PDO::FETCH_ASSOC);
+
+            $studentAnswerText = $studentAnswerData ? htmlspecialchars($studentAnswerData['option_text']) : '';
+
+            if ($studentAnswerText == $correctAnswer) {
                 $totalScore += $pointValue;
                 $results[$questionId] = [
                     'correct' => true,
                     'points_awarded' => $pointValue,
-                    'student_answer' => htmlspecialchars($studentAnswer),
+                    'student_answer' => $studentAnswerText,
                     'correct_answer' => htmlspecialchars($correctAnswer)
                 ];
             } else {
                 $results[$questionId] = [
                     'correct' => false,
                     'points_awarded' => 0,
-                    'student_answer' => htmlspecialchars($studentAnswer),
+                    'student_answer' => $studentAnswerText,
                     'correct_answer' => htmlspecialchars($correctAnswer)
                 ];
             }
