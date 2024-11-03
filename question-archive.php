@@ -5,6 +5,38 @@ if (!isset($_SESSION['theme'])) {
     $_SESSION['theme'] = 'light';
 }
 
+$servername = "localhost"; 
+$username = "root";   
+$password = "";     
+$dbname = "quiex";         
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$selectedSubject = isset($_GET['subject']) ? $_GET['subject'] : null;
+
+$sql = "SELECT * FROM Assessments";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$assessments = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+if ($selectedSubject) {
+    $sqlQuestions = "SELECT * FROM Questions WHERE subject = ?";
+    $stmtQuestions = $conn->prepare($sqlQuestions);
+    $stmtQuestions->bind_param("s", $selectedSubject);
+    $stmtQuestions->execute();
+    $questions = $stmtQuestions->get_result();
+} else {
+    // Default fetch all questions or handle error
+    $sqlQuestions = "SELECT * FROM Questions";
+    $stmtQuestions = $conn->prepare($sqlQuestions);
+    $stmtQuestions->execute();
+    $questions = $stmtQuestions->get_result();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +106,6 @@ if (!isset($_SESSION['theme'])) {
         </div>
     </main>
 
-
     <div class="container" id="questions-page" style="display: none;">
         <div class="sidebar">
             <button class="back-button" onclick="goBack()">Back</button>
@@ -113,23 +144,51 @@ if (!isset($_SESSION['theme'])) {
         </div>
 
         <div class="content">
-            <h1 id="subject-title">Subject 1</h1>
-            <div class="questions">
-                <div class="question">
-                    <p><strong>Question 1:</strong> Lorem ipsum.</p>
-                    <label><input type="radio" name="q1" disabled> A</label><br>
-                    <label><input type="radio" name="q1" disabled> B</label><br>
-                    <label><input type="radio" name="q1" disabled> C</label><br>
-                    <label><input type="radio" name="q1" disabled> D</label>
-                </div>
-                <div class="question">
-                    <p><strong>Question 2:</strong> Lorem ipsum.</p>
-                    <label><input type="radio" name="q2" disabled> True</label><br>
-                    <label><input type="radio" name="q2" disabled> False</label><br>
-                </div>
-            </div>
+    <h1 id="subject-title"><?php echo htmlspecialchars($selectedSubject);?></h1>
+    <div class="questions archive-list" id="archive-list">
+        <div class="questions-container">
+            <?php if ($questions->num_rows > 0): ?>
+                <?php while ($question = $questions->fetch_assoc()): ?>
+                    <div class="question">
+                        <p><strong>Question:</strong> <?php echo htmlspecialchars($question['question_text']); ?></p>
+
+                        <?php if ($question['question_type'] == 'multiple_choice'): ?>
+                            <?php
+                            // Fetch options for this question
+                            $sqlOptions = "SELECT * FROM Options WHERE question_id = ?";
+                            $stmtOptions = $conn->prepare($sqlOptions);
+                            $stmtOptions->bind_param("i", $question['id']);
+                            $stmtOptions->execute();
+                            $options = $stmtOptions->get_result();
+                            ?>
+                            <div class="options">
+                                <?php while ($option = $options->fetch_assoc()): ?>
+                                    <label>
+                                        <input type="radio" name="answers[<?php echo $question['id']; ?>]" value="<?php echo $option['id']; ?>">
+                                        <?php echo htmlspecialchars($option['option_text']); ?>
+                                    </label><br>
+                                <?php endwhile; ?>
+                            </div>
+                        <?php elseif ($question['question_type'] == 'true_false'): ?>
+                            <div class="options">
+                                <label><input type="radio" name="answers[<?php echo $question['id']; ?>]" value="true"> True</label><br>
+                                <label><input type="radio" name="answers[<?php echo $question['id']; ?>]" value="false"> False</label><br>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No questions found for this subject.</p>
+            <?php endif; ?>
         </div>
     </div>
+</div>
 
 </body>
 </html>
+
+<?php
+$stmt->close();
+$stmtQuestions->close();
+$conn->close();
+?>
