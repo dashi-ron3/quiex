@@ -23,7 +23,6 @@
 
     if ($quizId) {
         try {
-            // Change here: Selecting quiz by quiz ID instead of quiz code
             $quizStmt = $pdo->prepare("SELECT * FROM quizzes WHERE id = :quizId");
             $quizStmt->execute([':quizId' => $quizId]);
             $quiz = $quizStmt->fetch(PDO::FETCH_ASSOC);
