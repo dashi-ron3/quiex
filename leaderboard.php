@@ -9,13 +9,19 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Fetch top 3 and the rest of the students from the attempts table
+// Fetch top 3 students along with quiz_id and max_score from attempts, quizzes, and questions tables
 $sql = "
-    SELECT u.name, SUM(a.score) AS total_points 
+    SELECT u.id AS user_id, u.name, SUM(a.score) AS points, q.id AS quiz_id, max_scores.max_score 
     FROM users u 
     JOIN attempts a ON u.id = a.user_id 
-    GROUP BY u.id 
-    ORDER BY total_points DESC
+    JOIN quizzes q ON a.quiz_id = q.id 
+    JOIN (
+        SELECT quiz_id, SUM(points) AS max_score 
+        FROM questions 
+        GROUP BY quiz_id
+    ) AS max_scores ON q.id = max_scores.quiz_id 
+    GROUP BY u.id, q.id 
+    ORDER BY points DESC
 ";
 $stmt = $pdo->query($sql);
 
@@ -30,6 +36,19 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $other_students[] = $row;
     }
     $rank++;
+}
+
+// Insert top students into the leaderboard table
+foreach ($top_three as $student) {
+    $insert_sql = "INSERT INTO leaderboard (user_id, quiz_id, name, points, max_score) VALUES (:user_id, :quiz_id, :name, :points, :max_score)";
+    $insert_stmt = $pdo->prepare($insert_sql);
+    $insert_stmt->execute([
+        ':user_id' => $student['user_id'],
+        ':quiz_id' => $student['quiz_id'],
+        ':name' => $student['name'],
+        ':points' => $student['points'],
+        ':max_score' => $student['max_score'],
+    ]);
 }
 
 ?>
@@ -59,7 +78,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             </div>
         </nav>
         <div class="mobile-page-name">
-                <img src="assets/leaderboard.png" alt="page title">
+            <img src="assets/leaderboard.png" alt="page title">
         </div>
     </header>
 
@@ -79,7 +98,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         <img src="assets/bronze_profile.jpg" alt="<?= htmlspecialchars($student['name']) ?>">
                     <?php } ?>
                     <h3><?= htmlspecialchars($student['name']) ?></h3>
-                    <div class="points"><?= htmlspecialchars($student['total_points']) ?> points</div>
+                    <div class="points"><?= htmlspecialchars($student['points']) ?> points</div>
+                    <div class="max-score">Max Score: <?= htmlspecialchars($student['max_score']) ?></div>
                 </div>
             <?php } ?>
         </div>
@@ -87,29 +107,36 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
     <!-- 4th to nth players -->
     <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Points</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $rank = 4;
-                foreach ($other_students as $student) {
-                    echo "<tr>";
-                    echo "<td>{$rank}</td>";
-                    echo "<td>" . htmlspecialchars($student['name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($student['total_points']) . " points</td>";
-                    echo "</tr>";
-                    $rank++;
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
+        <
+
+            <!-- 4th to nth players -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Points</th>
+                            <th>Max Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $rank = 4;
+                        foreach ($other_students as $student) {
+                            echo "<tr>";
+                            echo "<td>{$rank}</td>";
+                            echo "<td>" . htmlspecialchars($student['name']) . "</td>";
+                            echo "<td>" . htmlspecialchars($student['points']) . " points</td>";
+                            echo "<td>" . htmlspecialchars($student['max_score']) . "</td>";
+                            echo "</tr>";
+                            $rank++;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
 
 </body>
+
 </html>
