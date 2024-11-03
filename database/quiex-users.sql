@@ -69,6 +69,10 @@ CREATE TABLE options (
     option_text VARCHAR(255) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
+-- Add subject column to questions table
+ALTER TABLE Questions ADD COLUMN subject VARCHAR(50);
+UPDATE Questions SET subject = 'Biology' WHERE id = 1;
+UPDATE Questions SET subject = 'Chemistry' WHERE id = 2;
 
 -- Attempts table to store user attempts on quizzes
 CREATE TABLE attempts (
@@ -191,17 +195,23 @@ INSERT INTO student_scores (assessmentTitle, studentName, score, totalPoints, in
 INSERT INTO quizzes (title, subject, description, open_date, close_date, max_attempts, randomize_order)
 VALUES ('Sample Quiz', 'Mathematics', 'This is a sample quiz on basic math concepts.', '2024-11-01 08:00:00', '2024-11-10 23:59:59', 3, 0);
 
--- Insert sample data into the questions table
-INSERT INTO questions (quiz_id, question_text, question_type, correct_answer, points, feedback)
-VALUES 
-    (1, 'What is 2 + 2?', 'multiple-choice', '4', 1, 'The correct answer is 4.'),
-    (1, 'What is 5 + 5?', 'multiple-choice', '10', 1, 'Incorrect. The correct answer is 10.'),
-    (1, 'Is the Earth flat?', 'true-false', 'false', 1, 'The Earth is not flat.'),
-    (1, 'Is the moon made of cheese?', 'true-false', 'false', 1, 'Incorrect. The moon is not made of cheese.'),
-    (1, 'Explain the process of photosynthesis.', 'long-answer', 'Plants convert sunlight into energy.', 2, 'Correct answer.'),
-    (1, 'What is the process of photosynthesis?', 'long-answer', 'Plants produce oxygen from carbon dioxide.', 2, 'Incorrect answer. The correct process involves converting sunlight into energy.'),
-    (1, 'What is the capital of France?', 'short-answer', 'Paris', 1, 'Correct! Paris is the capital of France.'),
-    (1, 'What is the capital of Germany?', 'short-answer', 'Berlin', 1, 'Incorrect. The capital of Germany is Berlin.');
+-- Insert sample data into the questions table with subject
+INSERT INTO Questions (id, assessment_id, question_text, question_type, correct_answer, points, explanation, subject) VALUES
+(1, 1, 'What is the largest mammal on Earth?', 'multiple-choice', 'Blue Whale', 5, 'The Blue Whale is the largest mammal on Earth.', 'Biology'),
+(2, 1, 'What is the formula for calculating the area of a circle?', 'multiple-choice', 'πr²', 5, 'The area of a circle is calculated using the formula πr², where r is the radius.', 'Math'),
+(3, 1, 'What is the boiling point of water in Celsius?', 'multiple-choice', '100', 5, 'Water boils at 100 degrees Celsius at sea level.', 'Chemistry'),
+(4, 1, 'What is the capital of Italy?', 'multiple-choice', 'Rome', 5, 'The capital of Italy is Rome.', 'General'),
+(5, 1, 'Who is known as the father of modern physics?', 'multiple-choice', 'Albert Einstein', 5, 'Albert Einstein is known as the father of modern physics.', 'Science'),
+(6, 1, 'What is the main function of the legislative branch of government?', 'multiple-choice', 'To make laws', 5, 'The legislative branch is responsible for making laws.', 'Ethics'),
+(7, 1, 'What is the capital of France?', 'short-answer', 'Paris', 1, 'Correct! Paris is the capital of France.', 'Geography'),
+(8, 1, 'What is the capital of Germany?', 'short-answer', 'Berlin', 1, 'Incorrect. The capital of Germany is Berlin.', 'Geography'),
+(9, 1, 'What is the largest planet in our solar system?', 'multiple-choice', 'Jupiter', 5, 'Jupiter is the largest planet in our solar system.', 'Astronomy'),
+(10, 1, 'What is the chemical symbol for water?', 'multiple-choice', 'H2O', 5, 'The chemical symbol for water is H2O.', 'Chemistry'),
+(11, 1, 'Which gas do plants absorb from the atmosphere?', 'multiple-choice', 'Carbon Dioxide', 5, 'Plants absorb Carbon Dioxide during photosynthesis.', 'Biology'),
+(12, 1, 'What is the powerhouse of the cell?', 'multiple-choice', 'Mitochondria', 5, 'Mitochondria are known as the powerhouse of the cell.', 'Biology'),
+(13, 1, 'What is the capital of Japan?', 'multiple-choice', 'Tokyo', 5, 'Tokyo is the capital of Japan.', 'Geography'),
+(14, 1, 'Who wrote "Romeo and Juliet"?', 'multiple-choice', 'William Shakespeare', 5, 'William Shakespeare wrote "Romeo and Juliet".', 'Literature');
+
 
 -- Insert sample data into the options table for multiple choice and true/false questions
 INSERT INTO options (question_id, option_text)

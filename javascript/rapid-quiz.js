@@ -79,11 +79,16 @@ function nextQuestion() {
         startTimer();
     } else {
         clearInterval(timer);
-        alert(`Quiz Complete! Your final score is: ${score}`);
-        document.querySelector('.restart-button').style.display = 'block'; 
+        document.getElementById('finalScore').innerText = score; 
+        document.getElementById('customAlert').style.display = 'flex';
+        finishQuiz();
     }
 }
 
+function closeCustomAlert() {
+    document.getElementById('customAlert').style.display = 'none';
+    document.querySelector('.restart-button').style.display = 'block'; 
+}
 
 
 function handleAnswerClick() {
@@ -148,6 +153,12 @@ function restartQuiz() {
     startQuiz(); 
 }
 
+function showHomeButton() {
+    document.getElementById("homeButton").style.display = "block";
+}
 
+function finishQuiz() {
+    showHomeButton();
+}
 
 document.querySelector('.start-button').addEventListener('click', startQuiz);

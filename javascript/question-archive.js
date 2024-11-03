@@ -1,7 +1,6 @@
 function showQuestionsPage(subject) {
     document.querySelector('.main-container').style.display = 'none';
-    document.getElementById('questions-page').style.display = 'flex';
-    document.getElementById('subject-title').textContent = subject;
+    window.location.href = window.location.pathname + '?subject=' + encodeURIComponent(subject);
 }
 
 function showQuestions(subject) {

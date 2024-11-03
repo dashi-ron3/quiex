@@ -32,6 +32,48 @@ p {
     gap: 10px;
 }
 
+.start-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.start-screen img {
+    margin-bottom: 20px;
+}
+
+.start-button {
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #567cbd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+.start-button:hover {
+    background-color: #203f69;
+}
+
+.quiz-screen {
+    display: none;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-screen .logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
 .container {
     background-color: #fffdfd;
     width: 500px;
@@ -177,6 +219,59 @@ p {
 .restart-button:hover {
     background-color: #511c1c;
 }
+
+.home-button {
+    margin-top: 20px;
+    background: none;
+    border: none;
+    color: #567cbd;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.home-button:hover {
+    color: #203f69;
+}
+
+.custom-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.custom-alert-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+.custom-alert-content h2 {
+    margin-top: 0;
+}
+
+.custom-alert-content button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #567cbd;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-alert-content button:hover {
+    background-color: #203f69;
+}
+
 
 @keyframes fadeMoveUp {
     0% {
