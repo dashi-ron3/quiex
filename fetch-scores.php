@@ -14,7 +14,7 @@ if (isset($_POST['assessment_title'])) {
                 attempts.max_score AS totalPoints,
                 GROUP_CONCAT(options.id) AS incorrectQuestions
               FROM attempts
-              JOIN quizzes ON quizzes.title = attempts.title
+              JOIN quizzes ON quizzes.title = attempts.quiz_title
               JOIN users ON users.id = attempts.user_id
               LEFT JOIN answers ON answers.quiz_id = attempts.id
               LEFT JOIN options ON options.id = answers.id AND answers.correct = 0
