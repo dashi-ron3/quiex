@@ -1,11 +1,13 @@
 <?php
 session_start();
 
+// Database credentials
 $servername = "localhost";
 $db_username = "root";
 $db_password = "yannigonzales";
 $dbname = "quiex";
 
+// Establish a database connection
 try {
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $db_username, $db_password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -13,8 +15,10 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
+// Check user authentication
 if (!isset($_SESSION['user_id'])) {
-    die("User not logged in.");
+    // For testing, set user_id to 1 explicitly if not already set
+    $_SESSION['user_id'] = 1;  // Remove this line in production
 }
 $userId = $_SESSION['user_id'];
 
@@ -22,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
     $quizId = filter_var($_POST['quiz_id'], FILTER_VALIDATE_INT);
     $answers = $_POST['answer'];
 
+    // Validate the quiz ID and answers
     if (!$quizId || empty($answers)) {
         echo "<script>alert('Quiz ID or answers are invalid.');</script>";
         exit;
@@ -42,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
     
     $quizTitle = htmlspecialchars($quizTitleData['title']);
 
+    // Calculate the total score and gather question results
     foreach ($answers as $questionId => $studentAnswer) {
         $correctAnswerStmt = $pdo->prepare("SELECT correct_answer, points FROM questions WHERE id = :questionId");
         $correctAnswerStmt->execute([':questionId' => $questionId]);
@@ -74,10 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
         }
     }
 
+    // Insert the attempt data into the database
     try {
-        // Debugging outputs
-        var_dump($userId, $quizId, $totalScore, $maxScore);
-
         $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, quiz_title, score, max_score) VALUES (:user_id, :quiz_id, :quiz_title, :score, :max_score)");
         $stmt->execute([
             ':user_id' => $userId,
@@ -88,8 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
         ]);
         $attemptId = $pdo->lastInsertId();
 
+        // Insert each answer result for the attempt
         foreach ($results as $questionId => $result) {
-            $stmt = $pdo->prepare("INSERT INTO answers (attempt_id, question_id, quiz_id, student_answer, points_awarded, correct) VALUES (:attempt_id, :question_id, quiz_id, :student_answer, :points_awarded, :correct)");
+            $stmt = $pdo->prepare("INSERT INTO answers (attempt_id, question_id, quiz_id, student_answer, points_awarded, correct) VALUES (:attempt_id, :question_id, :quiz_id, :student_answer, :points_awarded, :correct)");
             $stmt->execute([
                 ':attempt_id' => $attemptId,
                 ':question_id' => $questionId,
