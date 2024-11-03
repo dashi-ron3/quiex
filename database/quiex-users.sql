@@ -162,6 +162,7 @@ CREATE TABLE leaderboard (
     quiz_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     points INT NOT NULL,
+    max_score INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
 );
