@@ -152,13 +152,13 @@ INSERT INTO uploadedAss (quizId, subject, title, status, lastUsed, descrip) VALU
 
 -- leaderboard
 CREATE TABLE leaderboard (
-    -- quizID INT AUTO_INCREMENT PRIMARY KEY,
-    id INT NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    quiz_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    profile_pic VARCHAR(255) NOT NULL,
-    points INT NOT NULL
-    -- FOREIGN KEY (quizID) REFERENCES Quiz Table_name(quizID),
-	-- FOREIGN KEY (id) REFERENCES users(id)
+    points INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
 );
 
 -- FOR TESTING OF LEADERBOARD

@@ -11,8 +11,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch all students, ordered by points, highest first
-$sql = "SELECT name, points FROM leaderboard ORDER BY points DESC";
+// Fetch names from users and scores from attempts
+$sql = "
+    SELECT u.name, SUM(a.score) AS total_points 
+    FROM users u 
+    JOIN attempts a ON u.id = a.user_id 
+    GROUP BY u.id 
+    ORDER BY total_points DESC
+";
 $result = $conn->query($sql);
 
 // Create arrays for top 3 and rest of the students
@@ -30,6 +36,23 @@ if ($result->num_rows > 0) {
     }
 }
 
+// Store the fetched data into the leaderboard table
+foreach ($top_three as $student) {
+    $name = $conn->real_escape_string($student['name']);
+    $points = $student['total_points'];
+    
+    // Check if the entry already exists
+    $checkSql = "SELECT * FROM leaderboard WHERE name = '$name'";
+    $checkResult = $conn->query($checkSql);
+    
+    if ($checkResult->num_rows == 0) {
+        // Insert into leaderboard
+        $insertSql = "INSERT INTO leaderboard (name, points) VALUES ('$name', $points)";
+        $conn->query($insertSql);
+    }
+}
+
+// Close the connection
 $conn->close();
 ?>
 
@@ -78,7 +101,7 @@ $conn->close();
                         <img src="assets/bronze_profile.jpg" alt="<?= $student['name'] ?>">
                     <?php } ?>
                     <h3><?= $student['name'] ?></h3>
-                    <div class="points"><?= $student['points'] ?> points</div>
+                    <div class="points"><?= $student['total_points'] ?> points</div>
                 </div>
             <?php } ?>
         </div>
@@ -97,18 +120,3 @@ $conn->close();
             <tbody>
                 <?php
                 $rank = 4;
-                foreach ($other_students as $student) { ?>
-                    <tr>
-                        <td><?= $rank ?></td>
-                        <td><?= $student['name'] ?></td>
-                        <td><?= $student['points'] ?> points</td>
-                    </tr>
-                <?php $rank++;
-                } ?>
-            </tbody>
-        </table>
-    </div>
-
-</body>
-
-</html>
