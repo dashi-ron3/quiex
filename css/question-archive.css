@@ -184,6 +184,8 @@ body {
     flex: 1;
     padding: 20px;
     border-left: 2px solid #adadad;
+    overflow: scroll !important;
+    max-height: 100vh !important;
 }
 
 h1 {
@@ -230,4 +232,56 @@ h1 {
 
 .back-button:hover {
     background-color: #2c3b50;
+}
+
+
+/* Existing styles... */
+
+/* Mobile Styles */
+@media (min-width: 375px) and (max-width: 767px) {
+    .main-container{
+        display: flex;
+        min-width: 100vh;
+        align-items: center;
+        justify-content: center;
+        position:absolute;
+    }
+    main .container {
+        min-width: 100%;
+        margin: 30px;
+        padding: 10px;
+        height: auto;
+    }
+    body {
+        max-width: 100vh;
+    }
+    .container {
+        min-width: 100%;
+        margin: 80px;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+    body {
+        justify-content: center;
+        align-items: center;
+    }
+    main .container {
+        padding: 20px;
+        margin: 20px;
+    }
+    .container{
+        width: 90%;
+        margin: 50px;
+        margin-left: 100px;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+    }
+    .container .content {
+        align-items: stretch;
+    }
+
 }
