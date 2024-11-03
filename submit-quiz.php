@@ -83,10 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
     $attemptId = $pdo->lastInsertId();
 
     foreach ($results as $questionId => $result) {
-        $stmt = $pdo->prepare("INSERT INTO answers (attempt_id, question_id, student_answer, points_awarded, correct) VALUES (:attempt_id, :question_id, :student_answer, :points_awarded, :correct)");
+        $stmt = $pdo->prepare("INSERT INTO answers (attempt_id, question_id, quiz_id, student_answer, points_awarded, correct) VALUES (:attempt_id, :question_id, :student_answer, :points_awarded, :correct)");
         $stmt->execute([
             ':attempt_id' => $attemptId,
             ':question_id' => $questionId,
+            ':quiz_id' => $quizId,
             ':student_answer' => $result['student_answer'],
             ':points_awarded' => $result['points_awarded'],
             ':correct' => $result['correct'] ? 1 : 0

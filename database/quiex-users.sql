@@ -88,6 +88,7 @@ CREATE TABLE attempts (
 CREATE TABLE answers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     attempt_id INT NOT NULL,
+    quiz_id INT NOT NULL,
     question_id INT NOT NULL,
     student_answer TEXT NOT NULL,
     points_awarded INT DEFAULT 0,
@@ -135,11 +136,11 @@ CREATE TABLE uploadedAss (
     quizId INT NOT NULL,
     subject VARCHAR(255),
     title text,
-    status VARCHAR(255),
+    status VARCHAR(255) DEFAULT 'Done',
     lastUsed DATE,
     descrip text,
     shared TINYINT DEFAULT (0),
-    FOREIGN KEY (quizId) REFERENCES assessments(id)
+    FOREIGN KEY (quizId) REFERENCES quizzes(id)
 );
 
 SELECT * FROM uploadedAss;
@@ -153,7 +154,7 @@ INSERT INTO uploadedAss (quizId, subject, title, status, lastUsed, descrip) VALU
 -- leaderboard
 CREATE TABLE leaderboard (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+	user_id INT NOT NULL,
     quiz_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     points INT NOT NULL,
@@ -162,8 +163,12 @@ CREATE TABLE leaderboard (
 );
 
 -- FOR TESTING OF LEADERBOARD
--- INSERT INTO lb (name, profile_pic, points) VALUES 
--- ("Student1", "desktop_wp.jpg", "1000"),
+INSERT INTO leaderboard (name, points) VALUES 
+    ("Student1", "1000"),
+    ("Student2", "200"),
+    ("Student3", "1200"),
+    ("Student4", "800"),
+    ("Student5", "500");
 
 CREATE TABLE student_scores (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -177,10 +182,10 @@ CREATE TABLE student_scores (
 );
 -- SAMPLE DATA FOR student scores
 INSERT INTO student_scores (assessmentTitle, studentName, score, totalPoints, incorrectQuestions) VALUES
-('Sample Science Quiz', 'Alice Smith', 90, 100, '1,3'),
-('Sample Science Quiz', 'John Doe', 65, 90, '2,5,6'),
-('Sample Science Quiz', 'Jane Johnson', 77, 85, '2,8'),
-('Sample Science Quiz', 'Alice Smith', 94, 100, '4');
+    ('Sample Science Quiz', 'Alice Smith', 90, 100, '1,3'),
+    ('Sample Science Quiz', 'John Doe', 65, 90, '2,5,6'),
+    ('Sample Science Quiz', 'Jane Johnson', 77, 85, '2,8'),
+    ('Sample Science Quiz', 'Alice Smith', 94, 100, '4');
 
 -- Insert sample data into the quizzes table
 INSERT INTO quizzes (title, subject, description, open_date, close_date, max_attempts, randomize_order)

@@ -14,8 +14,8 @@ $subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['sub
 if ($subject) {
     // Query to get all quizzes from assessments for this subject
     $getQuizzesQuery = "
-        SELECT id, title, status, created_at AS lastUsed, content AS descrip
-        FROM assessments
+        SELECT id, title, open_date AS lastUsed, description AS descrip
+        FROM quizzes
         WHERE subject = '$subject'
     ";
     $quizzesResult = $conn->query($getQuizzesQuery);
@@ -32,8 +32,8 @@ if ($subject) {
             // Insert only if this quiz does not exist
             if ($row['count'] == 0) {
                 $insertQuizQuery = "
-                    INSERT INTO uploadedAss (quizId, subject, title, status, lastUsed, descrip)
-                    VALUES ($quizId, '$subject', '{$quiz['title']}', '{$quiz['status']}', '{$quiz['lastUsed']}', '{$quiz['descrip']}')
+                    INSERT INTO uploadedAss (quizId, subject, title, lastUsed, descrip)
+                    VALUES ($quizId, '$subject', '{$quiz['title']}', '{$quiz['lastUsed']}', '{$quiz['descrip']}')
                 ";
                 if ($conn->query($insertQuizQuery) !== TRUE) {
                     echo "Error inserting quiz: " . $conn->error;
@@ -58,7 +58,7 @@ if (isset($_POST['assessment_title'])) {
 }
 
 // Fetching subjects
-$subjectsQuery = "SELECT DISTINCT subject FROM assessments";
+$subjectsQuery = "SELECT DISTINCT subject FROM quizzes";
 $subjectsResult = $conn->query($subjectsQuery);
 
 // Fetching assessments from uploadedAss
