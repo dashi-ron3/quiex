@@ -3,7 +3,7 @@ session_start();
 
 $servername = "localhost";
 $db_username = "root";
-$db_password = "15a5m249ph";
+$db_password = "yannigonzales";
 $dbname = "quiex";
 
 try {
@@ -14,14 +14,13 @@ try {
 }
 
 if (!isset($_SESSION['user_id'])) {
-    die("User not logged in.");
+    die("User  not logged in.");
 }
 $userId = $_SESSION['user_id'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['answer'], $_POST['title'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['answer'])) {
     $quizId = filter_var($_POST['quiz_id'], FILTER_VALIDATE_INT);
     $answers = $_POST['answer'];
-    $subject = htmlspecialchars($_POST['title']);
 
     if (empty($answers)) {
         echo "<script>alert('Please answer all questions.');</script>";
@@ -31,6 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
     $totalScore = 0;
     $maxScore = 0;
     $results = [];
+
+    // Fetch the quiz title
+    $quizTitleStmt = $pdo->prepare("SELECT title FROM quizzes WHERE id = :quiz_id");
+    $quizTitleStmt->execute([':quiz_id' => $quizId]);
+    $quizTitleData = $quizTitleStmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$quizTitleData) {
+        die("Quiz not found.");
+    }
+    
+    $quizTitle = htmlspecialchars($quizTitleData['title']);
 
     foreach ($answers as $questionId => $studentAnswer) {
         $correctAnswerStmt = $pdo->prepare("SELECT correct_answer, points FROM questions WHERE id = :questionId");
@@ -61,13 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
         }
     }
 
-    $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, score, max_score, title) VALUES (:user_id, :quiz_id, :score, :max_score, :title)");
+    // Insert into attempts table including the quiz title
+    $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, quiz_title, score, max_score) VALUES (:user_id, :quiz_id, :quiz_title, :score, :max_score)");
     $stmt->execute([
         ':user_id' => $userId,
         ':quiz_id' => $quizId,
+        ':quiz_title' => $quizTitle,
         ':score' => $totalScore,
-        ':max_score' => $maxScore,
-        'title' => $title
+        ':max_score' => $maxScore
     ]);
     $attemptId = $pdo->lastInsertId();
 

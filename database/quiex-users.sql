@@ -74,10 +74,10 @@ CREATE TABLE options (
 CREATE TABLE attempts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     quiz_id INT NOT NULL,
+    quiz_title VARCHAR(255),
     user_id INT NOT NULL,
     score INT NOT NULL,
     max_score INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
     started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- added
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
