@@ -141,7 +141,7 @@ $result = $conn->query($sql);
                             
                         </div>
                         <p class="details"><?php echo htmlspecialchars($row['descrip']); ?></p>
-                        <div class="share">
+                        <!-- <div class="share">
                             <form method="POST" action="">
                                 <input type="hidden" name="assessment_title" value="<?php echo htmlspecialchars($row['title']); ?>">
                                 <label for="share-<?php echo htmlspecialchars($row['title']); ?>">SHARE TO PUBLIC: </label>
@@ -152,7 +152,7 @@ $result = $conn->query($sql);
                                     <?php echo $row['shared'] ? 'checked' : ''; ?>
                                     onchange="this.form.submit()">
                             </form>
-                        </div>
+                        </div> -->
                     </div>
             <?php
                 }

@@ -236,12 +236,6 @@ h1 {
     right: 15px; 
 }
 
-.view {
-    text-decoration: none;
-    color: var(--h1-color);
-    font-size: 16px;
-}
-
 .details {
     margin: 10px 0;
     color: var(--details-color);
