@@ -68,7 +68,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Gothic', sans-serif;
+    font-family: 'Arial', sans-serif;
 }
 
 a {
@@ -510,4 +510,8 @@ body {
 .quiz-container .quiz-link:hover {
     background-color: var(--left-container-h3-bg-color);
     color: var(--question-section-bg-color);
+}
+
+.answer-spacing {
+    margin: 15px 0;
 }
