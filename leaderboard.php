@@ -1,17 +1,15 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "15a5m249ph";
-$dbname = "quiex";
+session_start();
+include 'config/connection.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $db_username, $db_password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
 
-// Fetch names from users and scores from attempts
+// Fetch top 3 and the rest of the students from the attempts table
 $sql = "
     SELECT u.name, SUM(a.score) AS total_points 
     FROM users u 
@@ -19,41 +17,21 @@ $sql = "
     GROUP BY u.id 
     ORDER BY total_points DESC
 ";
-$result = $conn->query($sql);
+$stmt = $pdo->query($sql);
 
-// Create arrays for top 3 and rest of the students
 $top_three = [];
 $other_students = [];
 
-if ($result->num_rows > 0) {
-    // Fetch top 3 students
-    for ($i = 0; $i < 3 && $row = $result->fetch_assoc(); $i++) {
+$rank = 1;
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    if ($rank <= 3) {
         $top_three[] = $row;
-    }
-    // Fetch the rest of the students
-    while ($row = $result->fetch_assoc()) {
+    } else {
         $other_students[] = $row;
     }
+    $rank++;
 }
 
-// Store the fetched data into the leaderboard table
-foreach ($top_three as $student) {
-    $name = $conn->real_escape_string($student['name']);
-    $points = $student['total_points'];
-    
-    // Check if the entry already exists
-    $checkSql = "SELECT * FROM leaderboard WHERE name = '$name'";
-    $checkResult = $conn->query($checkSql);
-    
-    if ($checkResult->num_rows == 0) {
-        // Insert into leaderboard
-        $insertSql = "INSERT INTO leaderboard (name, points) VALUES ('$name', $points)";
-        $conn->query($insertSql);
-    }
-}
-
-// Close the connection
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -92,16 +70,16 @@ $conn->close();
                 <div class="player-card player-<?= $index + 1 ?>"> <!-- Add class to identify player position -->
                     <?php if ($index == 0) { ?>
                         <div class="star gold-star"></div>
-                        <img src="assets/gold_profile.jpg" alt="<?= $student['name'] ?>">
+                        <img src="assets/gold_profile.jpg" alt="<?= htmlspecialchars($student['name']) ?>">
                     <?php } elseif ($index == 1) { ?>
                         <div class="star silver-star"></div>
-                        <img src="assets/silver_profile.jpg" alt="<?= $student['name'] ?>">
+                        <img src="assets/silver_profile.jpg" alt="<?= htmlspecialchars($student['name']) ?>">
                     <?php } else { ?>
                         <div class="star bronze-star"></div>
-                        <img src="assets/bronze_profile.jpg" alt="<?= $student['name'] ?>">
+                        <img src="assets/bronze_profile.jpg" alt="<?= htmlspecialchars($student['name']) ?>">
                     <?php } ?>
-                    <h3><?= $student['name'] ?></h3>
-                    <div class="points"><?= $student['total_points'] ?> points</div>
+                    <h3><?= htmlspecialchars($student['name']) ?></h3>
+                    <div class="points"><?= htmlspecialchars($student['total_points']) ?> points</div>
                 </div>
             <?php } ?>
         </div>
@@ -120,3 +98,18 @@ $conn->close();
             <tbody>
                 <?php
                 $rank = 4;
+                foreach ($other_students as $student) {
+                    echo "<tr>";
+                    echo "<td>{$rank}</td>";
+                    echo "<td>" . htmlspecialchars($student['name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($student['total_points']) . " points</td>";
+                    echo "</tr>";
+                    $rank++;
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -14,7 +14,7 @@ try {
 }
 
 if (!isset($_SESSION['user_id'])) {
-    die("User  not logged in.");
+    die("User not logged in.");
 }
 $userId = $_SESSION['user_id'];
 
@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
     $quizId = filter_var($_POST['quiz_id'], FILTER_VALIDATE_INT);
     $answers = $_POST['answer'];
 
-    if (empty($answers)) {
-        echo "<script>alert('Please answer all questions.');</script>";
+    if (!$quizId || empty($answers)) {
+        echo "<script>alert('Quiz ID or answers are invalid.');</script>";
         exit;
     }
 
@@ -68,35 +68,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
                     'correct_answer' => htmlspecialchars($correctAnswer)
                 ];
             }
+        } else {
+            echo "<script>alert('Question ID $questionId not found.');</script>";
         }
     }
 
-    // Insert into attempts table including the quiz title
-    $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, quiz_title, score, max_score) VALUES (:user_id, :quiz_id, :quiz_title, :score, :max_score)");
-    $stmt->execute([
-        ':user_id' => $userId,
-        ':quiz_id' => $quizId,
-        ':quiz_title' => $quizTitle,
-        ':score' => $totalScore,
-        ':max_score' => $maxScore
-    ]);
-    $attemptId = $pdo->lastInsertId();
-
-    foreach ($results as $questionId => $result) {
-        $stmt = $pdo->prepare("INSERT INTO answers (attempt_id, question_id, quiz_id, student_answer, points_awarded, correct) VALUES (:attempt_id, :question_id, :student_answer, :points_awarded, :correct)");
+    try {
+        $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, quiz_title, score, max_score) VALUES (:user_id, :quiz_id, :score, :max_score)");
         $stmt->execute([
-            ':attempt_id' => $attemptId,
-            ':question_id' => $questionId,
+            ':user_id' => $userId,
             ':quiz_id' => $quizId,
-            ':student_answer' => $result['student_answer'],
-            ':points_awarded' => $result['points_awarded'],
-            ':correct' => $result['correct'] ? 1 : 0
+            ':quiz_title' => $quizTitle,
+            ':score' => $totalScore,
+            ':max_score' => $maxScore
         ]);
-    }
+        $attemptId = $pdo->lastInsertId();
 
-    header("Location: leaderboard.php");
-    exit;
+        foreach ($results as $questionId => $result) {
+            $stmt = $pdo->prepare("INSERT INTO answers (attempt_id, question_id, quiz_id, student_answer, points_awarded, correct) VALUES (:attempt_id, :question_id, :student_answer, :points_awarded, :correct)");
+            $stmt->execute([
+                ':attempt_id' => $attemptId,
+                ':question_id' => $questionId,
+                ':quiz_id' => $quizId,
+                ':student_answer' => $result['student_answer'],
+                ':points_awarded' => $result['points_awarded'],
+                ':correct' => $result['correct'] ? 1 : 0
+            ]);
+        }
+
+        echo "<script>alert('Quiz submitted successfully.');</script>";
+        header("Location: leaderboard.php");
+        exit;
+    } catch (PDOException $e) {
+        echo "<script>alert('Error saving to database: " . $e->getMessage() . "');</script>";
+    }
 } else {
-    echo "<script>alert('Quiz submission failed. Please answer all questions.');</script>";
+    echo "<script>alert('Invalid request method or missing data.');</script>";
 }
 ?>
