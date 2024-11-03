@@ -17,7 +17,7 @@ if (isset($_POST['assessment_title'])) {
               JOIN quizzes ON quizzes.title = attempts.title
               JOIN users ON users.id = attempts.user_id
               LEFT JOIN answers ON answers.quiz_id = attempts.id
-              LEFT JOIN options ON options.id = answers.id AND answers.is_correct = 0
+              LEFT JOIN options ON options.id = answers.id AND answers.correct = 0
               WHERE quizzes.title = '$assessmentTitle'
               GROUP BY users.name, attempts.score, attempts.max_score";
 
