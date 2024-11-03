@@ -123,6 +123,7 @@ body {
     overflow: hidden;
     width: 62.5rem;
     margin: 40px auto;
+    max-height: 80vh; /* Set a max height for the container */
 }
 
 .sidebar {
@@ -133,6 +134,16 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 80vh; /* Set a max height for the sidebar */
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    border-left: 2px solid var(--content-color);
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 80vh; /* Set a max height for the content */
 }
 
 .sidebar .subject img {
@@ -171,12 +182,6 @@ button {
     transform: translate(-50%, -50%);
     font-size: 17px;
     padding: 10px;
-}
-
-.content {
-    flex: 1;
-    padding: 20px;
-    border-left: 2px solid var(--content-color); /* The line that separates the sidebar from the content */
 }
 
 h1 {
@@ -327,7 +332,6 @@ h1 {
         flex-direction: column;
         align-items: center;
         padding: 10px;
-        align-items: center;
         justify-content: center;
         width: 100%;
         box-sizing: border-box;
@@ -347,11 +351,18 @@ h1 {
     }
 
     .sidebar {
-        width: 35%;
+        width: 100%; /* Use full width for the sidebar */
         padding: 10px;
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row; /* Change to row for side by side */
+        overflow-x: auto; /* Enable horizontal scrolling */
+        overflow-y: hidden; /* Hide vertical scrollbar */
+    }
+
+    .subject {
+        flex: 0 0 auto; /* Prevent subjects from shrinking */
+        margin: 5px; /* Add some margin for spacing */
+        width: 100px; /* Set a fixed width for each subject */
     }
 
     .content {
