@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $db_username = "root";
 $db_password = "yannigonzales";
@@ -11,13 +13,15 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// Check if form is submitted with necessary data
-// Inside submit-quiz.php
+if (!isset($_SESSION['user_id'])) {
+    die("User not logged in.");
+}
+$userId = $_SESSION['user_id'];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['answer'])) {
     $quizId = filter_var($_POST['quiz_id'], FILTER_VALIDATE_INT);
     $answers = $_POST['answer'];
 
-    // Validate answers
     if (empty($answers)) {
         echo "<script>alert('Please answer all questions.');</script>";
         exit;
@@ -27,9 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
     $maxScore = 0;
     $results = [];
 
-    // Iterate over each question to calculate score
     foreach ($answers as $questionId => $studentAnswer) {
-        // Get the correct answer from the database
         $correctAnswerStmt = $pdo->prepare("SELECT correct_answer, points FROM questions WHERE id = :questionId");
         $correctAnswerStmt->execute([':questionId' => $questionId]);
         $correctAnswerData = $correctAnswerStmt->fetch(PDO::FETCH_ASSOC);
@@ -39,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
             $pointValue = (int)$correctAnswerData['points'];
             $maxScore += $pointValue;
 
-            // Check if the student's answer matches the correct answer
             if ($studentAnswer == $correctAnswer) {
                 $totalScore += $pointValue;
                 $results[$questionId] = [
@@ -58,10 +59,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
             }
         }
     }
-    
-    // Save attempt details
-    $stmt = $pdo->prepare("INSERT INTO attempts (quiz_id, score, max_score) VALUES (:quiz_id, :score, :max_score)");
+
+    $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, score, max_score) VALUES (:user_id, :quiz_id, :score, :max_score)");
     $stmt->execute([
+        ':user_id' => $userId,
         ':quiz_id' => $quizId,
         ':score' => $totalScore,
         ':max_score' => $maxScore
@@ -79,29 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
         ]);
     }
 
-    header("Location: results.php?attempt_id=$attemptId&score=$totalScore&max_score=$maxScore");
+    header("Location: leaderboard.php");
     exit;
-
 } else {
     echo "<script>alert('Quiz submission failed. Please answer all questions.');</script>";
-}
-
-if (isset($_FILES['uploaded_files'])) {
-    $uploadDir = 'uploads-assessments/';
-    $uploadedFiles = [];
-
-    foreach ($_FILES['uploaded_files']['name'] as $key => $name) {
-        if ($_FILES['uploaded_files']['error'][$key] === UPLOAD_ERR_OK) {
-            $tmpName = $_FILES['uploaded_files']['tmp_name'][$key];
-            $filePath = $uploadDir . basename($name);
-            if (move_uploaded_file($tmpName, $filePath)) {
-                $uploadedFiles[] = $filePath; 
-            } else {
-                echo "Failed to move uploaded file: $name";
-            }
-        } else {
-            echo "Error uploading file: $name";
-        }
-    }
 }
 ?>
