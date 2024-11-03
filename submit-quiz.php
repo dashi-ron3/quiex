@@ -31,6 +31,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
     $maxScore = 0;
     $results = [];
 
+    // Fetch the quiz title
+    $quizTitleStmt = $pdo->prepare("SELECT title FROM quizzes WHERE id = :quiz_id");
+    $quizTitleStmt->execute([':quiz_id' => $quizId]);
+    $quizTitleData = $quizTitleStmt->fetch(PDO::FETCH_ASSOC);
+    
+    if (!$quizTitleData) {
+        die("Quiz not found.");
+    }
+    
+    $quizTitle = htmlspecialchars($quizTitleData['title']);
+
     foreach ($answers as $questionId => $studentAnswer) {
         $correctAnswerStmt = $pdo->prepare("SELECT correct_answer, points FROM questions WHERE id = :questionId");
         $correctAnswerStmt->execute([':questionId' => $questionId]);
@@ -67,20 +78,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
         // Debugging outputs
         var_dump($userId, $quizId, $totalScore, $maxScore);
 
-        $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, score, max_score) VALUES (:user_id, :quiz_id, :score, :max_score)");
+        $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, quiz_title, score, max_score) VALUES (:user_id, :quiz_id, :quiz_title, :score, :max_score)");
         $stmt->execute([
             ':user_id' => $userId,
             ':quiz_id' => $quizId,
+            ':quiz_title' => $quizTitle,
             ':score' => $totalScore,
             ':max_score' => $maxScore
         ]);
         $attemptId = $pdo->lastInsertId();
 
         foreach ($results as $questionId => $result) {
-            $stmt = $pdo->prepare("INSERT INTO answers (attempt_id, question_id, student_answer, points_awarded, correct) VALUES (:attempt_id, :question_id, :student_answer, :points_awarded, :correct)");
+            $stmt = $pdo->prepare("INSERT INTO answers (attempt_id, question_id, quiz_id, student_answer, points_awarded, correct) VALUES (:attempt_id, :question_id, quiz_id, :student_answer, :points_awarded, :correct)");
             $stmt->execute([
                 ':attempt_id' => $attemptId,
                 ':question_id' => $questionId,
+                ':quiz_id' => $quizId,
                 ':student_answer' => $result['student_answer'],
                 ':points_awarded' => $result['points_awarded'],
                 ':correct' => $result['correct'] ? 1 : 0
