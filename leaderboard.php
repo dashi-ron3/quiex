@@ -107,35 +107,31 @@ foreach ($top_three as $student) {
 
     <!-- 4th to nth players -->
     <div class="table-container">
-        <
-
-            <!-- 4th to nth players -->
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Player</th>
-                            <th>Points</th>
-                            <th>Max Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $rank = 4;
-                        foreach ($other_students as $student) {
-                            echo "<tr>";
-                            echo "<td>{$rank}</td>";
-                            echo "<td>" . htmlspecialchars($student['name']) . "</td>";
-                            echo "<td>" . htmlspecialchars($student['points']) . " points</td>";
-                            echo "<td>" . htmlspecialchars($student['max_score']) . "</td>";
-                            echo "</tr>";
-                            $rank++;
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Points</th>
+                    <th>Max Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $rank = 4;
+                foreach ($other_students as $student) {
+                    echo "<tr>";
+                    echo "<td>{$rank}</td>";
+                    echo "<td>" . htmlspecialchars($student['name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($student['points']) . " points</td>";
+                    echo "<td>" . htmlspecialchars($student['max_score']) . "</td>";
+                    echo "</tr>";
+                    $rank++;
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 
 </body>
 
