@@ -43,6 +43,7 @@
 
                 if ($questions) {
                     echo "<form method='POST' action='submit-quiz.php'>";
+                    echo "<input type='hidden' name='quiz_id' value='" . htmlspecialchars($quizId) . "'>";
 
                     foreach ($questions as $question) {
                         echo "<div class='question'>";
