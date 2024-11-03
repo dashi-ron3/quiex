@@ -11,15 +11,16 @@ if (isset($_POST['assessment_title'])) {
     $query = "SELECT 
                 users.name AS studentName,
                 attempts.score AS score,
-                attempts.max_score AS totalPoints,
+                SUM(q.points) AS totalPoints,
                 GROUP_CONCAT(options.id) AS incorrectQuestions
               FROM attempts
               JOIN quizzes ON quizzes.title = attempts.quiz_title
               JOIN users ON users.id = attempts.user_id
               LEFT JOIN answers ON answers.quiz_id = attempts.id
               LEFT JOIN options ON options.id = answers.id AND answers.correct = 0
+              LEFT JOIN questions q ON q.quiz_id = quizzes.id
               WHERE quizzes.title = '$assessmentTitle'
-              GROUP BY users.name, attempts.score, attempts.max_score";
+              GROUP BY users.name, attempts.score";
 
     $result = $conn->query($query);
 
