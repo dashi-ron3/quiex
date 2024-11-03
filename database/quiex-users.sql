@@ -77,6 +77,7 @@ CREATE TABLE attempts (
     user_id INT NOT NULL,
     score INT NOT NULL,
     max_score INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
     started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- added
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,

@@ -3,7 +3,7 @@ session_start();
 
 $servername = "localhost";
 $db_username = "root";
-$db_password = "yannigonzales";
+$db_password = "15a5m249ph";
 $dbname = "quiex";
 
 try {
@@ -18,9 +18,10 @@ if (!isset($_SESSION['user_id'])) {
 }
 $userId = $_SESSION['user_id'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['answer'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['answer'], $_POST['title'])) {
     $quizId = filter_var($_POST['quiz_id'], FILTER_VALIDATE_INT);
     $answers = $_POST['answer'];
+    $subject = htmlspecialchars($_POST['title']);
 
     if (empty($answers)) {
         echo "<script>alert('Please answer all questions.');</script>";
@@ -60,12 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
         }
     }
 
-    $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, score, max_score) VALUES (:user_id, :quiz_id, :score, :max_score)");
+    $stmt = $pdo->prepare("INSERT INTO attempts (user_id, quiz_id, score, max_score, title) VALUES (:user_id, :quiz_id, :score, :max_score, :title)");
     $stmt->execute([
         ':user_id' => $userId,
         ':quiz_id' => $quizId,
         ':score' => $totalScore,
-        ':max_score' => $maxScore
+        ':max_score' => $maxScore,
+        'title' => $title
     ]);
     $attemptId = $pdo->lastInsertId();
 
