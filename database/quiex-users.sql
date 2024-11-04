@@ -258,5 +258,7 @@ SELECT * FROM attempts;
 SELECT * FROM answers;
 SELECT * FROM quizzes WHERE id = 1;
 SELECT * FROM options WHERE question_id = 1;
+SELECT * FROM leaderboard;
+SELECT * FROM uploadedAss;
 
 
