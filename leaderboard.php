@@ -2,6 +2,12 @@
 session_start();
 include 'config/connection.php';
 
+$quizId = isset($_GET['quiz_id']) ? filter_var($_GET['quiz_id'], FILTER_VALIDATE_INT) : null;
+
+if (!$quizId) {
+    die("Invalid quiz ID.");
+}
+
 try {
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8", $db_username, $db_password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -20,10 +26,12 @@ $sql = "
         FROM questions 
         GROUP BY quiz_id
     ) AS max_scores ON q.id = max_scores.quiz_id 
+    WHERE a.quiz_id = :quiz_id
     GROUP BY u.id, q.id 
     ORDER BY points DESC
 ";
-$stmt = $pdo->query($sql);
+$stmt = $pdo->prepare($sql);
+$stmt->execute([':quiz_id' => $quizId]);
 
 $top_three = [];
 $other_students = [];

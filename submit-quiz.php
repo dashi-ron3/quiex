@@ -3,7 +3,7 @@ session_start();
 
 $servername = "localhost";
 $db_username = "root";
-$db_password = "pochita12";
+$db_password = "15a5m249ph";
 $dbname = "quiex";
 
 try {
@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_id'], $_POST['an
             ]);
         }
 
-        echo "<script>alert('Quiz submitted successfully.'); window.location.href = 'leaderboard.php';</script>";
+        echo "<script>alert('Quiz submitted successfully.'); window.location.href = 'leaderboard.php?quiz_id=$quizId';</script>";
         exit;
     } catch (PDOException $e) {
         echo "<script>alert('Error saving attempt: " . addslashes($e->getMessage()) . "');</script>";
