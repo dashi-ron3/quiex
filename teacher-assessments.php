@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost", "root", "15a5m249ph", "quiex");
+$conn = mysqli_connect("localhost", "root", "pochita12", "quiex");
 if (mysqli_connect_errno()) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -14,8 +14,8 @@ $subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['sub
 if ($subject) {
     // Query to get all quizzes from assessments for this subject
     $getQuizzesQuery = "
-        SELECT id, title, open_date AS lastUsed, description AS descrip
-        FROM quizzes
+        SELECT id, title, status, created_at AS lastUsed, content AS descrip
+        FROM assessments
         WHERE subject = '$subject'
     ";
     $quizzesResult = $conn->query($getQuizzesQuery);
@@ -32,8 +32,8 @@ if ($subject) {
             // Insert only if this quiz does not exist
             if ($row['count'] == 0) {
                 $insertQuizQuery = "
-                    INSERT INTO uploadedAss (quizId, subject, title, lastUsed, descrip)
-                    VALUES ($quizId, '$subject', '{$quiz['title']}', '{$quiz['lastUsed']}', '{$quiz['descrip']}')
+                    INSERT INTO uploadedAss (quizId, subject, title, status, lastUsed, descrip)
+                    VALUES ($quizId, '$subject', '{$quiz['title']}', '{$quiz['status']}', '{$quiz['lastUsed']}', '{$quiz['descrip']}')
                 ";
                 if ($conn->query($insertQuizQuery) !== TRUE) {
                     echo "Error inserting quiz: " . $conn->error;
@@ -58,7 +58,7 @@ if (isset($_POST['assessment_title'])) {
 }
 
 // Fetching subjects
-$subjectsQuery = "SELECT DISTINCT subject FROM quizzes";
+$subjectsQuery = "SELECT DISTINCT subject FROM assessments";
 $subjectsResult = $conn->query($subjectsQuery);
 
 // Fetching assessments from uploadedAss
@@ -72,25 +72,42 @@ $result = $conn->query($sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Assessments</title>
+    <title>Assessments | QuiEx</title>
     <link rel="stylesheet" href="css/assessment-style.css">
+    <link rel="icon" href="assets/logo-quiex.ico"/>
     <script src="javascript/student-appearance.js" defer></script>
 </head>
 
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo-page-name-container">
-                <div class="logo">
-                    <a href="teacher-page.php">
-                    <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
-                    </a>
-                </div>
-                <div class="page-name">
-                    <img src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/darkassessments.png' : 'assets/assessment.png'); ?>" alt="page title">
+            <div class="logo">
+                <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+            </div>
+                <div class="menu-icon" onclick="toggleMenu()">☰</div>
+                <div class="nav">
+                <a href="teacher-page.php">HOME</a>
+                <div class="dropdown">
+                <a href="#create" class="dropbtn">CREATE</a>
+                <div class="dropdown-content">
+                    <a href="qtesting.php">Create Assessment</a>
+                    <a href="#">Questions Archive</a>
+                    <a href="teacher-assessments.php">Assessments</a>
                 </div>
             </div>
+            <div class="dropdown">
+                <a href="#grade" class="drpbtn">GRADE VIEWING</a>
+                <div class="dropdown-content">
+                <a href="grade-viewing.php">View Grades</a>
+            </div>
+        </div>
+            <a href="teacher-settings.php">SETTINGS</a>
+        </div>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
         </nav>
+        <div class="page-name">
+            <img src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/darkassessments.png' : 'assets/assessment.png'); ?>" alt="page title">
+        </div>
     </header>
 
     <div class="container">
@@ -141,7 +158,7 @@ $result = $conn->query($sql);
                             
                         </div>
                         <p class="details"><?php echo htmlspecialchars($row['descrip']); ?></p>
-                        <!-- <div class="share">
+                        <div class="share">
                             <form method="POST" action="">
                                 <input type="hidden" name="assessment_title" value="<?php echo htmlspecialchars($row['title']); ?>">
                                 <label for="share-<?php echo htmlspecialchars($row['title']); ?>">SHARE TO PUBLIC: </label>
@@ -152,7 +169,7 @@ $result = $conn->query($sql);
                                     <?php echo $row['shared'] ? 'checked' : ''; ?>
                                     onchange="this.form.submit()">
                             </form>
-                        </div> -->
+                        </div>
                     </div>
             <?php
                 }

@@ -7,7 +7,7 @@ if (!isset($_SESSION['theme'])) {
 
 $servername = "localhost"; 
 $username = "root";   
-$password = "";     
+$password = "pochita12";     
 $dbname = "quiex";         
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -44,7 +44,8 @@ $questions = $stmtQuestions->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Questions Archive</title>
+    <link rel="icon" href="assets/logo-quiex.ico"/>
+    <title>Question Archive | QuiEx</title>
     <link rel="stylesheet" href="css/question-archive.css">
     <script src="javascript/student-appearance.js" defer></script>
     <script src="javascript/question-archive.js" defer></script>
@@ -52,19 +53,35 @@ $questions = $stmtQuestions->get_result();
 <body>
 
 <header>
-    <nav class="navbar">
-        <div class="logo-page-name-container">
-            <div class="logo">
-                <a href="teacher-page.php">
-                    <img class="main-logo" src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/Dark_QuiEx-Logo.png' : 'assets/QuiEx-Logo.png'); ?>" alt="QuiEx Logo" width="140" height="50">
-                </a>
-            </div>
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
+                </div>
+                <div class="menu-icon" onclick="toggleMenu()">☰</div>
+                <div class="nav">
+                    <a href="teacher-page.php">HOME</a>
+                    <div class="dropdown">
+                        <a href="#create" class="dropbtn">CREATE</a>
+                        <div class="dropdown-content">
+                            <a href="qtesting.php">Create Assessment</a>
+                            <a href="#">Questions Archive</a>
+                            <a href="teacher-assessments.php">Assessments</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#grade" class="drpbtn">GRADE VIEWING</a>
+                        <div class="dropdown-content">
+                            <a href="grade-viewing.php">View Grades</a>
+                        </div>
+                    </div>
+                    <a href="teacher-settings.php">SETTINGS</a>
+                </div>
+                <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            </nav>
             <div class="page-name">
-                <img src="<?php echo htmlspecialchars($_SESSION['theme'] === 'dark' ? 'assets/darkquestionarchive.png' : 'assets/questionarchive.png'); ?>" alt="page title">
+                <img src="assets/questionarchive.png" alt="page title">
             </div>
-        </div>
-    </nav>
-</header>
+        </header>
 
 <main class="main-container">
     <div class="container">
