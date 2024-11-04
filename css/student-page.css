@@ -12,7 +12,7 @@
     --navbar: #6b83a3;
     --logo: #1A202C;
     --nav: #1A202C;
-    --dropdown: #6b83a3;
+    --dropdown: white;
     --dropbtn: #d0e1f9;
     --dropdown-content: #ffffff;
     --dropdown-content-text: #1A202C;
@@ -32,11 +32,15 @@
     --study-companion: #CBD5E0;
     --assessment-container: #f7fafc;
     --student-container: #f7fafc;
-    --assessment-options: #d0e1f9;
+    --assessment-options: #0d1b2a;
 
     --hover-content: #6b83a3;
     --footer-content: #374664;
     --contact-info: #374664;
+    /*new*/
+    --assessment-hover: #17304b;
+    --assessment-text: white;
+    
 }
 
 :root.dark {
@@ -77,6 +81,9 @@
     --hover-content: #2C5282;
     --footer-content: #1A202C;
     --contact-info: #CBD5E0;
+    /**/
+    --assessment-hover: #17304b;
+    --assessment-text: white;
 }
 
 
@@ -118,6 +125,10 @@
     --hover-content: #a16bbf;
     --footer-content: #a16bbf;
     --contact-info: #1A202C;
+
+    /**/
+    --assessment-hover: #6a1fab;
+    --assessment-text: white;
 }
 
 html {
@@ -125,7 +136,7 @@ html {
 }
 
 body {
-    font-family: 'Gothic', sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     background-color: #CBD5E0; 
     height: 100vh;
@@ -408,7 +419,8 @@ header {
 }
 
 .assessment-options button:hover {
-    transform: scale(1.1);
+    background-color: var(--assessment-hover);
+    color: var(--assessment-text);
 }
 
 .hover-content {
@@ -482,10 +494,6 @@ button {
     border: 1px solid var(--text-color);
     transition: transform 0.3s ease;
     color: var(--text-color);
-}
-
-button:hover {
-    transform: scale(1.1);
 }
 
 footer {

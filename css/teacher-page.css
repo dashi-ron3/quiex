@@ -28,10 +28,13 @@
     --study-companion: #CBD5E0;
     --assessment-container: #f7fafc;
     --student-container: #f7fafc;
-    --assessment-options: #d0e1f9;
+    --create-options: #d0e1f9;
     --hover-content: #6b83a3;
     --footer-content: #374664;
     --contact-info: #374664;
+        /*new*/
+    --assessment-hover: #17304b;
+    --assessment-text: white;
 }
 
 :root.dark {
@@ -63,10 +66,13 @@
     --study-companion: #4A5568;
     --assessment-container: #2D3748;
     --student-container: #2D3748;
-    --assessment-options: #4A5568;
+    --create-options: #4A5568;
     --hover-content: #2C5282;
     --footer-content: #1A202C;
     --contact-info: #CBD5E0;
+        /**/
+    --assessment-hover: #17304b;
+    --assessment-text: white;
 }
 
 
@@ -99,10 +105,13 @@
     --study-companion: #d0b2e0;
     --assessment-container: #e3d3f5;
     --student-container: #e3d3f5;
-    --assessment-options: #d0b2e0;
+    --create-options: #d0b2e0;
     --hover-content: #a16bbf;
     --footer-content: #a16bbf;
     --contact-info: #1A202C;
+        /**/
+    --assessment-hover: #17304b;
+    --assessment-text: white;
 }
 
 html {
@@ -110,7 +119,7 @@ html {
 }
 
 body {
-    font-family: 'Gothic', sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     background-color: var(--bg-color);
     height: 100vh;
@@ -373,7 +382,7 @@ header {
     box-shadow: -10px 10px 0px var(--text-color);
 }
 
-.assessment-options button {
+.create-options button {
     cursor: pointer;
     padding: 5px 15px;
     background-color: var(--sidebar-bg-color);
@@ -382,7 +391,10 @@ header {
     transition: transform 0.3s ease;
 }
 
-.assessment-options button:hover {transform: scale(1.1);}
+.create-options button:hover {
+    background-color: var(--assessment-hover);
+    color: var(--assessment-text);
+}
 
 .hover-content {
     display: none;
