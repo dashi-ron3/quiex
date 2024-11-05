@@ -23,23 +23,8 @@ VALUES
 ('john_doe', 'john@example.com', 'John Doe', 16, '10th Grade', 'password123', 'student'),
 ('jane_smith', 'jane@example.com', 'Jane Smith', 15, '10th Grade', 'password123', 'student');
 
--- create assessment
-CREATE TABLE IF NOT EXISTS assessments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    subject VARCHAR(255),
-    title VARCHAR(255),
-    content TEXT,
-    status ENUM('draft', 'published') DEFAULT 'draft',
-    unique_code VARCHAR(10) UNIQUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-INSERT INTO assessments (subject, title, content, status, unique_code, created_at)
-VALUES 
-('Math','Math Quiz 1', 'Basic Algebra Quiz', 'published', 'MATH101', "2024-10-21 11:00:00");
-
--- Quizzes table to store quiz information
-CREATE TABLE quizzes (
+-- Quizzes table to store quiz metadata
+CREATE TABLE IF NOT EXISTS quizzes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     subject VARCHAR(255) NOT NULL,
@@ -51,7 +36,7 @@ CREATE TABLE quizzes (
 );
 
 -- Questions table to store individual quiz questions
-CREATE TABLE questions (
+CREATE TABLE IF NOT EXISTS questions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     quiz_id INT NOT NULL,
     question_text TEXT NOT NULL,
@@ -63,33 +48,37 @@ CREATE TABLE questions (
 );
 
 -- Options table for multiple choice answers
-CREATE TABLE options (
+CREATE TABLE IF NOT EXISTS options (
     id INT AUTO_INCREMENT PRIMARY KEY,
     question_id INT NOT NULL,
     option_text VARCHAR(255) NOT NULL,
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
--- Add subject column to questions table
-ALTER TABLE Questions ADD COLUMN subject VARCHAR(50);
-UPDATE Questions SET subject = 'Biology' WHERE id = 1;
-UPDATE Questions SET subject = 'Chemistry' WHERE id = 2;
+
+-- Add subject column to questions table if it doesn't already exist
+ALTER TABLE questions ADD COLUMN IF NOT EXISTS subject VARCHAR(50);
+
+-- Set sample data for testing purposes
+UPDATE questions SET subject = 'Biology' WHERE id = 1;
+UPDATE questions SET subject = 'Chemistry' WHERE id = 2;
 
 -- Attempts table to store user attempts on quizzes
-CREATE TABLE attempts (
+CREATE TABLE IF NOT EXISTS attempts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     quiz_id INT NOT NULL,
     quiz_title VARCHAR(255),
     user_id INT NOT NULL,
     score INT NOT NULL,
     max_score INT NOT NULL,
-    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- added
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (quiz_id) REFERENCES quizzes(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    -- Assuming the users table exists, otherwise comment out the next line
+    -- FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- Answers table to store the student's answers
-CREATE TABLE answers (
+CREATE TABLE IF NOT EXISTS answers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     attempt_id INT NOT NULL,
     quiz_id INT NOT NULL,
@@ -101,59 +90,39 @@ CREATE TABLE answers (
     FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE
 );
 
-SELECT * FROM assessments;
-
--- save questions in the database
-CREATE TABLE quiex_questions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    assessment_id INT NOT NULL,
-    question_type ENUM('multiple-choice', 'true-false', 'long-answer', 'short-answer', 'checkboxes') NOT NULL,
-    question_text TEXT NOT NULL,
-    points INT DEFAULT 0,
-    FOREIGN KEY (assessment_id) REFERENCES assessments(id) ON DELETE CASCADE
-);
-
--- quiex choices
-CREATE TABLE quiex_choices (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    question_id INT NOT NULL,
-    choice_text VARCHAR(255) NOT NULL,
-    is_correct BOOLEAN DEFAULT 0,
-    FOREIGN KEY (question_id) REFERENCES quiex_questions(id) ON DELETE CASCADE
-);
-
-SELECT * FROM quiex_choices;
-
--- img or vid upload
-CREATE TABLE files (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    question_id INT NOT NULL,
-    file_path VARCHAR(255) NOT NULL,
-    file_type ENUM('image', 'video') NOT NULL, 
-    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (question_id) REFERENCES quiex_questions(id) ON DELETE CASCADE
-);
-
--- uploaded assessments
-CREATE TABLE uploadedAss (
+-- Uploaded assessments table
+CREATE TABLE IF NOT EXISTS uploadedAss (
     upAss INT AUTO_INCREMENT PRIMARY KEY,
     quizId INT NOT NULL,
     subject VARCHAR(255),
-    title text,
+    title TEXT,
     status VARCHAR(255) DEFAULT 'Published',
     lastUsed DATE,
-    descrip text,
-    shared TINYINT DEFAULT (0),
+    descrip TEXT,
+    shared TINYINT DEFAULT 0,
     FOREIGN KEY (quizId) REFERENCES quizzes(id)
 );
 
-SELECT * FROM uploadedAss;
+-- Add a publish status column to questions table if it doesn't exist
+ALTER TABLE questions ADD COLUMN IF NOT EXISTS publish_status TINYINT(1) DEFAULT 0;
 
--- FOR TESTING ASSESSMENTS
-INSERT INTO uploadedAss (quizId, subject, title, status, lastUsed, descrip) VALUES
+-- Insert test data into uploadedAss table
+INSERT INTO uploadedAss (quizId, subject, title, status, lastUsed, descrip) 
+VALUES
 (1, 'Science', 'Sample Science Quiz 1', 'In Progress', '2024-02-10', 'An examination of basic physics concepts.');
--- ('History', 'Sample History Quiz', 'Not Started', '2024-03-01', 'An assignment about World War II.'),
--- ("Biology","Sample Biology Exam", "Done", "2023-11-09", "Sample Test Description.");
+
+-- To display the questions at the teacher-assessment page
+SELECT 
+    q.id AS question_id, 
+    q.question_text, 
+    o.id AS option_id, 
+    o.option_text
+FROM 
+    questions q
+LEFT JOIN 
+    options o ON q.id = o.question_id
+WHERE 
+    q.quiz_id = 1;
 
 -- leaderboard
 CREATE TABLE leaderboard (
@@ -260,5 +229,3 @@ SELECT * FROM quizzes WHERE id = 1;
 SELECT * FROM options WHERE question_id = 1;
 SELECT * FROM leaderboard;
 SELECT * FROM uploadedAss;
-
-
