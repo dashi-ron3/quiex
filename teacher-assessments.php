@@ -168,29 +168,45 @@ $result = $conn->query($sql);
                     options o ON q.id = o.question_id
                 WHERE 
                     q.quiz_id = (SELECT id FROM quizzes WHERE subject = '$subject' LIMIT 1) -- Modify if you want to fetch from multiple quizzes
-            ";
+                ";
                 $questionsAndOptionsResult = $conn->query($getQuestionsAndOptionsQuery);
             
                 if ($questionsAndOptionsResult->num_rows > 0) {
                     echo '<h2>Questions for ' . htmlspecialchars($subject) . ':</h2>';
                     $currentQuestionId = null;
+                    
                     while ($row = $questionsAndOptionsResult->fetch_assoc()) {
+                        // Check if this is a new question
                         if ($currentQuestionId !== $row['question_id']) {
+                            // Close the previous question block if it exists
+                            if ($currentQuestionId !== null) {
+                                echo '</div>'; // Closing the previous question block
+                            }
+                            
                             // New question block
                             echo '<div class="question">';
-                            echo '<p>' . htmlspecialchars($row['question_text']) . '</p>';
+                            echo '<p class="question-text">' . htmlspecialchars($row['question_text']) . '</p>';
                             $currentQuestionId = $row['question_id'];
                         }
+            
                         // Output options if they exist
                         if ($row['option_id'] !== null) {
-                            echo '<p>- ' . htmlspecialchars($row['option_text']) . '</p>';
+                            echo '<div class="radio-choice">';
+                            echo '<input type="radio" id="option_' . $row['option_id'] . '" name="question_' . $row['question_id'] . '" value="' . $row['option_id'] . '">';
+                            echo '<label for="option_' . $row['option_id'] . '">' . htmlspecialchars($row['option_text']) . '</label>';
+                            echo '</div>'; // Close radio choice
                         }
                     }
-                    echo '</div>'; // Closing the question block
+                    
+                    // Close the last question block
+                    if ($currentQuestionId !== null) {
+                        echo '</div>'; // Closing the last question block
+                    }
                 } else {
                     echo "<p>No published questions found for this subject.</p>";
                 }
             }
+            
 
             $conn->close();
             ?>
