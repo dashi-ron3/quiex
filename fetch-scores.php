@@ -9,17 +9,22 @@ if (isset($_POST['assessment_title'])) {
 
     // Updated query to join quizzes, assessments, users, and user_answers tables
     $query = "SELECT 
-            users.name AS studentName,
+            users.username AS studentName,  -- Fetching username instead of name
             attempts.score AS score,
-            SUM(q.points) AS totalPoints,
+            totalPoints.total AS totalPoints,
             GROUP_CONCAT(DISTINCT q.id) AS incorrectQuestions
-          FROM attempts
-          JOIN quizzes ON quizzes.title = attempts.quiz_title
-          JOIN users ON users.id = attempts.user_id
-          JOIN answers ON answers.attempt_id = attempts.id
-          JOIN questions q ON q.id = answers.question_id
-          WHERE quizzes.title = '$assessmentTitle' AND answers.correct = 0
-          GROUP BY users.name, attempts.score";
+        FROM attempts
+        JOIN quizzes ON quizzes.title = attempts.quiz_title
+        JOIN users ON users.id = attempts.user_id
+        JOIN answers ON answers.attempt_id = attempts.id
+        JOIN questions q ON q.id = answers.question_id
+        JOIN (
+            SELECT SUM(points) AS total
+            FROM questions
+            WHERE quiz_id = (SELECT id FROM quizzes WHERE title = '$assessmentTitle')
+        ) AS totalPoints ON totalPoints.total IS NOT NULL
+        WHERE quizzes.title = '$assessmentTitle' AND answers.correct = 0
+        GROUP BY users.username, attempts.score, totalPoints.total";
 
     $result = $conn->query($query);
 

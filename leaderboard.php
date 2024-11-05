@@ -17,7 +17,7 @@ try {
 
 // Fetch top 3 students along with quiz_id and max_score from attempts, quizzes, and questions tables
 $sql = "
-    SELECT u.id AS user_id, u.name, SUM(a.score) AS points, q.id AS quiz_id, max_scores.max_score 
+    SELECT u.id AS user_id, u.username, SUM(a.score) AS points, q.id AS quiz_id, max_scores.max_score 
     FROM users u 
     JOIN attempts a ON u.id = a.user_id 
     JOIN quizzes q ON a.quiz_id = q.id 
@@ -48,12 +48,12 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 // Insert top students into the leaderboard table
 foreach ($top_three as $student) {
-    $insert_sql = "INSERT INTO leaderboard (user_id, quiz_id, name, points, max_score) VALUES (:user_id, :quiz_id, :name, :points, :max_score)";
+    $insert_sql = "INSERT INTO leaderboard (user_id, quiz_id, name, points, max_score) VALUES (:user_id, :quiz_id, :username, :points, :max_score)";
     $insert_stmt = $pdo->prepare($insert_sql);
     $insert_stmt->execute([
         ':user_id' => $student['user_id'],
         ':quiz_id' => $student['quiz_id'],
-        ':name' => $student['name'],
+        ':username' => $student['username'],
         ':points' => $student['points'],
         ':max_score' => $student['max_score'],
     ]);
@@ -97,15 +97,15 @@ foreach ($top_three as $student) {
                 <div class="player-card player-<?= $index + 1 ?>"> <!-- Add class to identify player position -->
                     <?php if ($index == 0) { ?>
                         <div class="star gold-star"></div>
-                        <img src="assets/gold_profile.jpg" alt="<?= htmlspecialchars($student['name']) ?>">
+                        <img src="assets/gold_profile.jpg" alt="<?= htmlspecialchars($student['username']) ?>">
                     <?php } elseif ($index == 1) { ?>
                         <div class="star silver-star"></div>
-                        <img src="assets/silver_profile.jpg" alt="<?= htmlspecialchars($student['name']) ?>">
+                        <img src="assets/silver_profile.jpg" alt="<?= htmlspecialchars($student['username']) ?>">
                     <?php } else { ?>
                         <div class="star bronze-star"></div>
-                        <img src="assets/bronze_profile.jpg" alt="<?= htmlspecialchars($student['name']) ?>">
+                        <img src="assets/bronze_profile.jpg" alt="<?= htmlspecialchars($student['username']) ?>">
                     <?php } ?>
-                    <h3><?= htmlspecialchars($student['name']) ?></h3>
+                    <h3><?= htmlspecialchars($student['username']) ?></h3>
                     <div class="points"><?= htmlspecialchars($student['points']) ?> points</div>
                     <div class="max-score">Max Score: <?= htmlspecialchars($student['max_score']) ?></div>
                 </div>
@@ -130,7 +130,7 @@ foreach ($top_three as $student) {
                 foreach ($other_students as $student) {
                     echo "<tr>";
                     echo "<td>{$rank}</td>";
-                    echo "<td>" . htmlspecialchars($student['name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($student['username']) . "</td>";
                     echo "<td>" . htmlspecialchars($student['points']) . " points</td>";
                     echo "<td>" . htmlspecialchars($student['max_score']) . "</td>";
                     echo "</tr>";
