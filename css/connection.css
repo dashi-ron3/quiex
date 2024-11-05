@@ -1,0 +1,16 @@
+body {
+    background-color: #CBD5E0;
+}
+
+.access-denied {
+    color: #ffffff;
+    background-color: #e74c3c;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px auto;
+    text-align: center;
+    max-width: 500px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
