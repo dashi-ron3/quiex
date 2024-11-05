@@ -140,7 +140,7 @@ CREATE TABLE uploadedAss (
     quizId INT NOT NULL,
     subject VARCHAR(255),
     title text,
-    status VARCHAR(255) DEFAULT 'Done',
+    status VARCHAR(255) DEFAULT 'Published',
     lastUsed DATE,
     descrip text,
     shared TINYINT DEFAULT (0),
