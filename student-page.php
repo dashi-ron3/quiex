@@ -1,6 +1,16 @@
-<?php 
+<?php
 session_start();
-require 'config/connection.php';
+
+// if (!isset($_SESSION['user_id'])) {
+//     header("Location: index.php");
+//     exit();
+// }
+
+if (!isset($_SESSION['theme'])) {
+    $_SESSION['theme'] = 'light';
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -14,7 +24,7 @@ header("Pragma: no-cache");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QuiEx Main Page Student's View">
     <link rel="icon" href="assets/logo-quiex.ico"/>
-    <title>Home | QuiEx</title>
+    <title>Student Page | QuiEx</title>
     <link rel="stylesheet" href="css/student-page.css">
     <link rel="stylesheet" href="css/loading-screen.css">
     <script src="javascript/student-appearance.js" defer></script>
@@ -40,7 +50,7 @@ header("Pragma: no-cache");
                         <a href="#assessment" class="dropbtn">ASSESSMENT</a>
                         <div class="dropdown-content">
                             <a href="#">Take Assessment</a>
-                            <a href="rapid-quiz.php">Rapid Quiz</a>
+                            <a href="#">Rapid Quiz</a>
                         </div>
                     </div>
                     <div class="dropdown">
@@ -110,7 +120,7 @@ header("Pragma: no-cache");
                     </div>
 
                     <div class="assessment-options">
-                        <a href="rapid-quiz.php">Rapid Quiz</a>
+                        <a href="#">Rapid Quiz</a>
                         <div class="hover-content">
                             <p>Fun and thrill in studying? Test your comprehension speed with this!</p>
                             <button>Enter</button>
@@ -126,46 +136,75 @@ header("Pragma: no-cache");
                 <div class="student-container">
                     <a href="#">Student Summary</a>
                     <div class="hover-content">
-                        <!-- Example Data Start -->
-                        <h2>Finished Assessments</h2>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Assessment Title</th>
-                                    <th>Score</th>
-                                    <th>Total Points</th>
-                                    <th>Incorrect Questions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Sample data rows -->
-                                <tr>
-                                    <td>Sample Science Quiz</td>
-                                    <td>90</td>
-                                    <td>100</td>
-                                    <td>1, 3</td>
-                                </tr>
-                                <tr>
-                                    <td>Sample Science Quiz</td>
-                                    <td>65</td>
-                                    <td>90</td>
-                                    <td>2, 5, 6</td>
-                                </tr>
-                                <tr>
-                                    <td>Sample Quiz 1</td>
-                                    <td>77</td>
-                                    <td>85</td>
-                                    <td>2, 8</td>
-                                </tr>
-                                <tr>
-                                    <td>Sample Quiz 2</td>
-                                    <td>94</td>
-                                    <td>100</td>
-                                    <td>4</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- Example Data End -->
+                    <?php
+
+                    $conn = new mysqli("localhost", "root", "aventurine", "quiex");
+
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+
+                    if (isset($_SESSION['user_id'])) {
+                        $student_id = $_SESSION['user_id'];
+
+                        $sql = "SELECT 
+                                    a.quiz_title AS 'Assessment Title',
+                                    a.score AS 'Score',
+                                    a.max_score AS 'Total Points',
+                                    GROUP_CONCAT(q.id ORDER BY q.id ASC) AS 'Incorrect Questions'
+                                FROM 
+                                    attempts AS a
+                                JOIN 
+                                    answers AS ans ON ans.attempt_id = a.id
+                                JOIN 
+                                    questions AS q ON q.id = ans.question_id
+                                WHERE 
+                                    a.user_id = $student_id AND
+                                    ans.correct = 0
+                                GROUP BY 
+                                    a.id";
+                                    
+                        $result = $conn->query($sql);
+
+                        if (!$result) {
+                            echo "Error in query: " . $conn->error;
+                        }
+                    } else {
+                        echo "User ID is not set in the session.";
+                    }
+                    ?>
+
+                    <h2>Finished Assessments</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Assessment Title</th>
+                                <th>Score</th>
+                                <th>Total Points</th>
+                                <th>Incorrect Questions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if (isset($result) && $result->num_rows > 0) {
+                                while($row = $result->fetch_assoc()) {
+                                    echo '<tr>
+                                            <td>' . htmlspecialchars($row["Assessment Title"]) . '</td>
+                                            <td>' . htmlspecialchars($row["Score"]) . '</td>
+                                            <td>' . htmlspecialchars($row["Total Points"]) . '</td>
+                                            <td>' . htmlspecialchars($row["Incorrect Questions"]) . '</td>
+                                        </tr>';
+                                }
+                            } else {
+                                echo '<tr><td colspan="4">No assessments found or an error occurred.</td></tr>';
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+                    <?php
+                    $conn->close();
+                    ?>
                     </div>
                 </div>
             </div>
