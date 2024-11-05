@@ -42,7 +42,6 @@ $teacher_pages = ['teacher-page.php', 'qtesting.php', 'question-archive.php', 't
 $current_page = basename($_SERVER['PHP_SELF']);
 $access_denied = false;
 
-// Restrict access based on user type
 if (($user_type == 'student' && !in_array($current_page, $student_pages)) ||
     ($user_type == 'teacher' && !in_array($current_page, $teacher_pages))) {
     $access_denied = true;
@@ -63,9 +62,26 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
+echo "<style>
+    body {
+        background-color: #CBD5E0;
+    }
+</style>";
+
 if ($access_denied) {
     echo "
-    <div class='access-denied'>
+    <div style='
+        color: #ffffff;
+        background-color: #e74c3c;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px auto;
+        text-align: center;
+        max-width: 500px;
+        font-size: 18px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    '>
         Access Denied: You do not have permission to view this page.
     </div>";
     exit();
