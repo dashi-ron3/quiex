@@ -17,12 +17,11 @@ if ($subject) {
         while ($quiz = $quizzesResult->fetch_assoc()) {
             $quizId = $quiz['id'];
 
-            // Check if this specific quizId already exists in uploadedAss
+            // Check and insert if this quiz does not exist in uploadedAss
             $checkQuizQuery = "SELECT COUNT(*) AS count FROM uploadedAss WHERE quizId = $quizId";
             $checkQuizResult = $conn->query($checkQuizQuery);
             $row = $checkQuizResult->fetch_assoc();
 
-            // Insert only if this quiz does not exist
             if ($row['count'] == 0) {
                 $insertQuizQuery = "
                     INSERT INTO uploadedAss (quizId, subject, title, lastUsed, descrip)
@@ -36,17 +35,16 @@ if ($subject) {
     }
 }
 
-
 // Check if the checkbox was checked or not
-$isShared = isset($_POST['share']) ? 1 : 0;  // 1 if checked, 0 if unchecked
+$isShared = isset($_POST['share']) ? 1 : 0;
 
-// Update the 'shared' status based on the checkbox state.
+// Update the 'shared' status based on the checkbox state
 if (isset($_POST['assessment_title'])) {
     $assessmentTitle = mysqli_real_escape_string($conn, $_POST['assessment_title']);
     $updateQuery = "UPDATE uploadedAss SET shared = $isShared WHERE title = '$assessmentTitle'";
 
-    if ($conn->query($updateQuery) !== FALSE) {
-        $conn->error;
+    if ($conn->query($updateQuery) === FALSE) {
+        echo "Error updating shared status: " . $conn->error;
     }
 }
 
@@ -74,28 +72,28 @@ $result = $conn->query($sql);
 <body>
     <header>
         <nav class="navbar">
-        <div class="logo">
+            <div class="logo">
                 <img src="assets/QuiEx-Logo.png" alt="QuiEx Logo" width="140" height="50">
             </div>
-                <div class="menu-icon" onclick="toggleMenu()">☰</div>
-                <div class="nav">
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            <div class="nav">
                 <a href="teacher-page.php">HOME</a>
                 <div class="dropdown">
-                <a href="#create" class="dropbtn">CREATE</a>
-                <div class="dropdown-content">
-                    <a href="qtesting.php">Create Assessment</a>
-                    <a href="#">Questions Archive</a>
-                    <a href="teacher-assessments.php">Assessments</a>
+                    <a href="#create" class="dropbtn">CREATE</a>
+                    <div class="dropdown-content">
+                        <a href="qtesting.php">Create Assessment</a>
+                        <a href="#">Questions Archive</a>
+                        <a href="teacher-assessments.php">Assessments</a>
+                    </div>
                 </div>
+                <div class="dropdown">
+                    <a href="#grade" class="drpbtn">GRADE VIEWING</a>
+                    <div class="dropdown-content">
+                        <a href="grade-viewing.php">View Grades</a>
+                    </div>
+                </div>
+                <a href="teacher-settings.php">SETTINGS</a>
             </div>
-            <div class="dropdown">
-                <a href="#grade" class="drpbtn">GRADE VIEWING</a>
-                <div class="dropdown-content">
-                <a href="grade-viewing.php">View Grades</a>
-            </div>
-        </div>
-            <a href="teacher-settings.php">SETTINGS</a>
-        </div>
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
         </nav>
         <div class="page-name">
@@ -114,12 +112,12 @@ $result = $conn->query($sql);
                         <form method="GET" action="">
                             <input type="hidden" name="subject" value="<?php echo $subjectName; ?>">
                             <button type="submit">
-                            <img src="<?php 
-                                echo htmlspecialchars(
-                                    $_SESSION['theme'] === 'dark' ? 'assets/darksubfolder.png' : 
-                                    ($_SESSION['theme'] === 'purple' ? 'assets/purplesubfolder.png' : 'assets/sub-folder.png')
-                                ); 
-                            ?>" alt="<?php echo $subjectName; ?> folder">
+                                <img src="<?php 
+                                    echo htmlspecialchars(
+                                        $_SESSION['theme'] === 'dark' ? 'assets/darksubfolder.png' : 
+                                        ($_SESSION['theme'] === 'purple' ? 'assets/purplesubfolder.png' : 'assets/sub-folder.png')
+                                    ); 
+                                ?>" alt="<?php echo $subjectName; ?> folder">
                                 <h3><?php echo strtoupper($subjectName); ?></h3>
                             </button>
                         </form>
@@ -146,28 +144,52 @@ $result = $conn->query($sql);
                                 <div class="title"><strong>Assessment Title:</strong> <?php echo htmlspecialchars($row['title']); ?></div>
                                 <div class="status"><strong>Status:</strong> <?php echo htmlspecialchars($row['status']); ?></div>
                             </div>
-                            <!-- <a href="#" class="edit"><strong>Edit</strong></a> -->
                             <button type="button" class="score" onclick="fetchScores('<?php echo htmlspecialchars($row['title']); ?>')">Score</button>
-                            
                         </div>
                         <p class="details"><?php echo htmlspecialchars($row['descrip']); ?></p>
-                        <!-- <div class="share">
-                            <form method="POST" action="">
-                                <input type="hidden" name="assessment_title" value="<?php echo htmlspecialchars($row['title']); ?>">
-                                <label for="share-<?php echo htmlspecialchars($row['title']); ?>">SHARE TO PUBLIC: </label>
-                                <input
-                                    type="checkbox"
-                                    id="share-<?php echo htmlspecialchars($row['title']); ?>"
-                                    name="share"
-                                    <?php echo $row['shared'] ? 'checked' : ''; ?>
-                                    onchange="this.form.submit()">
-                            </form>
-                        </div> -->
                     </div>
             <?php
                 }
             } else {
                 echo "<p>No assessments found.</p>";
+            }
+
+            // Fetching questions and options related to the selected subject
+            if ($subject) {
+                $getQuestionsAndOptionsQuery = "
+                SELECT 
+                    q.id AS question_id, 
+                    q.question_text, 
+                    o.id AS option_id, 
+                    o.option_text
+                FROM 
+                    questions q
+                LEFT JOIN 
+                    options o ON q.id = o.question_id
+                WHERE 
+                    q.quiz_id = (SELECT id FROM quizzes WHERE subject = '$subject' LIMIT 1) -- Modify if you want to fetch from multiple quizzes
+            ";
+                $questionsAndOptionsResult = $conn->query($getQuestionsAndOptionsQuery);
+            
+                if ($questionsAndOptionsResult->num_rows > 0) {
+                    echo '<h2>Questions for ' . htmlspecialchars($subject) . ':</h2>';
+                    $currentQuestionId = null;
+                    while ($row = $questionsAndOptionsResult->fetch_assoc()) {
+                        if ($currentQuestionId !== $row['question_id']) {
+                            // New question block
+                            echo '<div class="question">';
+                            echo '<p>' . htmlspecialchars($row['question_text']) . '</p>';
+                            $currentQuestionId = $row['question_id'];
+                        }
+                        // Output options if they exist
+                        if ($row['option_id'] !== null) {
+                            echo '<p>- ' . htmlspecialchars($row['option_text']) . '</p>';
+                        }
+                    }
+                    echo '</div>'; // Closing the question block
+                } else {
+                    echo "<p>No published questions found for this subject.</p>";
+                }
             }
 
             $conn->close();
@@ -198,28 +220,31 @@ $result = $conn->query($sql);
 
             // Fetch scores
             fetch('fetch-scores.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: 'assessment_title=' + encodeURIComponent(title)
-                })
-                .then(response => response.text())
-                .then(data => {
-                    modalContent.innerHTML = data;
-                })
-                .catch(error => {
-                    console.error('Error fetching scores:', error);
-                    modalContent.innerHTML = '<p>Error loading scores. Please try again.</p>';
-                });
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'title=' + encodeURIComponent(title),
+            })
+            .then(response => response.text())
+            .then(data => {
+                modalContent.innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error fetching scores:', error);
+                modalContent.innerHTML = '<p>Error loading scores.</p>';
+            });
         }
 
         function closeModal() {
             const modal = document.getElementById('score-modal');
             modal.style.display = 'none';
         }
+
+        function toggleMenu() {
+            const nav = document.querySelector('.nav');
+            nav.classList.toggle('show');
+        }
     </script>
-
 </body>
-
 </html>
