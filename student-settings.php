@@ -1,14 +1,6 @@
 <?php
 session_start();
-
-/*if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}*/
-
-if (!isset($_SESSION['theme'])) {
-    $_SESSION['theme'] = 'light';
-}
+require 'config/connection.php';
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -21,7 +13,7 @@ header("Pragma: no-cache");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QuiEx Student Settings">
     <link rel="icon" href="assets/logo-quiex.ico"/>
-    <title>QuiEx</title>
+    <title>Settings | QuiEx</title>
     <link rel="stylesheet" href="css/student-settings.css">
     <script src="javascript/student-appearance.js" defer></script>
     <script src="javascript/student-settings.js" defer></script>
@@ -100,12 +92,13 @@ header("Pragma: no-cache");
                             <option value="college" <?php echo (isset($_SESSION['gr_level']) && $_SESSION['gr_level'] == 'college') ? 'selected' : ''; ?>>Undergraduate</option>
                         </select>
                     </div>
+                    
                 </div>
             </section>
 
             <!-- Appearance Section -->
             <section id="appearance">
-                <div class="content">
+                <div class="theme-select">
                     <h2>Appearance</h2>
                     <label for="theme-select">Choose a theme:</label>
                     <select name="theme-select" id="theme-select">
@@ -123,12 +116,12 @@ header("Pragma: no-cache");
                     <div class="help-links">
                         <h3>Help Resources</h3>
                         <ul>
-                            <li>See <a href="quiex-terms-of-use.html">Terms of Use</a></li>
-                            <li>See <a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li>See <a href="quiex-terms-of-use.php">Terms of Use</a></li>
+                            <li>See <a href="quiex-terms-of-use.php">Privacy Policy</a></li>
                         </ul>
                     </div>
                     <div class="feedback-form">
-                        <h3>Send feedback?</h3>
+                        <h3>Send a feedback?</h3>
                         <form id="feedbackForm">
                             <label for="name">Your Name:</label>
                             <input type="text" id="name" name="name" placeholder="Enter your name" required>

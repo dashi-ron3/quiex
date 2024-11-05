@@ -1,22 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-
-$servername = "localhost";
-$db_username = "root";
-$db_password = "pochita12";
-$dbname = "quiex";
-
-$conn = new mysqli($servername, $db_username, $db_password, $dbname);
-
-if ($conn->connect_error) {
-    die(json_encode(['status' => 'error', 'message' => 'Database connection failed']));
-}
-
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
-    exit();
-}
+require 'config/connection.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 $theme = $data['theme'] ?? '';

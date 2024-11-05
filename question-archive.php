@@ -1,21 +1,6 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['theme'])) {
-    $_SESSION['theme'] = 'light';
-}
-
-$servername = "localhost"; 
-$username = "root";   
-$password = "pochita12";     
-$dbname = "quiex";         
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'config/connection.php';
 
 // Fetch the assessments (if needed)
 $sql = "SELECT * FROM Assessments";

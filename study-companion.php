@@ -1,25 +1,6 @@
 <?php
 session_start();
-
-$servername = "localhost";
-$db_username = "root";
-$db_password = "pochita12";
-$dbname = "quiex";
-
-$conn = new mysqli($servername, $db_username, $db_password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-/*if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    header("Location: index.php");
-    exit();
-}*/
-
-// Sample user ID
-$user_id = 3;
+require 'config/connection.php';
 
 $percentage = null;
 
@@ -331,8 +312,8 @@ while ($question = $questions->fetch_assoc()) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assessment Storage | QuiEx</title>
-    <link rel="stylesheet" href="css/study-companion.css">
     <link rel="icon" href="assets/logo-quiex.ico"/>
+    <link rel="stylesheet" href="css/study-companion.css">
     <script src="javascript/student-appearance.js" defer></script>
 </head>
 

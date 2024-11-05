@@ -1,13 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect("localhost", "root", "pochita12", "quiex");
-if (mysqli_connect_errno()) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-if (!isset($_SESSION['theme'])) {
-    $_SESSION['theme'] = 'light';
-}
+require 'config/connection.php';
 
 $subject = isset($_GET['subject']) ? mysqli_real_escape_string($conn, $_GET['subject']) : '';
 

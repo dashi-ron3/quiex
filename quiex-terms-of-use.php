@@ -1,10 +1,6 @@
 <?php
 session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}
+require 'config/connection.php';
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -55,7 +51,7 @@ header("Pragma: no-cache");
         <p>Your participation in assessments is subject to the rules provided by your educational institution. QuiEx is not responsible for grading or evaluation.</p>
 
         <h3>7. Privacy and Data Security</h3>
-        <p>QuiEx values your privacy. By using the platform, you agree to our <a href="quiex-privacy-policy.html">Privacy Policy</a>, which outlines how we collect, use, and protect your personal information.</p>
+        <p>QuiEx values your privacy. By using the platform, you agree to our <a href="quiex-terms-of-use.php">Privacy Policy</a>, which outlines how we collect, use, and protect your personal information.</p>
 
         <h3>8. Termination</h3>
         <p>QuiEx may terminate or suspend your access to the platform without notice if you violate any of these Terms of Use.</p>

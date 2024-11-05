@@ -1,14 +1,6 @@
 <?php
 session_start();
-
-/*if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}*/
-
-if (!isset($_SESSION['theme'])) {
-    $_SESSION['theme'] = 'light';
-}
+require 'config/connection.php';
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -21,7 +13,7 @@ header("Pragma: no-cache");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QuiEx Teacher Settings">
     <link rel="icon" href="assets/logo-quiex.ico"/>
-    <title>QuiEx</title>
+    <title>Settings | QuiEx</title>
     <link rel="stylesheet" href="css/teacher-settings.css">
     <script src="javascript/student-appearance.js" defer></script>
     <script src="javascript/teacher-settings.js"></script>
@@ -69,7 +61,7 @@ header("Pragma: no-cache");
                 </div>
             
                 <div class="profile-upload">
-                    <form action="pfp-upload.php" method="post" enctype="multipart/form-data">
+                    <form action="t-pfp-upload.php" method="post" enctype="multipart/form-data">
                         <input type="file" name="fileToUpload" id="fileToUpload">
                         <button type="submit" id="saveButton" name="submit">Save</button>
                     </form>
@@ -82,7 +74,7 @@ header("Pragma: no-cache");
                             <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                         </svg>
                         Basic Information
-                        <button id="saveButton" style="display:none;" onclick="saveChanges()">Save</button>
+                        <button id="saveChanges" style="display:none;" onclick="saveChanges()">Save</button>
                     </h3>
                     <div class="info-item">
                         <label for="username">Username:</label>
@@ -108,7 +100,7 @@ header("Pragma: no-cache");
             </section>
 
             <section id="appearance">
-                <div class="content">
+                <div class="theme-select">
                     <h2>Appearance</h2>
                     <label for="theme-select">Choose a theme:</label>
                     <select name="theme-select" id="theme-select">
@@ -127,8 +119,8 @@ header("Pragma: no-cache");
                     <div class="help-links">
                         <h3>Help Resources</h3>
                         <ul>
-                            <li>See <a href="quiex-terms-of-use.html">Terms of Use</a></li>
-                            <li>See <a href="privacy-policy.html">Privacy Policy</a></li>
+                            <li>See <a href="quiex-terms-of-use.php">Terms of Use</a></li>
+                            <li>See <a href="quiex-terms-of-use.php">Privacy Policy</a></li>
                         </ul>
                     </div>
 

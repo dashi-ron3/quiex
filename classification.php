@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <meta name="description" content="QuiEx Classification Page">
     <title>Classification | QuiEx</title>
     <link rel="stylesheet" href="css/classification.css">
+    <link rel="icon" href="assets/logo-quiex.ico"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <script src="javascript/classification.js" defer></script>
 </head>

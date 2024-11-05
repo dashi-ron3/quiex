@@ -1,14 +1,6 @@
 <?php
 session_start();
-
-/*if (!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
-    exit();
-}*/
-
-if (!isset($_SESSION['theme'])) {
-    $_SESSION['theme'] = 'light';
-}
+require 'config/connection.php';
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -23,7 +15,7 @@ header("Pragma: no-cache");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QuiEx Main Page Teacher's View">
     <link rel="icon" href="assets/logo-quiex.ico" />
-    <title>QuiEx</title>
+    <title>Home | QuiEx</title>
     <link rel="stylesheet" href="css/teacher-page.css">
     <link rel="stylesheet" href="css/loading-screen.css">
     <script src="javascript/student-appearance.js" defer></script>
@@ -37,7 +29,7 @@ header("Pragma: no-cache");
         <img src="assets/QuiEx-Logo.png" alt="Logo" id="logo" width="100" height="200">
     </div>
 
-    <div id="main-content" style="display: none;">
+    <div id="main-content" style="display: block;">
 
     <header>
         <nav class="navbar">
@@ -50,8 +42,8 @@ header("Pragma: no-cache");
                 <div class="dropdown">
                     <a href="#create" class="dropbtn">CREATE</a>
                     <div class="dropdown-content">
-                        <a href="create-assessment.php">Create Assessment</a>
-                        <a href="#">Questions Archive</a>
+                        <a href="qtesting.php">Create Assessment</a>
+                        <a href="question-archive.php">Questions Archive</a>
                         <a href="teacher-assessments.php">Assessments</a>
                     </div>
                 </div>
@@ -112,7 +104,7 @@ header("Pragma: no-cache");
                         <a href="#">Create Assessment</a>
                         <div class="hover-content">
                             <p>Create an assessment for your students!</p>
-                            <button onclick="window.location.href='create-assessment.php'">Enter</button>
+                            <button onclick="window.location.href='qtesting.php'">Enter</button>
                         </div>
                     </div>
 
@@ -120,7 +112,7 @@ header("Pragma: no-cache");
                         <a href="#">Questions Archive</a>
                         <div class="hover-content">
                             <p>Have access on your previous test questions for possible usage on future tests.</p>
-                            <button>Enter</button>
+                            <button onclick="window.location.href='question-archive.php'">Enter</button>
                         </div>
                     </div>
 

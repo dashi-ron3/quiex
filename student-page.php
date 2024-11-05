@@ -1,16 +1,6 @@
-<?php
+<?php 
 session_start();
-
-// if (!isset($_SESSION['user_id'])) {
-//     header("Location: index.php");
-//     exit();
-// }
-
-if (!isset($_SESSION['theme'])) {
-    $_SESSION['theme'] = 'light';
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit();
-}
+require 'config/connection.php';
 
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
@@ -24,7 +14,7 @@ header("Pragma: no-cache");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="QuiEx Main Page Student's View">
     <link rel="icon" href="assets/logo-quiex.ico"/>
-    <title>Student Page | QuiEx</title>
+    <title>Home | QuiEx</title>
     <link rel="stylesheet" href="css/student-page.css">
     <link rel="stylesheet" href="css/loading-screen.css">
     <script src="javascript/student-appearance.js" defer></script>
@@ -50,7 +40,7 @@ header("Pragma: no-cache");
                         <a href="#assessment" class="dropbtn">ASSESSMENT</a>
                         <div class="dropdown-content">
                             <a href="#">Take Assessment</a>
-                            <a href="#">Rapid Quiz</a>
+                            <a href="rapid-quiz.php">Rapid Quiz</a>
                         </div>
                     </div>
                     <div class="dropdown">
@@ -120,7 +110,7 @@ header("Pragma: no-cache");
                     </div>
 
                     <div class="assessment-options">
-                        <a href="#">Rapid Quiz</a>
+                        <a href="rapid-quiz.php">Rapid Quiz</a>
                         <div class="hover-content">
                             <p>Fun and thrill in studying? Test your comprehension speed with this!</p>
                             <button>Enter</button>

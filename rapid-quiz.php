@@ -1,3 +1,8 @@
+<?php
+session_start();
+require 'config/connection.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
