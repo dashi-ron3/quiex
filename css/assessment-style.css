@@ -224,6 +224,24 @@ body {
     position: relative;
 }
 
+.question {
+    background-color: #c6d0d8; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    padding: 15px; 
+    margin-bottom: 10px;
+    box-shadow: -8px 8px 0 var(--box-shadow-color);
+}
+
+.question-text {
+    font-size: 18px; 
+    margin-bottom: 10px; 
+}
+
+.radio-choice {
+    margin-top: 8px; 
+}
+
 button { 
     background-color: transparent;
     border: none;
@@ -469,4 +487,3 @@ h1 {
         font-size: 2rem;
     }
 }   
-
