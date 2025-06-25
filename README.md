@@ -29,11 +29,8 @@ QuiEx is a responsive web-based platform designed to simplify the creation, deli
 - **Feedback Submission**: Report potential errors in questions or answers.
 
 ## Technologies Used
-
-> *(Customize this section based on your tech stack—e.g., HTML, CSS, JavaScript, PHP, MySQL, etc.)*
-
 - Frontend: `HTML`, `CSS`, `JavaScript`
-- Backend: `PHP` or `Node.js`
+- Backend: `PHP`, `Node.js`
 - Database: `MySQL`
 
 ## Setup Instructions
